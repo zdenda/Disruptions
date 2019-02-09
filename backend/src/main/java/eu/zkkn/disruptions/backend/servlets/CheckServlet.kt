@@ -1,6 +1,7 @@
-package eu.zkkn.disruptions.backend
+package eu.zkkn.disruptions.backend.servlets
 
 import com.google.gson.Gson
+import eu.zkkn.disruptions.backend.datasource.PidRssFeedParser
 import java.net.URL
 import java.util.logging.Logger
 import javax.servlet.annotation.WebServlet
@@ -13,9 +14,10 @@ import javax.servlet.http.HttpServletResponse
 class CheckServlet : HttpServlet() {
 
     private val log = Logger.getLogger(CheckServlet::class.java.name)
-    private val url = URL("https://pid.cz/feed/rss-mimoradnosti")
+
 
     override fun doGet(req: HttpServletRequest, resp: HttpServletResponse) {
+        val url = URL(PidRssFeedParser.URL)
         val pidRssFeed = PidRssFeedParser(url.openStream()).parse()
         log.info(pidRssFeed.toString())
         resp.contentType = "application/json; charset=UTF-8"

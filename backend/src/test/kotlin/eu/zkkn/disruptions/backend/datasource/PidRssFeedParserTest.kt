@@ -1,4 +1,4 @@
-﻿package eu.zkkn.disruptions.backend
+﻿package eu.zkkn.disruptions.backend.datasource
 
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -124,18 +124,22 @@ class PidRssFeedParserTest {
 
         assertEquals("Pražská integrovaná doprava - Mimořádnosti", feed.title)
         assertEquals(LocalDateTime.of(2019, 2, 4, 9, 45, 14), feed.updated)
-        assertTrue(feed.items.contains(PidRssFeedParser.PidRssFeed.Item(
-            guid ="5999-1",
-            title = "Letňany - Palmovka (trolejbus linky 58, oběma směry) - Provoz zastaven, Neodjetí spoje",
-            timeInfo = "4.2. 09:08 - do odvolání",
-            lines = listOf("58")
-        )))
-        assertTrue(feed.items.contains(PidRssFeedParser.PidRssFeed.Item(
-            guid ="5998-1",
-            title = "Kavalírka - Klamovka - Provoz omezen",
-            timeInfo = "4.2. 09:00 - do odvolání",
-            lines = listOf("9", "10", "15", "16")
-        )))
+        assertTrue(feed.items.contains(
+            PidRssFeed.Item(
+                guid ="5999-1",
+                title = "Letňany - Palmovka (trolejbus linky 58, oběma směry) - Provoz zastaven, Neodjetí spoje",
+                timeInfo = "4.2. 09:08 - do odvolání",
+                lines = listOf("58")
+            )
+        ))
+        assertTrue(feed.items.contains(
+            PidRssFeed.Item(
+                guid ="5998-1",
+                title = "Kavalírka - Klamovka - Provoz omezen",
+                timeInfo = "4.2. 09:00 - do odvolání",
+                lines = listOf("9", "10", "15", "16")
+            )
+        ))
     }
 
     @Test

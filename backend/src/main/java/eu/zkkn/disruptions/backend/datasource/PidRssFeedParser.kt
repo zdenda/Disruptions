@@ -1,4 +1,4 @@
-package eu.zkkn.disruptions.backend
+package eu.zkkn.disruptions.backend.datasource
 
 import java.io.InputStream
 import java.time.LocalDateTime
@@ -8,17 +8,17 @@ import java.util.*
 import javax.xml.stream.XMLInputFactory
 
 
-const val TITLE = "title"
-const val LAST_BUILD_DATE = "lastBuildDate"
-const val ITEM = "item"
-const val GUID = "guid"
-const val DESCRIPTION = "description"
+private const val TITLE = "title"
+private const val LAST_BUILD_DATE = "lastBuildDate"
+private const val ITEM = "item"
+private const val GUID = "guid"
+private const val DESCRIPTION = "description"
 
 
 class PidRssFeedParser(private val input: InputStream) {
 
-    data class PidRssFeed(val title: String, val updated: LocalDateTime, val items: List<Item>) {
-        data class Item(val guid: String, val title: String, val timeInfo: String, val lines: List<String>)
+    companion object {
+        const val URL = "https://pid.cz/feed/rss-mimoradnosti"
     }
 
     private val dateTimePattern = DateTimeFormatter.ofPattern("EEE, d MMM yyyy HH:mm:ss Z", Locale.US)
