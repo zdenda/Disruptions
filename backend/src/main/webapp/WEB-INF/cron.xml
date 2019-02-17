@@ -3,6 +3,6 @@
     <cron>
         <url>/check</url>
         <description>Periodic disruptions check</description>
-        <schedule>every 20 minutes</schedule>
+        <schedule>every 10 minutes</schedule>
     </cron>
 </cronentries>
