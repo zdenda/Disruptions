@@ -31,13 +31,20 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     //implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.googlecode.objectify:objectify:5.1.22'
     testImplementation 'junit:junit:4.12'
+    testImplementation 'com.google.appengine:appengine-testing:1.9.71'
+    testImplementation 'com.google.appengine:appengine-api-stubs:1.9.71'
 }
 
 appengine {
+    run {
+        //jvmFlags = ['-Xdebug', '-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005']
+        jvmFlags = ["-Ddatastore.backing_store=$rootDir/backend/local_db.bin".toString()]
+    }
     deploy {
         projectId = "$googleCloudProjectId"
-        version = 1
+        version = 2
     }
 }
 
