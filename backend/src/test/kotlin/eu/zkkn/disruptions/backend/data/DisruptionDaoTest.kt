@@ -6,20 +6,24 @@ import com.googlecode.objectify.Objectify
 import com.googlecode.objectify.ObjectifyService
 import com.googlecode.objectify.util.Closeable
 import org.junit.After
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotEquals
+import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertNull
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
-import java.util.*
+import java.util.Date
 
 
 class DisruptionDaoTest {
 
     private val METRO_A inline get() = Disruption(null, "guid-a", mutableSetOf("A"), "Metro A Disruption",
-        "1.2. 08:00 - 1.2. 08:30",  Date(1549004400000), null)
+        "1.2. 08:00 - 1.2. 08:30", Date(1549004400000), null)
     private val TRAM_1 inline get() = Disruption(null, "guid-1", mutableSetOf("1"), "Tram 1 Disruption",
         "1.2. 12:30 - 1.2. 13:00", Date(1549020600000), null)
     private val MULTIPLE_LINES inline get() = Disruption(null, "12345-2", mutableSetOf("A", "1", "100"),
-        "Mimořádnost","1.2. 18:00 - do odvolání", Date(1549044000000), null)
+        "Mimořádnost", "1.2. 18:00 - do odvolání", Date(1549044000000), null)
 
     private var helper = LocalServiceTestHelper(LocalDatastoreServiceTestConfig())
     private lateinit var objectify: Objectify

@@ -4,7 +4,7 @@ import java.io.InputStream
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
-import java.util.*
+import java.util.Locale
 import javax.xml.stream.XMLInputFactory
 
 
@@ -60,8 +60,11 @@ class PidRssFeedParser(private val input: InputStream) {
                             characters = ""
                         }
                         LAST_BUILD_DATE -> {
-                            lastBuildDate = try { LocalDateTime.parse(characters, dateTimePattern) }
-                                catch (e: DateTimeParseException) {LocalDateTime.now()}
+                            lastBuildDate = try {
+                                LocalDateTime.parse(characters, dateTimePattern)
+                            } catch (e: DateTimeParseException) {
+                                LocalDateTime.now()
+                            }
                             characters = ""
                         }
                         ITEM -> {
@@ -101,10 +104,10 @@ class PidRssFeedParser(private val input: InputStream) {
     }
 
     private fun parseDescLines(text: String): List<String> {
-        return text.substring(text.indexOf(':') + 1) //take text after first colon
-            .split(',') //split it by commas
-            .map { n -> n.trim() } //remove leading and trailing spaces
-            .filterNot { it.isBlank() } //and return only not blank values
+        return text.substring(text.indexOf(':') + 1) // take text after first colon
+            .split(',') // split it by commas
+            .map { n -> n.trim() } // remove leading and trailing spaces
+            .filterNot { it.isBlank() } // and return only not blank values
     }
 
     /*

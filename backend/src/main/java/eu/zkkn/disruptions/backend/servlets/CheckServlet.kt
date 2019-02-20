@@ -5,7 +5,7 @@ import eu.zkkn.disruptions.backend.data.Disruption
 import eu.zkkn.disruptions.backend.data.DisruptionDao
 import eu.zkkn.disruptions.backend.datasource.PidRssFeedParser
 import java.net.URL
-import java.util.*
+import java.util.Date
 import java.util.logging.Logger
 import javax.servlet.annotation.WebServlet
 import javax.servlet.http.HttpServlet
@@ -37,7 +37,7 @@ class CheckServlet : HttpServlet() {
             } else {
                 disruptions.save(Disruption.fromPidRssFeedItem(item))
                 log.info("Send notifications to: ${item.lines}")
-                //sendNotifications()
+                // sendNotifications()
             }
         }
 
