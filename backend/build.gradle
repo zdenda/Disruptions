@@ -24,17 +24,20 @@ apply plugin: 'com.google.cloud.tools.appengine'
 
 
 dependencies {
+    // define versions used for multiple dependencies
+    def appEngineVersion = '1.9.71'
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
-    providedCompile 'com.google.appengine:appengine-java-sdk:1.9.71'
-    implementation 'com.google.appengine:appengine-api-1.0-sdk:1.9.71'
+    providedCompile "com.google.appengine:appengine-java-sdk:$appEngineVersion"
+    implementation "com.google.appengine:appengine-api-1.0-sdk:$appEngineVersion"
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     //implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.googlecode.objectify:objectify:5.1.22'
     testImplementation 'junit:junit:4.12'
-    testImplementation 'com.google.appengine:appengine-testing:1.9.71'
-    testImplementation 'com.google.appengine:appengine-api-stubs:1.9.71'
+    testImplementation "com.google.appengine:appengine-testing:$appEngineVersion"
+    testImplementation "com.google.appengine:appengine-api-stubs:$appEngineVersion"
 }
 
 appengine {
