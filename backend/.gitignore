@@ -1,2 +1,3 @@
 /build
 /local_db.bin
+/src/main/webapp/WEB-INF/serviceAccountKey.json

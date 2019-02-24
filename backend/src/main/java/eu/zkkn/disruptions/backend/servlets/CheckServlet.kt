@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import eu.zkkn.disruptions.backend.data.Disruption
 import eu.zkkn.disruptions.backend.data.DisruptionDao
 import eu.zkkn.disruptions.backend.datasource.PidRssFeedParser
+import eu.zkkn.disruptions.backend.messaging.Messaging
 import java.net.URL
 import java.util.Date
 import java.util.logging.Logger
@@ -24,6 +25,7 @@ class CheckServlet : HttpServlet() {
         val pidRssFeed = PidRssFeedParser(url.openStream()).parse()
         log.info(pidRssFeed.toString())
 
+        val messaging = Messaging()
         val disruptions = DisruptionDao()
 
         for (item in pidRssFeed.items) {
@@ -37,7 +39,8 @@ class CheckServlet : HttpServlet() {
             } else {
                 disruptions.save(Disruption.fromPidRssFeedItem(item))
                 log.info("Send notifications to: ${item.lines}")
-                // sendNotifications()
+                val results = messaging.send(Messaging.prepareMessages(item))
+                log.info(results.toString())
             }
         }
 
