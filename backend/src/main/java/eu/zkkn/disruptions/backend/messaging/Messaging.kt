@@ -32,6 +32,8 @@ class Messaging {
                     .putData("type", "notification")
                     .putData("id", pidRssItem.guid)
                     .putData("title", pidRssItem.title)
+                    .putData("time", pidRssItem.timeInfo)
+                    .putData("lines", pidRssItem.lines.joinToString(","))
                     .setAndroidConfig(
                         AndroidConfig.builder()
                             .setPriority(AndroidConfig.Priority.HIGH)
