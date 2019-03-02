@@ -3,6 +3,7 @@ package eu.zkkn.disruptions.backend.messaging
 import com.google.auth.oauth2.GoogleCredentials
 import com.google.firebase.FirebaseApp
 import com.google.firebase.FirebaseOptions
+import com.google.firebase.messaging.AndroidConfig
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.Message
 import eu.zkkn.disruptions.backend.ServletContextHolder
@@ -17,10 +18,12 @@ class Messaging {
 
         init {
             val googleCredentials = GoogleCredentials.fromStream(
-                ServletContextHolder.getServletContext().getResourceAsStream("/WEB-INF/serviceAccountKey.json"))
+                ServletContextHolder.getServletContext().getResourceAsStream("/WEB-INF/serviceAccountKey.json")
+            )
             val options = FirebaseOptions.builder().setCredentials(googleCredentials).build()
             firebaseMessaging = FirebaseMessaging.getInstance(FirebaseApp.initializeApp(options))
         }
+
 
         fun prepareMessages(pidRssItem: PidRssFeed.Item): Set<Message> {
             val messages = mutableSetOf<Message>()
@@ -29,6 +32,11 @@ class Messaging {
                     .putData("type", "notification")
                     .putData("id", pidRssItem.guid)
                     .putData("title", pidRssItem.title)
+                    .setAndroidConfig(
+                        AndroidConfig.builder()
+                            .setPriority(AndroidConfig.Priority.HIGH)
+                            .build()
+                    )
                     .setTopic(topic(line))
                     .build()
                 messages.add(message)
@@ -40,7 +48,9 @@ class Messaging {
             // remove spaces a use lower case for the name of line
             return "topic_pid_${line.trim().toLowerCase()}"
         }
+
     }
+
 
     fun send(messages: Set<Message>): Set<String> {
         val results = mutableSetOf<String>()
