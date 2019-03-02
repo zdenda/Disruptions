@@ -23,7 +23,7 @@ class CheckServlet : HttpServlet() {
     override fun doGet(req: HttpServletRequest, resp: HttpServletResponse) {
         val url = URL(PidRssFeedParser.URL)
         val pidRssFeed = PidRssFeedParser(url.openStream()).parse()
-        log.info(pidRssFeed.toString())
+        log.config(pidRssFeed.toString())
 
         val messaging = Messaging()
         val disruptions = DisruptionDao()
