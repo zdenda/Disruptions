@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         //TODO check play services
 
         btSubscribe.setOnClickListener {
-            val line = tiLine.editText?.text.toString()
+            val line = tiLine.editText?.text.toString().trim()
             FirebaseMessaging.getInstance().subscribeToTopic(topic(line))
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         btUnsubscribe.setOnClickListener {
-            val line = tiLine.editText?.text.toString()
+            val line = tiLine.editText?.text.toString().trim()
             FirebaseMessaging.getInstance().unsubscribeFromTopic(topic(line))
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
@@ -73,7 +73,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun refreshSubscriptions() {
-        tvChannels.text = "Přihlášeno: ${Preferences.getTopics(this).sorted()}"
+        val topics = Preferences.getTopics(this)
+        tvChannels.text = if (topics.isEmpty()) {
+            "Přihlaste se k odběru upozornění na mimořídnosti v provozu na linkách pražské MHD"
+        } else {
+            "Přihlášeno: ${topics.joinToString()}"
+        }
     }
 
     private fun topic(line: String): String {
