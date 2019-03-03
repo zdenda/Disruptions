@@ -23,8 +23,12 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val data = remoteMessage.data
 
         if ("notification" == data["type"]) {
-            //TODO use names of lines as a title for notification
-            showNotification(data["id"]!!, data["title"]!!, data["title"]!!)
+            //TODO add validation that all data fields exists and have values
+            val id = data["id"]!!.trim().replace("[^0-9]".toRegex(), "0").toIntOrNull() ?: 1 //TODO do it better
+            val lines = data["lines"]!!.split(',').map { it.trim() }
+            val title = resources.getQuantityString(R.plurals.notification_lines, lines.size, lines.joinToString())
+            val bigText = "${data["title"]}\n${data["time"]}"
+            showNotification(id, title, data["title"]!!, bigText)
         }
     }
 
@@ -33,7 +37,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         //TODO: ??? maybe resubscribe to topics
     }
 
-    private fun showNotification(id: String, title: String, text: String) {
+    private fun showNotification(id: Int, title: String, text: String, bigText: String) {
         val notifications = NotificationManagerCompat.from(this)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             //TODO add channel description
@@ -45,10 +49,10 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 .setSmallIcon(android.R.drawable.ic_dialog_alert) //TODO: proper icon
                 .setContentTitle(title)
                 .setContentText(text)
-                //TODO .setStyle(NotificationCompat.BigTextStyle().bigText(bigText))
+                .setStyle(NotificationCompat.BigTextStyle().bigText(bigText))
                 .build()
 
-        notifications.notify(1, notification) //TODO: ID
+        notifications.notify(id, notification)
     }
 
 }

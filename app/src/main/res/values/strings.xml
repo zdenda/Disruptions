@@ -1,8 +1,14 @@
 <resources>
     <string name="app_name">Disruptions</string>
+
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     
     <string name="notification_channel_disruptions_name">Upozornění na mimořádnosti</string>
+    <plurals name="notification_lines">
+        <item quantity="one">Linka %1$s</item>
+        <item quantity="other">Linky %1$s</item>
+    </plurals>
+
 </resources>
