@@ -50,14 +50,14 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         }
 
         val builder = NotificationCompat.Builder(this, disruptionsChannelId)
-            .setSmallIcon(android.R.drawable.ic_dialog_alert) //TODO: proper icons
+            .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle(title)
             .setContentText(text)
             .setStyle(NotificationCompat.BigTextStyle().bigText(bigText))
 
         val action = Intent(Intent.ACTION_VIEW, url)
         if (action.resolveActivity(packageManager) != null) {
-            builder.addAction(android.R.drawable.ic_dialog_info, getString(R.string.notification_action_detail),
+            builder.addAction(R.drawable.ic_open_browser, getString(R.string.notification_action_detail),
                 PendingIntent.getActivity(this, 0, action, 0))
         }
 
