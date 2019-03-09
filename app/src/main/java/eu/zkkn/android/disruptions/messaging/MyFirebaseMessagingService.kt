@@ -2,6 +2,9 @@ package eu.zkkn.android.disruptions.messaging
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
@@ -28,7 +31,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             val lines = data["lines"]!!.split(',').map { it.trim() }
             val title = resources.getQuantityString(R.plurals.notification_lines, lines.size, lines.joinToString())
             val bigText = "${data["title"]}\n${data["time"]}"
-            showNotification(id, title, data["title"]!!, bigText)
+            val url = Uri.parse("https://pid.cz/mimoradnost/?id=${data["id"]!!.trim()}")
+            showNotification(id, title, data["title"]!!, bigText, url)
         }
     }
 
@@ -37,7 +41,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         //TODO: ??? maybe resubscribe to topics
     }
 
-    private fun showNotification(id: Int, title: String, text: String, bigText: String) {
+    private fun showNotification(id: Int, title: String, text: String, bigText: String, url: Uri) {
         val notifications = NotificationManagerCompat.from(this)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             //TODO add channel description
@@ -45,14 +49,19 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 getString(R.string.notification_channel_disruptions_name), NotificationManager.IMPORTANCE_DEFAULT))
         }
 
-        val notification = NotificationCompat.Builder(this, disruptionsChannelId)
-                .setSmallIcon(android.R.drawable.ic_dialog_alert) //TODO: proper icon
-                .setContentTitle(title)
-                .setContentText(text)
-                .setStyle(NotificationCompat.BigTextStyle().bigText(bigText))
-                .build()
+        val builder = NotificationCompat.Builder(this, disruptionsChannelId)
+            .setSmallIcon(android.R.drawable.ic_dialog_alert) //TODO: proper icons
+            .setContentTitle(title)
+            .setContentText(text)
+            .setStyle(NotificationCompat.BigTextStyle().bigText(bigText))
 
-        notifications.notify(id, notification)
+        val action = Intent(Intent.ACTION_VIEW, url)
+        if (action.resolveActivity(packageManager) != null) {
+            builder.addAction(android.R.drawable.ic_dialog_info, getString(R.string.notification_action_detail),
+                PendingIntent.getActivity(this, 0, action, 0))
+        }
+
+        notifications.notify(id, builder.build())
     }
 
 }

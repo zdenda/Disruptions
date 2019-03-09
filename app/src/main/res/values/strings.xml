@@ -6,6 +6,7 @@
     <string name="title_notifications">Notifications</string>
     
     <string name="notification_channel_disruptions_name">Upozornění na mimořádnosti</string>
+    <string name="notification_action_detail">Zobrazit podrobnosti</string>
     <plurals name="notification_lines">
         <item quantity="one">Linka %1$s</item>
         <item quantity="other">Linky %1$s</item>
