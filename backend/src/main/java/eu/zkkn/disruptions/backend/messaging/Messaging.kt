@@ -29,6 +29,7 @@ class Messaging {
             val messages = mutableSetOf<Message>()
             for (line in pidRssItem.lines) {
                 val message = Message.builder()
+                    //TODO keys should be constants, and shared with mobile app in common project
                     .putData("type", "notification")
                     .putData("id", pidRssItem.guid)
                     .putData("title", pidRssItem.title)
