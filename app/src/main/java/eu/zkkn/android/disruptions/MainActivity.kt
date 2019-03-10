@@ -1,14 +1,21 @@
 package eu.zkkn.android.disruptions
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.messaging.FirebaseMessaging
+import eu.zkkn.android.disruptions.data.SubscriptionRepository
 import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
+
+    private val TAG = MainActivity::class.simpleName
+
+    private val subscriptionRepository by lazy { SubscriptionRepository.getInstance(this) }
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
@@ -37,16 +44,26 @@ class MainActivity : AppCompatActivity() {
         refreshSubscriptions()
 
         //TODO check play services
+        FirebaseInstanceId.getInstance().instanceId.addOnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w(TAG, "Firebase getInstanceId() failed", task.exception)
+                return@addOnCompleteListener
+            }
+            Log.d(TAG, "Firebase token: ${task.result?.token}")
+        }
+
 
         btSubscribe.setOnClickListener {
             val line = tiLine.editText?.text.toString().trim()
-            FirebaseMessaging.getInstance().subscribeToTopic(topic(line))
+            val topic = topic(line)
+            FirebaseMessaging.getInstance().subscribeToTopic(topic)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        Preferences.addTopic(this, line.toUpperCase())
+                        subscriptionRepository.addSubscription(line)
                         tiLine.editText?.text?.clear()
                         refreshSubscriptions()
                     }
+                    Log.d(TAG, "Topic: $topic (subscribed: ${task.isSuccessful})")
                     Toast.makeText(baseContext,
                         if (task.isSuccessful) "Přihlášeno" else "Chyba",
                         Toast.LENGTH_LONG)
@@ -59,7 +76,7 @@ class MainActivity : AppCompatActivity() {
             FirebaseMessaging.getInstance().unsubscribeFromTopic(topic(line))
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        Preferences.removeTopic(this, line.toUpperCase())
+                        subscriptionRepository.removeSubscription(line)
                         tiLine.editText?.text?.clear()
                         refreshSubscriptions()
                     }
@@ -73,7 +90,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun refreshSubscriptions() {
-        val topics = Preferences.getTopics(this)
+        val topics = subscriptionRepository.getSubscriptions()
         tvChannels.text = if (topics.isEmpty()) {
             "Přihlaste se k odběru upozornění na mimořídnosti v provozu na linkách pražské MHD"
         } else {

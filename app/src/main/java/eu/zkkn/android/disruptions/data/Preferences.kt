@@ -1,4 +1,4 @@
-package eu.zkkn.android.disruptions
+package eu.zkkn.android.disruptions.data
 
 import android.content.Context
 import android.content.SharedPreferences
