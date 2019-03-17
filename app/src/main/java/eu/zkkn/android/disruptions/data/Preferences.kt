@@ -19,22 +19,10 @@ object Preferences {
         return preferences
     }
 
-
+    @Deprecated("Only for migration to Database storage")
     fun getTopics(context: Context): Set<String> {
         val default = setOf<String>()
         return getPreferences(context).getStringSet(PREF_KEY_TOPICS, default) ?: default
-    }
-
-    fun addTopic(context: Context, topic: String) {
-        getPreferences(context).edit().putStringSet(PREF_KEY_TOPICS,
-            getTopics(context).toMutableSet().apply { add(topic) })
-            .apply()
-    }
-
-    fun removeTopic(context: Context, topic: String) {
-        getPreferences(context).edit().putStringSet(PREF_KEY_TOPICS,
-            getTopics(context).toMutableSet().apply { remove(topic) })
-            .apply()
     }
 
 }

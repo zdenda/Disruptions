@@ -1,27 +1,27 @@
 package eu.zkkn.android.disruptions.data
 
-import android.annotation.SuppressLint
 import android.content.Context
 
 
-class SubscriptionRepository private constructor(private val appContext: Context){
+class SubscriptionRepository private constructor(private val dao: SubscriptionDao) {
 
     companion object {
         // For Singleton instantiation
-        @SuppressLint("StaticFieldLeak") // It's an application context
-        @Volatile private var instance: SubscriptionRepository? = null
+        @Volatile
+        private var INSTANCE: SubscriptionRepository? = null
 
         fun getInstance(context: Context) =
-            instance ?: synchronized(this) {
-                instance ?: SubscriptionRepository(context.applicationContext).also { instance = it }
+            INSTANCE ?: synchronized(this) {
+                INSTANCE ?: SubscriptionRepository(AppDatabase.getInstance(context).subscriptionDao())
+                    .also { INSTANCE = it }
             }
     }
 
 
-    fun getSubscriptions() = Preferences.getTopics(appContext)
+    fun getSubscriptions(): Set<String> = dao.getAll().map { it.lineName }.toSet()
 
-    fun addSubscription(lineName: String) = Preferences.addTopic(appContext, lineName.toUpperCase())
+    fun addSubscription(lineName: String) = dao.insert(Subscription(0, lineName.toUpperCase()))
 
-    fun removeSubscription(lineName: String) = Preferences.removeTopic(appContext, lineName.toUpperCase())
+    fun removeSubscription(lineName: String) = dao.deleteByLineName(lineName.toUpperCase())
 
 }

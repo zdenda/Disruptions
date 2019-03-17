@@ -22,6 +22,7 @@ class CheckServlet : HttpServlet() {
 
     override fun doGet(req: HttpServletRequest, resp: HttpServletResponse) {
         val url = URL(PidRssFeedParser.URL)
+        //TODO: handle SocketTimeoutException
         val pidRssFeed = PidRssFeedParser(url.openStream()).parse()
         log.config(pidRssFeed.toString())
 
