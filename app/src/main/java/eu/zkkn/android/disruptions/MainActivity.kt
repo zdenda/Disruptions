@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.messaging.FirebaseMessaging
@@ -41,7 +43,16 @@ class MainActivity : AppCompatActivity() {
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
-        refreshSubscriptions()
+        val viewModel = ViewModelProviders.of(this).get(SubscriptionViewModel::class.java)
+        viewModel.subscriptions.observe(this, Observer<Set<String>> { lineNames ->
+            Log.d(TAG, "Change in subscriptions: ${lineNames.joinToString()}")
+            tvChannels.text = if (lineNames.isEmpty()) {
+                "Přihlaste se k odběru upozornění na mimořídnosti v provozu na linkách pražské MHD"
+            } else {
+                "Přihlášeno: ${lineNames.joinToString()}"
+            }
+        })
+
 
         //TODO check play services
         FirebaseInstanceId.getInstance().instanceId.addOnCompleteListener { task ->
@@ -61,7 +72,6 @@ class MainActivity : AppCompatActivity() {
                     if (task.isSuccessful) {
                         subscriptionRepository.addSubscription(line)
                         tiLine.editText?.text?.clear()
-                        refreshSubscriptions()
                     }
                     Log.d(TAG, "Topic: $topic (subscribed: ${task.isSuccessful})")
                     Toast.makeText(baseContext,
@@ -78,7 +88,6 @@ class MainActivity : AppCompatActivity() {
                     if (task.isSuccessful) {
                         subscriptionRepository.removeSubscription(line)
                         tiLine.editText?.text?.clear()
-                        refreshSubscriptions()
                     }
                     Toast.makeText(baseContext,
                         if (task.isSuccessful) "Odhlášeno" else "Chyba",
@@ -87,15 +96,6 @@ class MainActivity : AppCompatActivity() {
                 }
         }
 
-    }
-
-    private fun refreshSubscriptions() {
-        val topics = subscriptionRepository.getSubscriptions()
-        tvChannels.text = if (topics.isEmpty()) {
-            "Přihlaste se k odběru upozornění na mimořídnosti v provozu na linkách pražské MHD"
-        } else {
-            "Přihlášeno: ${topics.joinToString()}"
-        }
     }
 
     private fun topic(line: String): String {

@@ -1,5 +1,6 @@
 package eu.zkkn.android.disruptions.data
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -19,8 +20,6 @@ interface SubscriptionDao {
     fun deleteByLineName(lineName: String)
 
     @Query("SELECT * FROM subscription ORDER BY id ASC")
-    fun getAll(): List<Subscription>
-
-    //TODO: fun getAll(): LiveData<List<Subscription>>
+    fun getAll(): LiveData<List<Subscription>>
 
 }

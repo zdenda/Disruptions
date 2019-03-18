@@ -41,7 +41,6 @@ abstract class AppDatabase : RoomDatabase() {
                         }
                     }
                 })
-                .allowMainThreadQueries() //TODO: remove all Main thread DB queries
                 .build()
         }
 

@@ -11,8 +11,8 @@ android {
         applicationId "eu.zkkn.android.disruptions"
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 3
-        versionName "0.2.0"
+        versionCode 4
+        versionName "0.2.1"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         kapt { arguments { arg("room.schemaLocation", "$projectDir/schemas".toString()) } }
@@ -33,6 +33,7 @@ dependencies {
 
     // define versions used for multiple dependencies
     def roomVersion = '2.1.0-alpha05'
+    def lifecycleVersion = '2.1.0-alpha03'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -46,6 +47,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:17.4.0'
     implementation 'com.crashlytics.sdk.android:crashlytics:2.9.9'
     implementation "android.arch.persistence.room:runtime:$roomVersion"
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
 
     debugImplementation 'com.facebook.stetho:stetho:1.5.0'
 
@@ -56,6 +58,7 @@ dependencies {
     androidTestImplementation "android.arch.persistence.room:testing:$roomVersion"
 
     kapt "android.arch.persistence.room:compiler:$roomVersion"
+    kapt "androidx.lifecycle:lifecycle-compiler:$lifecycleVersion"
 
 }
 
