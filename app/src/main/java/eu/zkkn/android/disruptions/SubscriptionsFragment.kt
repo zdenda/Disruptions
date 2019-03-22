@@ -15,7 +15,6 @@ class SubscriptionsFragment : Fragment() {
 
     companion object {
         private val TAG = SubscriptionsFragment::class.simpleName
-
         fun newInstance() = SubscriptionsFragment()
     }
 

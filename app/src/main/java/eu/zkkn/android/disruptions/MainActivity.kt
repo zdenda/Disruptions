@@ -3,6 +3,7 @@ package eu.zkkn.android.disruptions
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.activity_main.*
@@ -14,18 +15,24 @@ class MainActivity : AppCompatActivity() {
         private val TAG = MainActivity::class.simpleName
     }
 
+    private val subscriptionsFragment by lazy { SubscriptionsFragment.newInstance() }
+    private val aboutFragment by lazy { AboutFragment.newInstance() }
+    private var currentFragment: Fragment = subscriptionsFragment
+
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_home -> {
-                //TODO
+                supportFragmentManager.beginTransaction()
+                    .hide(currentFragment).show(subscriptionsFragment)
+                    .commit()
+                currentFragment = subscriptionsFragment
                 return@OnNavigationItemSelectedListener true
             }
-            R.id.navigation_dashboard -> {
-                //TODO
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.navigation_notifications -> {
-                //TODO
+            R.id.navigation_about -> {
+                supportFragmentManager.beginTransaction()
+                    .hide(currentFragment).show(aboutFragment)
+                    .commit()
+                currentFragment = aboutFragment
                 return@OnNavigationItemSelectedListener true
             }
         }
@@ -38,6 +45,17 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+
+        if (savedInstanceState == null) {
+            //TODO: doesn't work on screen rotation
+            supportFragmentManager.beginTransaction()
+                .add(R.id.fragment, aboutFragment).hide(aboutFragment)
+                .commit()
+            supportFragmentManager.beginTransaction()
+                .add(R.id.fragment, subscriptionsFragment)
+                .commit()
+        }
+
 
         //TODO check play services
         FirebaseInstanceId.getInstance().instanceId.addOnCompleteListener { task ->
