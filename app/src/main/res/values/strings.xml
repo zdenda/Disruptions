@@ -4,7 +4,13 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
-    
+
+    <string name="subscriptions_empty">Přihlaste se k odběru upozornění na mimořídnosti v provozu na linkách pražské MHD</string>
+    <string name="subscriptions">Přihlášeno: %1$s</string>
+    <string name="input_line_hint">Jméno linky (např.: A, 1, 100 nebo P1)</string>
+    <string name="button_subscribe">Přidat</string>
+    <string name="button_unsubscribe">Odebrat</string>
+
     <string name="notification_channel_disruptions_name">Upozornění na mimořádnosti</string>
     <string name="notification_action_detail">Zobrazit podrobnosti</string>
     <plurals name="notification_lines">
