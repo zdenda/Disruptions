@@ -3,8 +3,8 @@ package eu.zkkn.android.disruptions
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.Transformations
 import com.google.firebase.messaging.FirebaseMessaging
+import eu.zkkn.android.disruptions.data.Subscription
 import eu.zkkn.android.disruptions.data.SubscriptionRepository
 
 
@@ -12,10 +12,8 @@ class SubscriptionsViewModel(application: Application) : AndroidViewModel(applic
 
     private val subscriptionRepository by lazy { SubscriptionRepository.getInstance(application) }
 
-    val subscriptions: LiveData<Set<String>> by lazy {
-        Transformations.map(subscriptionRepository.getSubscriptions()) { subscriptions ->
-            subscriptions.map { it.lineName }.toSet()
-        }
+    val subscriptions: LiveData<List<Subscription>> by lazy {
+        subscriptionRepository.getSubscriptions()
     }
 
     fun addSubscription(lineName: String) {

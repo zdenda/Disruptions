@@ -7,8 +7,21 @@
     android:layout_height="match_parent"
     tools:context=".SubscriptionsFragment">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rwSubscriptions"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@+id/tiLine"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:context="eu.zkkn.android.disruptions.SubscriptionsFragment"
+        tools:listitem="@layout/list_item_subscription" />
+
     <TextView
-        android:id="@+id/tvChannels"
+        android:id="@+id/empty"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -16,9 +29,15 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginBottom="16dp"
+        android:gravity="center"
+        android:text="@string/subscriptions_empty"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/rwSubscriptions"
+        app:layout_constraintEnd_toEndOf="@+id/rwSubscriptions"
+        app:layout_constraintStart_toStartOf="@+id/rwSubscriptions"
+        app:layout_constraintTop_toTopOf="@+id/rwSubscriptions" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tiLine"
@@ -26,12 +45,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/btSubscribe"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvChannels">
+        app:layout_constraintStart_toStartOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -46,24 +65,24 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/button_subscribe"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btUnsubscribe"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tiLine" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btUnsubscribe"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/button_unsubscribe"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btSubscribe"
-        app:layout_constraintTop_toBottomOf="@+id/tiLine" />
+        app:layout_constraintStart_toEndOf="@+id/btSubscribe" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

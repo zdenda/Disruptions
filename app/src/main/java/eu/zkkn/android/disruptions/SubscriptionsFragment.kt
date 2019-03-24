@@ -1,13 +1,13 @@
 package eu.zkkn.android.disruptions
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import eu.zkkn.android.disruptions.data.Subscription
 import kotlinx.android.synthetic.main.fragment_subscriptions.*
 
 
@@ -30,13 +30,11 @@ class SubscriptionsFragment : Fragment() {
 
         viewModel = ViewModelProviders.of(this).get(SubscriptionsViewModel::class.java)
 
-        viewModel.subscriptions.observe(this, Observer<Set<String>> { lineNames ->
-            Log.d(TAG, "Change in subscriptions: ${lineNames.joinToString()}")
-            tvChannels.text = if (lineNames.isEmpty()) {
-                getString(R.string.subscriptions_empty)
-            } else {
-                getString(R.string.subscriptions, lineNames.joinToString())
-            }
+        val adapter = SubscriptionsAdapter()
+        rwSubscriptions.adapter = adapter
+        viewModel.subscriptions.observe(viewLifecycleOwner, Observer<List<Subscription>> { subscriptions ->
+            empty.visibility = if (subscriptions.isEmpty()) View.VISIBLE else View.GONE
+            adapter.submitList(subscriptions)
         })
 
         btSubscribe.setOnClickListener {
