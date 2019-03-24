@@ -13,7 +13,6 @@ class AboutFragment : Fragment() {
 
     companion object {
         private val TAG = AboutFragment::class.simpleName
-        fun newInstance() = AboutFragment()
     }
 
 

@@ -34,6 +34,7 @@ dependencies {
     // define versions used for multiple dependencies
     def roomVersion = '2.1.0-alpha05'
     def lifecycleVersion = '2.1.0-alpha03'
+    def navVersion = '2.1.0-alpha01'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -44,11 +45,13 @@ dependencies {
     implementation 'androidx.vectordrawable:vectordrawable:1.1.0-alpha01'
     implementation 'com.google.android.material:material:1.1.0-alpha04'
     implementation 'com.google.firebase:firebase-core:16.0.8'
-    implementation 'com.google.firebase:firebase-messaging:17.4.0'
+    implementation 'com.google.firebase:firebase-messaging:17.5.0'
     implementation 'com.crashlytics.sdk.android:crashlytics:2.9.9'
     implementation "android.arch.persistence.room:runtime:$roomVersion"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
     implementation 'androidx.fragment:fragment:1.1.0-alpha05'
+    implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
+    implementation "androidx.navigation:navigation-ui-ktx:$navVersion"
 
     debugImplementation 'com.facebook.stetho:stetho:1.5.0'
 
