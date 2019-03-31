@@ -13,12 +13,13 @@ import kotlinx.android.synthetic.main.list_item_subscription.view.*
 
 class SubscriptionsAdapter : ListAdapter<Subscription, SubscriptionsAdapter.ViewHolder>(DiffCallback()) {
 
-    private val mOnClickListener: View.OnClickListener
+    private val removeButtonClickListener: View.OnClickListener
+    private var onRemoveClickListener: ((String) -> Unit)? = null
+
 
     init {
-        mOnClickListener = View.OnClickListener { v ->
-            val item = v.tag as Subscription
-            //TODO: do something
+        removeButtonClickListener = View.OnClickListener { v ->
+            onRemoveClickListener?.invoke(v.tag as String)
         }
     }
 
@@ -30,21 +31,26 @@ class SubscriptionsAdapter : ListAdapter<Subscription, SubscriptionsAdapter.View
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        holder.tvLine.text = holder.tvLine.context.getString(R.string.lien_mname, item.lineName)
-
-        with(holder.view) {
-            tag = item
-            setOnClickListener(mOnClickListener)
+        holder.tvLine.text = holder.tvLine.context.getString(R.string.line_name, item.lineName)
+        with(holder.ibRemove) {
+            tag = item.lineName
+            setOnClickListener(removeButtonClickListener)
         }
     }
 
-    inner class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+    fun setOnRemoveClickListener(function: (String) -> Unit) {
+        onRemoveClickListener = function
+    }
+
+    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvLine: TextView = view.tvLine
+        val ibRemove: View = view.ibRemove
 
         override fun toString(): String {
             return super.toString() + " '" + tvLine.text + "'"
         }
     }
+
 }
 
 private class DiffCallback : DiffUtil.ItemCallback<Subscription>() {
