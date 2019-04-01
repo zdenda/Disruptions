@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/backgroundSecondary"
     tools:context=".SubscriptionsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -12,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
+        android:background="?android:attr/windowBackground"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/tiLine"
         app:layout_constraintEnd_toEndOf="parent"
@@ -55,11 +57,12 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/backgroundSecondary"
             android:hint="@string/input_line_hint" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btSubscribe"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -67,6 +70,8 @@
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
         android:text="@string/button_subscribe"
+        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+        app:icon="@drawable/ic_done"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
