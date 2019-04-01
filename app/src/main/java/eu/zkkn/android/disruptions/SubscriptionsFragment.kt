@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.EdgeEffect
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -69,8 +70,24 @@ class SubscriptionsFragment : Fragment() {
             adapter.submitList(subscriptions)
         })
 
-        btSubscribe.setOnClickListener {
-            viewModel.addSubscription(tiLine.editText?.text.toString())
+        tiLine.editText?.setOnEditorActionListener { _, actionId, _ ->
+            return@setOnEditorActionListener when (actionId) {
+                EditorInfo.IME_ACTION_DONE, EditorInfo.IME_ACTION_NEXT -> {
+                    onSubscribeClick()
+                    true
+                }
+                else -> false
+            }
+        }
+
+        btSubscribe.setOnClickListener { onSubscribeClick() }
+
+    }
+
+    private fun onSubscribeClick() {
+        val lineName = tiLine.editText?.text.toString()
+        if (!lineName.isBlank()) {
+            viewModel.addSubscription(lineName)
             tiLine.editText?.text?.clear()
         }
     }
