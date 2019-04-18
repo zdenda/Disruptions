@@ -6,7 +6,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.google.cloud.tools:appengine-gradle-plugin:2.0.0-rc5'
+        classpath 'com.google.cloud.tools:appengine-gradle-plugin:2.0.0-rc6'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -25,7 +25,7 @@ apply plugin: 'com.google.cloud.tools.appengine'
 
 dependencies {
     // define versions used for multiple dependencies
-    def appEngineVersion = '1.9.71'
+    def appEngineVersion = '1.9.73'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
@@ -35,8 +35,8 @@ dependencies {
     //implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.googlecode.objectify:objectify:5.1.22'
-    implementation 'com.google.firebase:firebase-admin:6.7.0'
-    testImplementation 'junit:junit:4.12'
+    implementation 'com.google.firebase:firebase-admin:6.8.0'
+    testImplementation 'junit:junit:4.13-beta-2'
     testImplementation "com.google.appengine:appengine-testing:$appEngineVersion"
     testImplementation "com.google.appengine:appengine-api-stubs:$appEngineVersion"
 }
