@@ -51,15 +51,15 @@ class SubscriptionsAdapter : ListAdapter<Subscription, SubscriptionsAdapter.View
         }
     }
 
-}
+    private class DiffCallback : DiffUtil.ItemCallback<Subscription>() {
 
-private class DiffCallback : DiffUtil.ItemCallback<Subscription>() {
+        override fun areItemsTheSame(oldItem: Subscription, newItem: Subscription): Boolean {
+            return oldItem.id == newItem.id
+        }
 
-    override fun areItemsTheSame(oldItem: Subscription, newItem: Subscription): Boolean {
-        return oldItem.id == newItem.id
+        override fun areContentsTheSame(oldItem: Subscription, newItem: Subscription): Boolean {
+            return oldItem == newItem
+        }
     }
 
-    override fun areContentsTheSame(oldItem: Subscription, newItem: Subscription): Boolean {
-        return oldItem == newItem
-    }
 }

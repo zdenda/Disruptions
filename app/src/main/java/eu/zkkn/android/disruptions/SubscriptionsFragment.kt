@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.fragment_subscriptions.*
 class SubscriptionsFragment : Fragment() {
 
     companion object {
-        private val TAG = this::class.simpleName
+        private val TAG = SubscriptionsFragment::class.simpleName
     }
 
 
@@ -42,7 +42,8 @@ class SubscriptionsFragment : Fragment() {
         }
         adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
             override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
-                rwSubscriptions.scrollToPosition(positionStart)
+                super.onItemRangeInserted(positionStart, itemCount)
+                rwSubscriptions.smoothScrollToPosition(positionStart)
             }
         })
 
@@ -65,10 +66,6 @@ class SubscriptionsFragment : Fragment() {
         rwSubscriptions.adapter = adapter
         rwSubscriptions.setHasFixedSize(true)
         rwSubscriptions.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
-        viewModel.subscriptions.observe(viewLifecycleOwner, Observer<List<Subscription>> { subscriptions ->
-            empty.visibility = if (subscriptions.isEmpty()) View.VISIBLE else View.GONE
-            adapter.submitList(subscriptions)
-        })
 
         tiLine.editText?.setOnEditorActionListener { _, actionId, _ ->
             return@setOnEditorActionListener when (actionId) {
@@ -82,7 +79,13 @@ class SubscriptionsFragment : Fragment() {
 
         btSubscribe.setOnClickListener { onSubscribeClick() }
 
+        viewModel.subscriptions.observe(viewLifecycleOwner, Observer<List<Subscription>> { subscriptions ->
+            empty.visibility = if (subscriptions.isEmpty()) View.VISIBLE else View.GONE
+            adapter.submitList(subscriptions)
+        })
+
     }
+
 
     private fun onSubscribeClick() {
         val lineName = tiLine.editText?.text.toString()

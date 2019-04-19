@@ -5,77 +5,87 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundSecondary"
-    tools:context=".SubscriptionsFragment">
+    tools:context="eu.zkkn.android.disruptions.SubscriptionsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rwSubscriptions"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
         android:background="?android:attr/windowBackground"
+        android:scrollbars="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toTopOf="@+id/tiLine"
+        app:layout_constraintBottom_toTopOf="@id/llAddSubscription"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:context="eu.zkkn.android.disruptions.SubscriptionsFragment"
         tools:listitem="@layout/list_item_subscription" />
 
     <TextView
         android:id="@+id/empty"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
         android:gravity="center"
         android:text="@string/subscriptions_empty"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/rwSubscriptions"
-        app:layout_constraintEnd_toEndOf="@+id/rwSubscriptions"
-        app:layout_constraintStart_toStartOf="@+id/rwSubscriptions"
-        app:layout_constraintTop_toTopOf="@+id/rwSubscriptions" />
+        app:layout_constraintBottom_toTopOf="@id/llAddSubscription"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tiLine"
+    <LinearLayout
+        android:id="@+id/llAddSubscription"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="16dp"
+        android:background="@color/backgroundSecondary"
+        android:elevation="4dp"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btSubscribe"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="UnusedAttribute">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tiLine"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@color/backgroundSecondary"
-            android:inputType="text|textCapCharacters"
-            android:maxLines="1"
-            android:imeOptions="actionDone"
-            android:hint="@string/input_line_hint" />
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginBottom="16dp"
+            android:layout_weight="1">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/backgroundSecondary"
+                android:hint="@string/input_line_hint"
+                android:imeOptions="actionDone"
+                android:inputType="text|textCapCharacters"
+                android:maxLines="1" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btSubscribe"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="16dp"
-        android:text="@string/button_subscribe"
-        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
-        app:icon="@drawable/ic_done"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btSubscribe"
+            style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:text="@string/button_subscribe"
+            app:icon="@drawable/ic_done" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
