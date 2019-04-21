@@ -12,12 +12,18 @@ import androidx.core.app.NotificationManagerCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import eu.zkkn.android.disruptions.R
+import eu.zkkn.disruptions.common.FcmConstants
 
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
 
-    private val TAG = MyFirebaseMessagingService::class.simpleName
+    companion object {
+        private val TAG = MyFirebaseMessagingService::class.simpleName
+    }
+
+
     private val disruptionsChannelId = "disruptions"
+
 
     override fun onMessageReceived(remoteMessage: RemoteMessage?) {
         Log.d(TAG, "New Message From: ${remoteMessage?.from}")
@@ -25,14 +31,17 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
         val data = remoteMessage.data
 
-        if ("notification" == data["type"]) {
+        @FcmConstants.FcmMessageType
+        val messageType = data[FcmConstants.KEY_TYPE]
+
+        if (FcmConstants.TYPE_NOTIFICATION == messageType) {
             //TODO add validation that all data fields exists and have values
-            val id = data["id"]!!.trim().replace("[^0-9]".toRegex(), "0").toIntOrNull() ?: 1 //TODO do it better
-            val lines = data["lines"]!!.split(',').map { it.trim() }
+            val id = data[FcmConstants.KEY_ID]!!.trim().replace("[^0-9]".toRegex(), "0").toIntOrNull() ?: 1 //TODO do it better
+            val lines = data[FcmConstants.KEY_LINES]!!.split(',').map { it.trim() }
             val title = resources.getQuantityString(R.plurals.notification_lines, lines.size, lines.joinToString())
-            val bigText = "${data["title"]}\n${data["time"]}"
-            val url = Uri.parse("https://pid.cz/mimoradnost/?id=${data["id"]!!.trim()}")
-            showNotification(id, title, data["title"]!!, bigText, url)
+            val bigText = "${data[FcmConstants.KEY_TITLE]}\n${data[FcmConstants.KEY_TIME]}"
+            val url = Uri.parse("https://pid.cz/mimoradnost/?id=${data[FcmConstants.KEY_ID]!!.trim()}")
+            showNotification(id, title, data[FcmConstants.KEY_TITLE]!!, bigText, url)
         }
     }
 

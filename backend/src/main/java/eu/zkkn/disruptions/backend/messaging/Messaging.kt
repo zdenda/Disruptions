@@ -8,6 +8,7 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.Message
 import eu.zkkn.disruptions.backend.ServletContextHolder
 import eu.zkkn.disruptions.backend.datasource.PidRssFeed
+import eu.zkkn.disruptions.common.FcmConstants
 
 
 class Messaging {
@@ -29,27 +30,21 @@ class Messaging {
             val messages = mutableSetOf<Message>()
             for (line in pidRssItem.lines) {
                 val message = Message.builder()
-                    //TODO keys should be constants, and shared with mobile app in common project
-                    .putData("type", "notification")
-                    .putData("id", pidRssItem.guid)
-                    .putData("title", pidRssItem.title)
-                    .putData("time", pidRssItem.timeInfo)
-                    .putData("lines", pidRssItem.lines.joinToString(","))
+                    .putData(FcmConstants.KEY_TYPE, FcmConstants.TYPE_NOTIFICATION)
+                    .putData(FcmConstants.KEY_ID, pidRssItem.guid)
+                    .putData(FcmConstants.KEY_TITLE, pidRssItem.title)
+                    .putData(FcmConstants.KEY_TIME, pidRssItem.timeInfo)
+                    .putData(FcmConstants.KEY_LINES, pidRssItem.lines.joinToString(","))
                     .setAndroidConfig(
                         AndroidConfig.builder()
                             .setPriority(AndroidConfig.Priority.HIGH)
                             .build()
                     )
-                    .setTopic(topic(line))
+                    .setTopic(FcmConstants.topicNameForLine(line))
                     .build()
                 messages.add(message)
             }
             return messages
-        }
-
-        private fun topic(line: String): String {
-            // remove spaces a use lower case for the name of line
-            return "topic_pid_${line.trim().toLowerCase()}"
         }
 
     }

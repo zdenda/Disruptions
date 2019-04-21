@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import com.google.firebase.messaging.FirebaseMessaging
 import eu.zkkn.android.disruptions.data.Subscription
 import eu.zkkn.android.disruptions.data.SubscriptionRepository
+import eu.zkkn.disruptions.common.FcmConstants
 
 
 class SubscriptionsViewModel(application: Application) : AndroidViewModel(application) {
@@ -17,7 +18,7 @@ class SubscriptionsViewModel(application: Application) : AndroidViewModel(applic
     }
 
     fun addSubscription(lineName: String) {
-        FirebaseMessaging.getInstance().subscribeToTopic(topic(lineName))
+        FirebaseMessaging.getInstance().subscribeToTopic(FcmConstants.topicNameForLine(lineName))
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     subscriptionRepository.addSubscription(lineName.trim())
@@ -26,18 +27,12 @@ class SubscriptionsViewModel(application: Application) : AndroidViewModel(applic
     }
 
     fun removeSubscription(lineName: String) {
-        FirebaseMessaging.getInstance().unsubscribeFromTopic(topic(lineName))
+        FirebaseMessaging.getInstance().unsubscribeFromTopic(FcmConstants.topicNameForLine(lineName))
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     subscriptionRepository.removeSubscription(lineName.trim())
                 }
             }
-    }
-
-
-    private fun topic(line: String): String {
-        // remove spaces a use lower case for the name of line
-        return "topic_pid_${line.trim().toLowerCase()}"
     }
 
 }
