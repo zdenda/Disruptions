@@ -2,6 +2,7 @@ package eu.zkkn.android.disruptions.data
 
 import android.content.Context
 import android.util.Log
+import androidx.annotation.VisibleForTesting
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -23,7 +24,8 @@ abstract class AppDatabase : RoomDatabase() {
 
         private val TAG = AppDatabase::class.simpleName
 
-        private val MIGRATION_1_2 = object : Migration(1, 2) {
+        @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
+        internal val MIGRATION_1_2 = object : Migration(1, 2) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL("""CREATE TABLE `disruption` (
                     |`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
