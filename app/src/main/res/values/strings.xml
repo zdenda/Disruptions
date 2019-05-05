@@ -12,6 +12,13 @@
     <string name="button_subscribe">Přidat</string>
     <string name="button_unsubscribe">Odebrat</string>
 
+    <string name="disruptions_empty">Zatím žádné upozornění na mimořádnost v MHD.</string>
+    <string name="button_to_subscriptions">Přihlaste se k odběru</string>
+    <plurals name="label_lines">
+        <item quantity="one">Linka:</item>
+        <item quantity="other">Linky:</item>
+    </plurals>
+
     <string name="version">Verze: %1$s</string>
     <string name="privacy_policy_link"><u><a href="https://goo.gl/jytXTT">Ochrana soukromí</a></u></string>
     <string name="source_code_link"><u><a href="https://goo.gl/S3CG25">Zdrojové kódy</a></u></string>
