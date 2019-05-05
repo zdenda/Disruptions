@@ -10,14 +10,18 @@
         android:id="@+id/subscriptionsFragment"
         android:name="eu.zkkn.android.disruptions.SubscriptionsFragment"
         android:label="fragment_subscriptions"
-        tools:layout="@layout/fragment_subscriptions" >
-    </fragment>
+        tools:layout="@layout/fragment_subscriptions" />
+
+    <fragment
+        android:id="@+id/disruptionsFragment"
+        android:name="eu.zkkn.android.disruptions.DisruptionsFragment"
+        android:label="fragment_disruptions"
+        tools:layout="@layout/fragment_disruptions" />
 
     <fragment
         android:id="@+id/aboutFragment"
         android:name="eu.zkkn.android.disruptions.AboutFragment"
         android:label="fragment_about"
-        tools:layout="@layout/fragment_about" >
-    </fragment>
+        tools:layout="@layout/fragment_about" />
 
 </navigation>
