@@ -12,6 +12,8 @@ import eu.zkkn.android.disruptions.data.Disruption
 import kotlinx.android.synthetic.main.list_item_disruption.view.*
 
 
+//TODO: use paging and PagedListAdapter
+//https://developer.android.com/topic/libraries/architecture/paging
 class DisruptionsAdapter : ListAdapter<Disruption, DisruptionsAdapter.ViewHolder>(DiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
