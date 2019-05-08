@@ -4,6 +4,7 @@
     <string name="title_home">Domů</string>
     <string name="title_disruptions">Mimořádnosti</string>
     <string name="title_about">O aplikaci</string>
+    <string name="title_disruption">Podrobnosti</string>
 
     <string name="line_name">Linka %1$s</string>
     <string name="button_remove_description">Odebrat</string>
