@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'io.fabric' // Firebase Crashlytics
+apply plugin: 'androidx.navigation.safeargs.kotlin'
 
 
 android {
@@ -42,7 +43,7 @@ dependencies {
     // define versions used for multiple dependencies
     def roomVersion = '2.1.0-alpha07'
     def lifecycleVersion = '2.1.0-alpha04'
-    def navVersion = '2.1.0-alpha02'
+    def navVersion = '2.1.0-alpha03'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':common')

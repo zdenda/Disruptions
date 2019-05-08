@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -16,14 +17,21 @@ import kotlinx.android.synthetic.main.list_item_disruption.view.*
 //https://developer.android.com/topic/libraries/architecture/paging
 class DisruptionsAdapter : ListAdapter<Disruption, DisruptionsAdapter.ViewHolder>(DiffCallback()) {
 
+    private val onItemClickListener = View.OnClickListener { view ->
+        view.findNavController().navigate(DisruptionsFragmentDirections.actionShowDisruptionDetail(view.tag as String))
+    }
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item_disruption, parent, false)
+        view.setOnClickListener(onItemClickListener)
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
         with(holder) {
+            itemView.tag = item.guid
             tvLinesLabel.apply {
                 text = resources.getQuantityText(R.plurals.label_lines, item.lineNames.size)
             }
