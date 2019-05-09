@@ -12,6 +12,7 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.navigation.NavDeepLinkBuilder
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import eu.zkkn.android.disruptions.CancelNotificationReceiver
 import eu.zkkn.android.disruptions.DisruptionFragmentArgs
 import eu.zkkn.android.disruptions.R
 import eu.zkkn.android.disruptions.data.DisruptionRepository
@@ -80,11 +81,15 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             .createPendingIntent()
         builder.setContentIntent(pendingIntent)
 
-        val action = Intent(Intent.ACTION_VIEW, Uri.parse("https://pid.cz/mimoradnost/?id=$guid"))
-        if (action.resolveActivity(packageManager) != null) {
+        val actionWeb = Intent(Intent.ACTION_VIEW, Uri.parse("https://pid.cz/mimoradnost/?id=$guid"))
+        if (actionWeb.resolveActivity(packageManager) != null) {
             builder.addAction(R.drawable.ic_open_browser, getString(R.string.notification_action_detail),
-                PendingIntent.getActivity(this, 0, action, 0))
+                PendingIntent.getActivity(this, 0, actionWeb, 0))
         }
+
+        val actionCancel = CancelNotificationReceiver.getIntent(this, id)
+        builder.addAction(R.drawable.ic_notification_clear, getString(R.string.notification_action_cancel),
+            PendingIntent.getBroadcast(this, 0, actionCancel, 0))
 
         notifications.notify(id, builder.build())
     }
