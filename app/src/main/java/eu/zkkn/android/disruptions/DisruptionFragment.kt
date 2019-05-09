@@ -5,8 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebViewClient
 import androidx.navigation.fragment.navArgs
 import kotlinx.android.synthetic.main.fragment_disruption.*
+import android.graphics.Bitmap
+import android.webkit.WebView
 
 
 class DisruptionFragment : Fragment() {
@@ -21,7 +24,22 @@ class DisruptionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        tvGuid.text = args.guid
+
+        webView.webViewClient = object: WebViewClient() {
+
+            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+                super.onPageStarted(view, url, favicon)
+                progress.visibility = View.VISIBLE
+            }
+
+            override fun onPageFinished(view: WebView?, url: String?) {
+                super.onPageFinished(view, url)
+                progress.visibility = View.GONE
+            }
+
+        }
+
+        webView.loadUrl("https://pid.cz/mimoradnost/?id=${args.guid}")
     }
 
 }
