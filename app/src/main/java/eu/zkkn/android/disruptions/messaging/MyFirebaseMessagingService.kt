@@ -9,8 +9,10 @@ import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.navigation.NavDeepLinkBuilder
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import eu.zkkn.android.disruptions.DisruptionFragmentArgs
 import eu.zkkn.android.disruptions.R
 import eu.zkkn.android.disruptions.data.DisruptionRepository
 import eu.zkkn.disruptions.common.FcmConstants
@@ -48,8 +50,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             val notificationTitle = resources.getQuantityString(
                 R.plurals.notification_lines, lines.size, lines.joinToString())
             val bigText = "$title\n$timeInfo"
-            val url = Uri.parse("https://pid.cz/mimoradnost/?id=$guid")
-            showNotification(notificationId, notificationTitle, title, bigText, url)
+            showNotification(notificationId, guid, notificationTitle, title, bigText)
         }
     }
 
@@ -58,7 +59,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         //TODO: ??? maybe resubscribe to topics
     }
 
-    private fun showNotification(id: Int, title: String, text: String, bigText: String, url: Uri) {
+    private fun showNotification(id: Int, guid: String, title: String, text: String, bigText: String) {
         val notifications = NotificationManagerCompat.from(this)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             //TODO add channel description
@@ -72,7 +73,14 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             .setContentText(text)
             .setStyle(NotificationCompat.BigTextStyle().bigText(bigText))
 
-        val action = Intent(Intent.ACTION_VIEW, url)
+        val pendingIntent = NavDeepLinkBuilder(this)
+            .setGraph(R.navigation.nav_graph)
+            .setDestination(R.id.disruptionFragment)
+            .setArguments(DisruptionFragmentArgs(guid).toBundle())
+            .createPendingIntent()
+        builder.setContentIntent(pendingIntent)
+
+        val action = Intent(Intent.ACTION_VIEW, Uri.parse("https://pid.cz/mimoradnost/?id=$guid"))
         if (action.resolveActivity(packageManager) != null) {
             builder.addAction(R.drawable.ic_open_browser, getString(R.string.notification_action_detail),
                 PendingIntent.getActivity(this, 0, action, 0))
