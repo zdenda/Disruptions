@@ -1,6 +1,7 @@
 package eu.zkkn.android.disruptions.data
 
 import android.content.Context
+import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import eu.zkkn.android.disruptions.utils.ioThread
 
@@ -21,6 +22,8 @@ class SubscriptionRepository private constructor(private val dao: SubscriptionDa
 
 
     fun getSubscriptions(): LiveData<List<Subscription>> = dao.getAll()
+
+    @WorkerThread fun getAllLineNames() = dao.getAllLineNames()
 
     //TODO: prevent inserting two same line names
     fun addSubscription(lineName: String) = ioThread {dao.insert(Subscription(0, lineName.toUpperCase())) }

@@ -22,4 +22,7 @@ interface SubscriptionDao {
     @Query("SELECT * FROM subscription ORDER BY id ASC")
     fun getAll(): LiveData<List<Subscription>>
 
+    @Query("SELECT line_name FROM subscription ORDER BY id ASC")
+    fun getAllLineNames(): List<String>
+
 }

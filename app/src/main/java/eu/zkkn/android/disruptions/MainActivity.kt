@@ -9,6 +9,8 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.firebase.iid.FirebaseInstanceId
+import eu.zkkn.android.disruptions.data.Preferences
+import eu.zkkn.android.disruptions.workers.RefreshSubscriptionsWorker
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -40,6 +42,11 @@ class MainActivity : AppCompatActivity() {
             }
             Log.d(TAG, "Firebase token: ${task.result?.token}")
         }
+
+        if (!Preferences.isPeriodicSubscriptionRefreshEnabled(this)) {
+            RefreshSubscriptionsWorker.schedulePeriodicRefresh(this)
+        }
+
     }
 
     override fun onSupportNavigateUp(): Boolean {
