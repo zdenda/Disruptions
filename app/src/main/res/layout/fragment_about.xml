@@ -11,7 +11,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/iv1"
+            android:id="@+id/ivAppLogo"
             android:layout_width="wrap_content"
             android:layout_height="70dp"
             android:layout_marginStart="16dp"
@@ -40,7 +40,7 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv1" />
+            app:layout_constraintTop_toBottomOf="@+id/ivAppLogo" />
 
         <TextView
             android:id="@+id/tvVersion"

@@ -1,11 +1,13 @@
 package eu.zkkn.android.disruptions
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import eu.zkkn.android.disruptions.data.Preferences
 import kotlinx.android.synthetic.main.fragment_about.view.*
 
 
@@ -24,7 +26,25 @@ class AboutFragment : Fragment() {
         view.tvSourceCodeLink.movementMethod = LinkMovementMethod.getInstance()
         view.tvRopidLink.movementMethod = LinkMovementMethod.getInstance()
 
+        // show debug window on short and long click on app logo
+        view.ivAppLogo.setOnClickListener {
+            it.setOnLongClickListener {
+                showDebugInfo()
+                return@setOnLongClickListener true
+            }
+        }
+
         return view
+    }
+
+    private fun showDebugInfo() {
+        AlertDialog.Builder(context).apply {
+            setTitle(R.string.dialog_debug_title)
+            setMessage(getString(R.string.dialog_debug_last_subscriptions_refresh,
+                Preferences.getLastSubscriptionRefreshTime(context)))
+            setPositiveButton(R.string.dialog_debug_ok) { dialog, _ -> dialog.dismiss() }
+            show()
+        }
     }
 
 }
