@@ -84,12 +84,14 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val actionWeb = Intent(Intent.ACTION_VIEW, Uri.parse("https://pid.cz/mimoradnost/?id=$guid"))
         if (actionWeb.resolveActivity(packageManager) != null) {
             builder.addAction(R.drawable.ic_open_browser, getString(R.string.notification_action_detail),
+                //TODO: shouldn't be the requestCode and flags of PendingIntent set similarly
+                // as in PendingIntent for actionCancel
                 PendingIntent.getActivity(this, 0, actionWeb, 0))
         }
 
         val actionCancel = CancelNotificationReceiver.getIntent(this, id)
         builder.addAction(R.drawable.ic_notification_clear, getString(R.string.notification_action_cancel),
-            PendingIntent.getBroadcast(this, 0, actionCancel, 0))
+            PendingIntent.getBroadcast(this, id, actionCancel, PendingIntent.FLAG_UPDATE_CURRENT))
 
         notifications.notify(id, builder.build())
     }
