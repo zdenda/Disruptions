@@ -8,7 +8,7 @@ import android.preference.PreferenceManager
 object Preferences {
 
     private const val PREF_KEY_TOPICS = "topics"
-    private const val PREF_KEY_PERIODIC_SUBSCRIPTION_REFRESH = "periodicSubscriptionRefresh"
+    private const val PREF_KEY_PERIODIC_SUBSCRIPTION_REFRESH = "periodicSubscriptionRefresh-1"
     private const val PREF_KEY_LAST_SUBSCRIPTION_REFRESH = "lastSubscriptionRefreshTime"
 
     private lateinit var preferences: SharedPreferences

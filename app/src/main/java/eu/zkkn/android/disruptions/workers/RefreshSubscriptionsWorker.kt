@@ -40,7 +40,7 @@ class RefreshSubscriptionsWorker(appContext: Context, params: WorkerParameters) 
             workManager.enqueueUniquePeriodicWork(
                 WORK_NAME,
                 ExistingPeriodicWorkPolicy.REPLACE,
-                PeriodicWorkRequestBuilder<RefreshSubscriptionsWorker>(10, TimeUnit.DAYS)
+                PeriodicWorkRequestBuilder<RefreshSubscriptionsWorker>(14, TimeUnit.DAYS, 7, TimeUnit.DAYS)
                     .addTag(WORK_NAME)
                     .setBackoffCriteria(
                         BackoffPolicy.EXPONENTIAL,
