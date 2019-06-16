@@ -13,29 +13,35 @@
         tools:layout="@layout/fragment_subscriptions" />
 
     <fragment
-        android:id="@+id/disruptionsFragment"
-        android:name="eu.zkkn.android.disruptions.DisruptionsFragment"
-        android:label="@string/app_name"
-        tools:layout="@layout/fragment_disruptions" >
-        <action
-            android:id="@+id/actionShowDisruptionDetail"
-            app:destination="@id/disruptionFragment" />
-    </fragment>
-
-    <fragment
         android:id="@+id/aboutFragment"
         android:name="eu.zkkn.android.disruptions.AboutFragment"
         android:label="@string/app_name"
         tools:layout="@layout/fragment_about" />
 
-    <fragment
-        android:id="@+id/disruptionFragment"
-        android:name="eu.zkkn.android.disruptions.DisruptionFragment"
-        android:label="@string/title_disruption"
-        tools:layout="@layout/fragment_disruption" >
-        <argument
-            android:name="guid"
-            app:argType="string" />
-    </fragment>
+    <navigation
+        android:id="@+id/disruptionsNavGraph"
+        app:startDestination="@id/disruptionsFragment">
+
+        <fragment
+            android:id="@+id/disruptionsFragment"
+            android:name="eu.zkkn.android.disruptions.DisruptionsFragment"
+            android:label="@string/app_name"
+            tools:layout="@layout/fragment_disruptions">
+            <action
+                android:id="@+id/actionShowDisruptionDetail"
+                app:destination="@id/disruptionFragment" />
+        </fragment>
+
+        <fragment
+            android:id="@+id/disruptionFragment"
+            android:name="eu.zkkn.android.disruptions.DisruptionFragment"
+            android:label="@string/title_disruption"
+            tools:layout="@layout/fragment_disruption">
+            <argument
+                android:name="guid"
+                app:argType="string" />
+        </fragment>
+
+    </navigation>
 
 </navigation>
