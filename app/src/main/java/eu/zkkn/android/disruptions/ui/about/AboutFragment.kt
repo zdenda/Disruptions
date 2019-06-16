@@ -1,4 +1,4 @@
-package eu.zkkn.android.disruptions
+package eu.zkkn.android.disruptions.ui.about
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import eu.zkkn.android.disruptions.BuildConfig
+import eu.zkkn.android.disruptions.R
 import eu.zkkn.android.disruptions.data.Preferences
 import kotlinx.android.synthetic.main.fragment_about.view.*
 

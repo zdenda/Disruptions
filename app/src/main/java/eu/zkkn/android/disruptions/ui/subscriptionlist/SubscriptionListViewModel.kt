@@ -1,4 +1,4 @@
-package eu.zkkn.android.disruptions
+package eu.zkkn.android.disruptions.ui.subscriptionlist
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -9,7 +9,7 @@ import eu.zkkn.android.disruptions.data.SubscriptionRepository
 import eu.zkkn.disruptions.common.FcmConstants
 
 
-class SubscriptionsViewModel(application: Application) : AndroidViewModel(application) {
+class SubscriptionListViewModel(application: Application) : AndroidViewModel(application) {
 
     private val subscriptionRepository by lazy { SubscriptionRepository.getInstance(application) }
 

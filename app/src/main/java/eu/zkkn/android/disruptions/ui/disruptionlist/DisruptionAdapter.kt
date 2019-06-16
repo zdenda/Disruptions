@@ -1,4 +1,4 @@
-package eu.zkkn.android.disruptions
+package eu.zkkn.android.disruptions.ui.disruptionlist
 
 import android.text.format.DateUtils
 import android.view.LayoutInflater
@@ -9,16 +9,19 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import eu.zkkn.android.disruptions.R
 import eu.zkkn.android.disruptions.data.Disruption
 import kotlinx.android.synthetic.main.list_item_disruption.view.*
 
 
 //TODO: use paging and PagedListAdapter
 //https://developer.android.com/topic/libraries/architecture/paging
-class DisruptionsAdapter : ListAdapter<Disruption, DisruptionsAdapter.ViewHolder>(DiffCallback()) {
+class DisruptionAdapter : ListAdapter<Disruption, DisruptionAdapter.ViewHolder>(DiffCallback()) {
 
     private val onItemClickListener = View.OnClickListener { view ->
-        view.findNavController().navigate(DisruptionsFragmentDirections.actionShowDisruptionDetail(view.tag as String))
+        view.findNavController().navigate(
+            DisruptionListFragmentDirections.actionShowDisruptionDetail(view.tag as String)
+        )
     }
 
 
@@ -55,7 +58,7 @@ class DisruptionsAdapter : ListAdapter<Disruption, DisruptionsAdapter.ViewHolder
     }
 
 
-    private class DiffCallback: DiffUtil.ItemCallback<Disruption>() {
+    private class DiffCallback : DiffUtil.ItemCallback<Disruption>() {
 
         override fun areItemsTheSame(oldItem: Disruption, newItem: Disruption): Boolean {
             return oldItem.id == newItem.id

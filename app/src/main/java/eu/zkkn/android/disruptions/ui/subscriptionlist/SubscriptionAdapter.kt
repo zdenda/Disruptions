@@ -1,4 +1,4 @@
-package eu.zkkn.android.disruptions
+package eu.zkkn.android.disruptions.ui.subscriptionlist
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,11 +7,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import eu.zkkn.android.disruptions.R
 import eu.zkkn.android.disruptions.data.Subscription
 import kotlinx.android.synthetic.main.list_item_subscription.view.*
 
 
-class SubscriptionsAdapter : ListAdapter<Subscription, SubscriptionsAdapter.ViewHolder>(DiffCallback()) {
+class SubscriptionAdapter : ListAdapter<Subscription, SubscriptionAdapter.ViewHolder>(DiffCallback()) {
 
     private val removeButtonClickListener: View.OnClickListener
     private var onRemoveClickListener: ((String) -> Unit)? = null

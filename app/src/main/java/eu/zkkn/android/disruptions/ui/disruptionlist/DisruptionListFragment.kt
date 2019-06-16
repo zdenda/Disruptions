@@ -1,4 +1,4 @@
-package eu.zkkn.android.disruptions
+package eu.zkkn.android.disruptions.ui.disruptionlist
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,13 +9,14 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DividerItemDecoration
+import eu.zkkn.android.disruptions.R
 import eu.zkkn.android.disruptions.data.Disruption
 import kotlinx.android.synthetic.main.fragment_disruptions.*
 
 
-class DisruptionsFragment : Fragment() {
+class DisruptionListFragment : Fragment() {
 
-    private lateinit var viewModel: DisruptionsViewModel
+    private lateinit var viewModel: DisruptionListViewModel
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -26,9 +27,9 @@ class DisruptionsFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        viewModel = ViewModelProviders.of(this).get(DisruptionsViewModel::class.java)
+        viewModel = ViewModelProviders.of(this).get(DisruptionListViewModel::class.java)
 
-        val adapter = DisruptionsAdapter()
+        val adapter = DisruptionAdapter()
 
         with(rwDisruptions) {
             this.adapter = adapter

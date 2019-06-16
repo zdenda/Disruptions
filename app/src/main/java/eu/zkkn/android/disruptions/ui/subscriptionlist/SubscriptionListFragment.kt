@@ -1,4 +1,4 @@
-package eu.zkkn.android.disruptions
+package eu.zkkn.android.disruptions.ui.subscriptionlist
 
 import android.os.Build
 import android.os.Bundle
@@ -13,18 +13,19 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
+import eu.zkkn.android.disruptions.R
 import eu.zkkn.android.disruptions.data.Subscription
 import kotlinx.android.synthetic.main.fragment_subscriptions.*
 
 
-class SubscriptionsFragment : Fragment() {
+class SubscriptionListFragment : Fragment() {
 
     companion object {
-        private val TAG = SubscriptionsFragment::class.simpleName
+        private val TAG = SubscriptionListFragment::class.simpleName
     }
 
 
-    private lateinit var viewModel: SubscriptionsViewModel
+    private lateinit var viewModel: SubscriptionListViewModel
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -34,9 +35,9 @@ class SubscriptionsFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        viewModel = ViewModelProviders.of(this).get(SubscriptionsViewModel::class.java)
+        viewModel = ViewModelProviders.of(this).get(SubscriptionListViewModel::class.java)
 
-        val adapter = SubscriptionsAdapter()
+        val adapter = SubscriptionAdapter()
         adapter.setOnRemoveClickListener { lineName ->
             viewModel.removeSubscription(lineName)
         }

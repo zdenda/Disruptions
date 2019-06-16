@@ -13,9 +13,9 @@ import androidx.navigation.NavDeepLinkBuilder
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import eu.zkkn.android.disruptions.CancelNotificationReceiver
-import eu.zkkn.android.disruptions.DisruptionFragmentArgs
 import eu.zkkn.android.disruptions.R
 import eu.zkkn.android.disruptions.data.DisruptionRepository
+import eu.zkkn.android.disruptions.ui.disruptiondetail.DisruptionDetailFragmentArgs
 import eu.zkkn.disruptions.common.FcmConstants
 
 
@@ -77,7 +77,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val pendingIntent = NavDeepLinkBuilder(this)
             .setGraph(R.navigation.nav_graph)
             .setDestination(R.id.disruptionFragment)
-            .setArguments(DisruptionFragmentArgs(guid).toBundle())
+            .setArguments(DisruptionDetailFragmentArgs(guid).toBundle())
             .createPendingIntent()
         builder.setContentIntent(pendingIntent)
 

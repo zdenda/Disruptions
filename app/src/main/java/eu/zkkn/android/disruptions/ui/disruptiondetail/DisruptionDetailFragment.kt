@@ -1,4 +1,4 @@
-package eu.zkkn.android.disruptions
+package eu.zkkn.android.disruptions.ui.disruptiondetail
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,11 +10,12 @@ import androidx.navigation.fragment.navArgs
 import kotlinx.android.synthetic.main.fragment_disruption.*
 import android.graphics.Bitmap
 import android.webkit.WebView
+import eu.zkkn.android.disruptions.R
 
 
-class DisruptionFragment : Fragment() {
+class DisruptionDetailFragment : Fragment() {
 
-    private val args by navArgs<DisruptionFragmentArgs>()
+    private val args by navArgs<DisruptionDetailFragmentArgs>()
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -25,7 +26,7 @@ class DisruptionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        webView.webViewClient = object: WebViewClient() {
+        webView.webViewClient = object : WebViewClient() {
 
             override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
                 super.onPageStarted(view, url, favicon)

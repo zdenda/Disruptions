@@ -1,4 +1,4 @@
-package eu.zkkn.android.disruptions
+package eu.zkkn.android.disruptions.ui.disruptionlist
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -7,7 +7,7 @@ import eu.zkkn.android.disruptions.data.Disruption
 import eu.zkkn.android.disruptions.data.DisruptionRepository
 
 
-class DisruptionsViewModel(application: Application) : AndroidViewModel(application) {
+class DisruptionListViewModel(application: Application) : AndroidViewModel(application) {
 
     private val disruptionRepository by lazy { DisruptionRepository.getInstance(application) }
 
