@@ -6,7 +6,6 @@ import eu.zkkn.disruptions.backend.data.DisruptionDao
 import eu.zkkn.disruptions.backend.datasource.PidRssFeedParser
 import eu.zkkn.disruptions.backend.messaging.Messaging
 import java.net.URL
-import java.util.Date
 import java.util.logging.Logger
 import javax.servlet.annotation.WebServlet
 import javax.servlet.http.HttpServlet
@@ -30,19 +29,24 @@ class CheckServlet : HttpServlet() {
         val disruptions = DisruptionDao()
 
         for (item in pidRssFeed.items) {
-            val disruption = disruptions.load(item.guid)
+            val linesToNotify = item.lines.toMutableSet()
+
+            var disruption = disruptions.load(item.guid)
             if (disruption != null) {
-                disruption.lines = item.lines.toMutableSet()
-                disruption.title = item.title
-                disruption.timeInfo = item.timeInfo
-                disruption.updated = Date()
-                disruptions.save(disruption)
+                // remove all lines which already received the notification
+                linesToNotify.removeAll(disruption.lines)
+                disruption.modify(item)
             } else {
-                disruptions.save(Disruption.fromPidRssFeedItem(item))
-                log.info("Send notifications to: ${item.lines}")
-                val results = messaging.send(Messaging.prepareMessages(item))
+                disruption = Disruption.fromPidRssFeedItem(item)
+            }
+
+            if (linesToNotify.isNotEmpty()) {
+                log.info("Send notifications to: $linesToNotify")
+                val results = messaging.send(Messaging.prepareMessages(linesToNotify, item))
                 log.info(results.toString())
             }
+
+            disruptions.save(disruption)
         }
 
         resp.contentType = "application/json; charset=UTF-8"

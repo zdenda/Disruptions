@@ -26,9 +26,11 @@ class Messaging {
         }
 
 
-        fun prepareMessages(pidRssItem: PidRssFeed.Item): Set<Message> {
+        fun prepareMessages(lines: Set<String>, pidRssItem: PidRssFeed.Item): Set<Message> {
             val messages = mutableSetOf<Message>()
-            for (line in pidRssItem.lines) {
+            // TODO: use lines.chunked(5) and send notification to multiple (up to 5) topics at once
+            // https://firebase.google.com/docs/cloud-messaging/android/topic-messaging#build_send_requests
+            for (line in lines) {
                 val message = Message.builder()
                     .putData(FcmConstants.KEY_TYPE, FcmConstants.TYPE_NOTIFICATION)
                     .putData(FcmConstants.KEY_ID, pidRssItem.guid)
