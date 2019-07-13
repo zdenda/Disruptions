@@ -10,6 +10,7 @@
     <string name="button_remove_description">Odebrat</string>
     <string name="subscriptions_empty">Přihlaste se k odběru upozornění na mimořídnosti v provozu na některé z linek pražské MHD</string>
     <string name="input_line_hint">Jméno linky (např.: A, 1, 100 nebo P1)</string>
+    <string name="input_line_wrong_name">"Zadané jméno je neplatné!!!"</string>
     <string name="button_subscribe">Přidat</string>
     <string name="button_unsubscribe">Odebrat</string>
 

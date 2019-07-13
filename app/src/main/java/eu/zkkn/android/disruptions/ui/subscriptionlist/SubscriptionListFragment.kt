@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import eu.zkkn.android.disruptions.R
 import eu.zkkn.android.disruptions.data.Subscription
+import eu.zkkn.android.disruptions.utils.isValidLineName
 import kotlinx.android.synthetic.main.fragment_subscriptions.*
 
 
@@ -89,10 +90,15 @@ class SubscriptionListFragment : Fragment() {
 
 
     private fun onSubscribeClick() {
-        val lineName = tiLine.editText?.text.toString()
-        if (!lineName.isBlank()) {
-            viewModel.addSubscription(lineName)
-            tiLine.editText?.text?.clear()
+        val lineName = tiLine.editText?.text.toString().trim()
+        if (lineName.isNotBlank()) {
+            if (lineName.isValidLineName()) {
+                tiLine.editText?.text?.clear()
+                tiLine.error = null
+                viewModel.addSubscription(lineName)
+            } else {
+                tiLine.error = getString(R.string.input_line_wrong_name)
+            }
         }
     }
 
