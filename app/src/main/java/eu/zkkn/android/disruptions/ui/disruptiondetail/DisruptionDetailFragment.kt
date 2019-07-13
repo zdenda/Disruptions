@@ -30,12 +30,12 @@ class DisruptionDetailFragment : Fragment() {
 
             override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
                 super.onPageStarted(view, url, favicon)
-                progress.visibility = View.VISIBLE
+                progress?.visibility = View.VISIBLE
             }
 
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
-                progress.visibility = View.GONE
+                progress?.visibility = View.GONE
             }
 
         }
