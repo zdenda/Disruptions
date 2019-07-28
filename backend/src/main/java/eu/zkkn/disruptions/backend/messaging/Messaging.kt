@@ -4,6 +4,7 @@ import com.google.auth.oauth2.GoogleCredentials
 import com.google.firebase.FirebaseApp
 import com.google.firebase.FirebaseOptions
 import com.google.firebase.messaging.AndroidConfig
+import com.google.firebase.messaging.FcmOptions
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.Message
 import eu.zkkn.disruptions.backend.ServletContextHolder
@@ -31,6 +32,7 @@ class Messaging {
             // TODO: use lines.chunked(5) and send notification to multiple (up to 5) topics at once
             // https://firebase.google.com/docs/cloud-messaging/android/topic-messaging#build_send_requests
             for (line in lines) {
+                val topicName = FcmConstants.topicNameForLine(line)
                 val message = Message.builder()
                     .putData(FcmConstants.KEY_TYPE, FcmConstants.TYPE_NOTIFICATION)
                     .putData(FcmConstants.KEY_ID, pidRssItem.guid)
@@ -42,7 +44,8 @@ class Messaging {
                             .setPriority(AndroidConfig.Priority.HIGH)
                             .build()
                     )
-                    .setTopic(FcmConstants.topicNameForLine(line))
+                    .setFcmOptions(FcmOptions.withAnalyticsLabel(topicName))
+                    .setTopic(topicName)
                     .build()
                 messages.add(message)
             }
