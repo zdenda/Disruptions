@@ -3,13 +3,16 @@ package eu.zkkn.android.disruptions.data
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
+import eu.zkkn.android.disruptions.workers.RefreshSubscriptionsWorker
 
 
 object Preferences {
 
     private const val PREF_KEY_TOPICS = "topics"
-    private const val PREF_KEY_PERIODIC_SUBSCRIPTION_REFRESH = "periodicSubscriptionRefresh-1"
-    private const val PREF_KEY_LAST_SUBSCRIPTION_REFRESH = "lastSubscriptionRefreshTime"
+    private const val PREF_KEY_PERIODIC_SUBSCRIPTION_REFRESH =
+        "periodicSubscriptionRefresh-v${RefreshSubscriptionsWorker.VERSION}"
+    private const val PREF_KEY_LAST_SUBSCRIPTION_REFRESH =
+        "lastSubscriptionRefreshTime-v${RefreshSubscriptionsWorker.VERSION}"
 
     private lateinit var preferences: SharedPreferences
 
