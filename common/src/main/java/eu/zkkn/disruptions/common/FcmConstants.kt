@@ -5,6 +5,8 @@ import androidx.annotation.StringDef
 
 object FcmConstants {
 
+    private const val TOPIC_PREFIX = "topic"
+
     const val KEY_TYPE = "type"
     const val KEY_ID = "id"
     const val KEY_TITLE = "title"
@@ -20,7 +22,7 @@ object FcmConstants {
 
     fun topicNameForLine(lineName: String): String {
         // remove spaces a use lower case for the name of line
-        return "topic_pid_${lineName.trim().toLowerCase()}"
+        return "${TOPIC_PREFIX}_pid_${lineName.trim().toLowerCase()}"
     }
 
 }

@@ -12,45 +12,41 @@ import eu.zkkn.disruptions.backend.datasource.PidRssFeed
 import eu.zkkn.disruptions.common.FcmConstants
 
 
-class Messaging {
+object Messaging {
 
-    companion object {
+    private val firebaseMessaging: FirebaseMessaging by lazy {
+        val googleCredentials = GoogleCredentials.fromStream(
+            ServletContextHolder.getServletContext().getResourceAsStream("/WEB-INF/serviceAccountKey.json")
+        )
+        val options = FirebaseOptions.builder().setCredentials(googleCredentials).build()
+        FirebaseMessaging.getInstance(FirebaseApp.initializeApp(options))
+    }
 
-        private val firebaseMessaging: FirebaseMessaging
 
-        init {
-            val googleCredentials = GoogleCredentials.fromStream(
-                ServletContextHolder.getServletContext().getResourceAsStream("/WEB-INF/serviceAccountKey.json")
-            )
-            val options = FirebaseOptions.builder().setCredentials(googleCredentials).build()
-            firebaseMessaging = FirebaseMessaging.getInstance(FirebaseApp.initializeApp(options))
+    fun prepareNotificationMessages(lines: Set<String>, pidRssItem: PidRssFeed.Item): Set<Message> {
+        val messages = mutableSetOf<Message>()
+        // TODO: use lines.chunked(5) and send notification to multiple (up to 5) topics at once
+        // https://firebase.google.com/docs/cloud-messaging/android/topic-messaging#build_send_requests
+        for (line in lines) {
+            val topicName = FcmConstants.topicNameForLine(line)
+            val message = Message.builder()
+                .putData(FcmConstants.KEY_TYPE, FcmConstants.TYPE_NOTIFICATION)
+                .putData(FcmConstants.KEY_ID, pidRssItem.guid)
+                .putData(FcmConstants.KEY_TITLE, pidRssItem.title)
+                .putData(FcmConstants.KEY_TIME, pidRssItem.timeInfo)
+                .putData(FcmConstants.KEY_LINES, pidRssItem.lines.joinToString(","))
+                .setAndroidConfig(
+                    AndroidConfig.builder()
+                        .setPriority(AndroidConfig.Priority.HIGH)
+                        .build()
+                )
+                .setFcmOptions(FcmOptions.withAnalyticsLabel(topicName))
+                .setTopic(topicName)
+                .build()
+            messages.add(message)
         }
-
-
-        fun prepareMessages(lines: Set<String>, pidRssItem: PidRssFeed.Item): Set<Message> {
-            val messages = mutableSetOf<Message>()
-            // TODO: use lines.chunked(5) and send notification to multiple (up to 5) topics at once
-            // https://firebase.google.com/docs/cloud-messaging/android/topic-messaging#build_send_requests
-            for (line in lines) {
-                val topicName = FcmConstants.topicNameForLine(line)
-                val message = Message.builder()
-                    .putData(FcmConstants.KEY_TYPE, FcmConstants.TYPE_NOTIFICATION)
-                    .putData(FcmConstants.KEY_ID, pidRssItem.guid)
-                    .putData(FcmConstants.KEY_TITLE, pidRssItem.title)
-                    .putData(FcmConstants.KEY_TIME, pidRssItem.timeInfo)
-                    .putData(FcmConstants.KEY_LINES, pidRssItem.lines.joinToString(","))
-                    .setAndroidConfig(
-                        AndroidConfig.builder()
-                            .setPriority(AndroidConfig.Priority.HIGH)
-                            .build()
-                    )
-                    .setFcmOptions(FcmOptions.withAnalyticsLabel(topicName))
-                    .setTopic(topicName)
-                    .build()
-                messages.add(message)
-            }
-            return messages
-        }
+        return messages
+    }
 
     }
 

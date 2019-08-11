@@ -25,7 +25,6 @@ class CheckServlet : HttpServlet() {
         val pidRssFeed = PidRssFeedParser(url.openStream()).parse()
         log.config(pidRssFeed.toString())
 
-        val messaging = Messaging()
         val disruptions = DisruptionDao()
 
         for (item in pidRssFeed.items) {
@@ -42,7 +41,7 @@ class CheckServlet : HttpServlet() {
 
             if (linesToNotify.isNotEmpty()) {
                 log.info("Send notifications to: $linesToNotify")
-                val results = messaging.send(Messaging.prepareMessages(linesToNotify, item))
+                val results = Messaging.send(Messaging.prepareNotificationMessages(linesToNotify, item))
                 log.info(results.toString())
             }
 
