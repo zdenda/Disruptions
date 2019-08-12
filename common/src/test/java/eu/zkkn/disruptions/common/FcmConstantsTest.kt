@@ -13,11 +13,9 @@ class FcmConstantsTest {
         assertEquals("topic_pid_c", FcmConstants.topicNameForLine(" C "))
     }
 
-    /*
     @Test
     fun topicNameHeartbeat() {
         assertEquals("topic_admin_heartbeat", FcmConstants.topicNameHeartbeat)
     }
-    */
 
 }

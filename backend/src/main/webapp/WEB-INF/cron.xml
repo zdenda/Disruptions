@@ -5,4 +5,9 @@
         <description>Periodic disruptions check</description>
         <schedule>every 5 minutes</schedule>
     </cron>
+    <cron>
+        <url>/heartbeat</url>
+        <description>Cloud messaging heartbeat</description>
+        <schedule>every day 12:00</schedule>
+    </cron>
 </cronentries>

@@ -48,6 +48,12 @@ object Messaging {
         return messages
     }
 
+    fun prepareHeartbeatMessage(): Message {
+        return Message.builder()
+            .putData(FcmConstants.KEY_TYPE, FcmConstants.TYPE_HEARTBEAT)
+            .setFcmOptions(FcmOptions.withAnalyticsLabel(FcmConstants.topicNameHeartbeat))
+            .setTopic(FcmConstants.topicNameHeartbeat)
+            .build()
     }
 
 

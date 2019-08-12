@@ -13,7 +13,6 @@ import kotlin.reflect.jvm.isAccessible
 
 class MessagingTest {
 
-    /*
     @Test
     fun prepareHeartbeatMessage() {
         val heartbeatMsg = Messaging.prepareHeartbeatMessage()
@@ -25,7 +24,6 @@ class MessagingTest {
 
         assertEquals("heartbeat", data!![FcmConstants.KEY_TYPE])
     }
-    */
 
     @Test
     fun prepareNotificationMessages_single() {

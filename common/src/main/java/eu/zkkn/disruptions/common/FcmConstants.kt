@@ -15,9 +15,12 @@ object FcmConstants {
 
 
     @Retention(AnnotationRetention.SOURCE)
-    @StringDef(TYPE_NOTIFICATION)
+    @StringDef(TYPE_NOTIFICATION, TYPE_HEARTBEAT)
     annotation class FcmMessageType
     const val TYPE_NOTIFICATION = "notification"
+    const val TYPE_HEARTBEAT = "heartbeat"
+
+    const val topicNameHeartbeat = "${TOPIC_PREFIX}_admin_heartbeat"
 
 
     fun topicNameForLine(lineName: String): String {
