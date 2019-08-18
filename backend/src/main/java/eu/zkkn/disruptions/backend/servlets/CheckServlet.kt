@@ -21,7 +21,8 @@ class CheckServlet : HttpServlet() {
 
     override fun doGet(req: HttpServletRequest, resp: HttpServletResponse) {
         val url = URL(PidRssFeedParser.URL)
-        //TODO: handle SocketTimeoutException
+        //TODO: handle SocketTimeoutException or increase timeout
+        // https://cloud.google.com/appengine/docs/standard/java/config/appref#urlfetch_timeout
         val pidRssFeed = PidRssFeedParser(url.openStream()).parse()
         log.config(pidRssFeed.toString())
 
