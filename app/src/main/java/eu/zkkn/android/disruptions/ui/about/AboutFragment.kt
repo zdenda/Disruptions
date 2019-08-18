@@ -43,7 +43,9 @@ class AboutFragment : Fragment() {
         AlertDialog.Builder(context).apply {
             setTitle(R.string.dialog_debug_title)
             setMessage(getString(R.string.dialog_debug_last_subscriptions_refresh,
-                Preferences.getLastSubscriptionRefreshTime(context)))
+                Preferences.getLastSubscriptionRefreshTime(context),
+                Preferences.getLastHeartbeatReceivedTime(context),
+                Preferences.getLastHeartbeatSentTime(context)))
             setPositiveButton(R.string.dialog_debug_ok) { dialog, _ -> dialog.dismiss() }
             show()
         }

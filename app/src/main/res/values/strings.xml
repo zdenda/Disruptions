@@ -29,7 +29,10 @@
     <string name="ropid_link"><u><a href="https://goo.gl/1ZmRnu">www.PID.cz</a></u></string>
 
     <string name="dialog_debug_title">Info pro ladění</string>
-    <string name="dialog_debug_last_subscriptions_refresh">Subscriptions Refresh: %1$tY-%1$tm-%1$td&#160;%1$tH:%1$tM:%1$tS</string>
+    <string name="dialog_debug_last_subscriptions_refresh">
+        Subscriptions Refresh: %1$tY-%1$tm-%1$td&#160;%1$tH:%1$tM:%1$tS\n
+        \nLast Heartbeat: %2$tY-%2$tm-%2$td&#160;%2$tH:%2$tM:%2$tS (Sent: %3$tY-%3$tm-%3$td&#160;%3$tH:%3$tM:%3$tS)\n
+    </string>
     <string name="dialog_debug_ok">OK</string>
 
     <string name="notification_channel_disruptions_name">Upozornění na mimořádnosti</string>

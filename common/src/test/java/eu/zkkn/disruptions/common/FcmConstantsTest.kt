@@ -15,7 +15,7 @@ class FcmConstantsTest {
 
     @Test
     fun topicNameHeartbeat() {
-        assertEquals("topic_admin_heartbeat", FcmConstants.topicNameHeartbeat)
+        assertEquals("topic_admin_heartbeat", FcmConstants.TOPIC_HEARTBEAT)
     }
 
 }

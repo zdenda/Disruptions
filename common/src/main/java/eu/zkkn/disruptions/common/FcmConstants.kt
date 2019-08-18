@@ -20,7 +20,7 @@ object FcmConstants {
     const val TYPE_NOTIFICATION = "notification"
     const val TYPE_HEARTBEAT = "heartbeat"
 
-    const val topicNameHeartbeat = "${TOPIC_PREFIX}_admin_heartbeat"
+    const val TOPIC_HEARTBEAT = "${TOPIC_PREFIX}_admin_heartbeat"
 
 
     fun topicNameForLine(lineName: String): String {

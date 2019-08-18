@@ -51,8 +51,8 @@ object Messaging {
     fun prepareHeartbeatMessage(): Message {
         return Message.builder()
             .putData(FcmConstants.KEY_TYPE, FcmConstants.TYPE_HEARTBEAT)
-            .setFcmOptions(FcmOptions.withAnalyticsLabel(FcmConstants.topicNameHeartbeat))
-            .setTopic(FcmConstants.topicNameHeartbeat)
+            .setFcmOptions(FcmOptions.withAnalyticsLabel(FcmConstants.TOPIC_HEARTBEAT))
+            .setTopic(FcmConstants.TOPIC_HEARTBEAT)
             .build()
     }
 

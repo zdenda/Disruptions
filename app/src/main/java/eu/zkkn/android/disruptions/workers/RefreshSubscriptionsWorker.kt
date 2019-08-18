@@ -32,6 +32,8 @@ class RefreshSubscriptionsWorker(appContext: Context, params: WorkerParameters) 
 
         private val TAG = RefreshSubscriptionsWorker::class.simpleName
 
+        private val firebaseMessaging: FirebaseMessaging by lazy { FirebaseMessaging.getInstance() }
+
 
         internal fun schedulePeriodicRefresh(context: Context) {
 
@@ -73,26 +75,32 @@ class RefreshSubscriptionsWorker(appContext: Context, params: WorkerParameters) 
 
         if (lineNames.isEmpty()) return@withContext Result.success()
 
-        val firebaseMessaging = FirebaseMessaging.getInstance()
         var success = true
+        // Subscribe to lines topics
         for (lineName in lineNames) {
-            try {
-
-                val topicName = FcmConstants.topicNameForLine(lineName)
-                Tasks.await(firebaseMessaging.subscribeToTopic(topicName))
-                Log.d(TAG, "Subscribed to topic: $topicName")
-
-            } catch (e: ExecutionException) {
-                success = false
-            } catch (e: InterruptedException) {
-                success = false
-            }
+            val topicName = FcmConstants.topicNameForLine(lineName)
+            success = success && subscribeToTopic(topicName)
         }
+
+        // Subscribe to Heartbeat
+        success = success && subscribeToTopic(FcmConstants.TOPIC_HEARTBEAT)
 
         if (success) Preferences.setLastSubscriptionRefreshTime(applicationContext)
 
         return@withContext if (success) Result.success() else Result.retry()
 
+    }
+
+    private fun subscribeToTopic(topicName: String): Boolean {
+        return try {
+            Tasks.await(firebaseMessaging.subscribeToTopic(topicName))
+            Log.d(TAG, "Subscribed to topic: $topicName")
+            true
+        } catch (e: ExecutionException) {
+            false
+        } catch (e: InterruptedException) {
+            false
+        }
     }
 
 }

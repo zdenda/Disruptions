@@ -13,6 +13,8 @@ object Preferences {
         "periodicSubscriptionRefresh-v${RefreshSubscriptionsWorker.VERSION}"
     private const val PREF_KEY_LAST_SUBSCRIPTION_REFRESH =
         "lastSubscriptionRefreshTime-v${RefreshSubscriptionsWorker.VERSION}"
+    private const val PREF_KEY_LAST_HEARTBEAT_RECEIVED = "lastHeartbeatReceivedTime"
+    private const val PREF_KEY_LAST_HEARTBEAT_SENT = "lastHeartbeatSentTime"
 
     private lateinit var preferences: SharedPreferences
 
@@ -46,6 +48,22 @@ object Preferences {
 
     fun getLastSubscriptionRefreshTime(context: Context): Long {
         return getPreferences(context).getLong(PREF_KEY_LAST_SUBSCRIPTION_REFRESH, 0L)
+    }
+
+    fun setLastHeartbeatReceivedTime(context: Context, timeMs: Long) {
+        getPreferences(context).edit().putLong(PREF_KEY_LAST_HEARTBEAT_RECEIVED, timeMs).apply()
+    }
+
+    fun getLastHeartbeatReceivedTime(context: Context): Long {
+        return getPreferences(context).getLong(PREF_KEY_LAST_HEARTBEAT_RECEIVED, 0L)
+    }
+
+    fun setLastHeartbeatSentTime(context: Context, timeMs: Long) {
+        getPreferences(context).edit().putLong(PREF_KEY_LAST_HEARTBEAT_SENT, timeMs).apply()
+    }
+
+    fun getLastHeartbeatSentTime(context: Context): Long {
+        return getPreferences(context).getLong(PREF_KEY_LAST_HEARTBEAT_SENT, 0L)
     }
 
 }
