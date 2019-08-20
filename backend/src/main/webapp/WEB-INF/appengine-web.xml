@@ -5,5 +5,6 @@
     <url-stream-handler>urlfetch</url-stream-handler>
     <system-properties>
         <property name="java.util.logging.config.file" value="WEB-INF/logging.properties" />
+        <property name="appengine.api.urlfetch.defaultDeadline" value="10" />
     </system-properties>
 </appengine-web-app>
