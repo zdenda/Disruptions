@@ -38,22 +38,20 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     }
 
 
-    override fun onMessageReceived(remoteMessage: RemoteMessage?) {
-        Log.d(TAG, "New Message From: ${remoteMessage?.from}")
-        if (remoteMessage == null) return
-
-        val data = remoteMessage.data
+    override fun onMessageReceived(remoteMessage: RemoteMessage) {
+        Log.d(TAG, "New Message From: ${remoteMessage.from}")
 
         @FcmConstants.FcmMessageType
-        val messageType = data[FcmConstants.KEY_TYPE]
+        val messageType = remoteMessage.data[FcmConstants.KEY_TYPE]
 
         when (messageType) {
             FcmConstants.TYPE_NOTIFICATION -> handleNotificationMsg(remoteMessage)
             FcmConstants.TYPE_HEARTBEAT -> handleHeartbeatMsg(remoteMessage)
+            else -> Log.w(TAG, "Unknown FCM message type: $messageType")
         }
     }
 
-    override fun onNewToken(token: String?) {
+    override fun onNewToken(token: String) {
         Log.d(TAG, "Refreshed token: $token")
         //TODO: ??? maybe resubscribe to topics
     }

@@ -63,17 +63,17 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta1' // beta2 breaks layout
     implementation 'androidx.vectordrawable:vectordrawable:1.1.0-rc01'
     implementation 'com.google.android.material:material:1.1.0-alpha09'
-    implementation 'com.google.firebase:firebase-core:17.0.1'
-    implementation 'com.google.firebase:firebase-messaging:19.0.1'
+    implementation 'com.google.firebase:firebase-core:17.1.0'
+    implementation 'com.google.firebase:firebase-messaging:20.0.0'
     implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
     implementation "androidx.room:room-runtime:$roomVersion"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
     implementation 'androidx.fragment:fragment-ktx:1.2.0-alpha02'
     implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navVersion"
-    implementation 'androidx.recyclerview:recyclerview:1.1.0-beta02'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0-beta03'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.work:work-runtime-ktx:2.1.0'
+    implementation 'androidx.work:work-runtime-ktx:2.2.0'
 
     debugImplementation 'com.facebook.stetho:stetho:1.5.1'
 
