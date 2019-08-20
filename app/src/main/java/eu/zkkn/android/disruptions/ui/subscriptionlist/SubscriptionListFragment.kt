@@ -89,6 +89,7 @@ class SubscriptionListFragment : Fragment() {
 
     private fun onSubscribeClick() {
         val lineName = tiLine.editText?.text.toString().trim()
+        // TODO: move validation to viewModel
         if (lineName.isNotBlank()) {
             if (lineName.isValidLineName()) {
                 tiLine.editText?.text?.clear()

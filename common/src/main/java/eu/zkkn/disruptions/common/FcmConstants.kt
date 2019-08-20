@@ -1,6 +1,8 @@
 package eu.zkkn.disruptions.common
 
 import androidx.annotation.StringDef
+import java.text.Normalizer
+import java.util.Locale
 
 
 object FcmConstants {
@@ -25,7 +27,23 @@ object FcmConstants {
 
     fun topicNameForLine(lineName: String): String {
         // remove spaces a use lower case for the name of line
-        return "${TOPIC_PREFIX}_pid_${lineName.trim().toLowerCase()}"
+        return "${TOPIC_PREFIX}_pid_${normalizeLineName(lineName)}"
+    }
+
+
+    private fun normalizeLineName(lineName: String): String {
+        return lineName.trim()
+            .take(40)
+            .replace(" ", "-")
+            .normalize()
+            .toLowerCase(Locale.ROOT)
+    }
+
+
+    // Removes diacritics (accents) from the string
+    private fun String.normalize(): String {
+        return Normalizer.normalize(this, Normalizer.Form.NFKD)
+            .replace("\\p{InCombiningDiacriticalMarks}+".toRegex(), "")
     }
 
 }

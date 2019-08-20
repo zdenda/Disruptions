@@ -29,10 +29,6 @@ object Messaging {
         // https://firebase.google.com/docs/cloud-messaging/android/topic-messaging#build_send_requests
         for (line in lines) {
             val topicName = FcmConstants.topicNameForLine(line)
-            // Quick fix for:
-            // IllegalArgumentException: Analytics label must have format matching'^[a-zA-Z0-9-_.~%]{1,50}$
-            // TODO: do it better
-            if (!"[a-zA-Z0-9-_.~%]{1,50}".toRegex().matches(topicName)) continue
             val message = Message.builder()
                 .putData(FcmConstants.KEY_TYPE, FcmConstants.TYPE_NOTIFICATION)
                 .putData(FcmConstants.KEY_ID, pidRssItem.guid)
