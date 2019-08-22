@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import eu.zkkn.android.disruptions.utils.ioThread
-
+import java.util.Locale
 
 class SubscriptionRepository private constructor(private val dao: SubscriptionDao) {
 
@@ -26,8 +26,12 @@ class SubscriptionRepository private constructor(private val dao: SubscriptionDa
     @WorkerThread fun getAllLineNames() = dao.getAllLineNames()
 
     //TODO: prevent inserting two same line names
-    fun addSubscription(lineName: String) = ioThread {dao.insert(Subscription(0, lineName.toUpperCase())) }
+    fun addSubscription(lineName: String) = ioThread {
+        dao.insert(Subscription(0, lineName.toUpperCase(Locale.ROOT)))
+    }
 
-    fun removeSubscription(lineName: String) = ioThread { dao.deleteByLineName(lineName.toUpperCase()) }
+    fun removeSubscription(lineName: String) = ioThread {
+        dao.deleteByLineName(lineName.toUpperCase(Locale.ROOT))
+    }
 
 }

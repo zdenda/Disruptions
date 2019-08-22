@@ -8,6 +8,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.util.Log
+import androidx.annotation.WorkerThread
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.navigation.NavDeepLinkBuilder
@@ -38,6 +39,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     }
 
 
+    @WorkerThread
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         Log.d(TAG, "New Message From: ${remoteMessage.from}")
 
@@ -51,6 +53,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         }
     }
 
+    @WorkerThread
     override fun onNewToken(token: String) {
         Log.d(TAG, "Refreshed token: $token")
         //TODO: ??? maybe resubscribe to topics

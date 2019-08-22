@@ -46,15 +46,13 @@ class PidRssFeedParser(private val input: InputStream) {
             when {
 
                 event.isStartElement -> {
-                    val elementName = event.asStartElement().name.localPart
-                    when (elementName) {
+                    when (event.asStartElement().name.localPart) {
                         ITEM -> inItem = true
                     }
                 }
 
                 event.isEndElement -> {
-                    val elementName = event.asEndElement().name.localPart
-                    when (elementName) {
+                    when (event.asEndElement().name.localPart) {
                         TITLE -> {
                             if (!inItem) title = characters else itemTitle = characters
                             characters = ""

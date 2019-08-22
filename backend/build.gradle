@@ -2,6 +2,7 @@
 
 buildscript {
     repositories {
+        google()
         mavenCentral()
         jcenter()
     }
@@ -12,6 +13,7 @@ buildscript {
 }
 
 repositories {
+    google()
     mavenCentral()
     jcenter()
 }
@@ -31,6 +33,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':common')
 
+    //noinspection GradleDeprecatedConfiguration providedImplementation needs Android Gradle Plugin
     providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
     //providedCompile "com.google.appengine:appengine-java-sdk:$appEngineVersion"
     implementation "com.google.appengine:appengine-api-1.0-sdk:$appEngineVersion"
@@ -41,7 +44,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-admin:6.9.0'
     implementation 'org.slf4j:slf4j-nop:1.7.26'
 
-    testCompile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     testImplementation 'junit:junit:4.13-beta-3'
     testImplementation 'org.hamcrest:hamcrest:2.1'
     testImplementation "com.google.appengine:appengine-testing:$appEngineVersion"

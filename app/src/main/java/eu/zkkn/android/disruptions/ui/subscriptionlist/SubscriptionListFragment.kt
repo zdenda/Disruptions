@@ -21,11 +21,6 @@ import kotlinx.android.synthetic.main.fragment_subscriptions.*
 
 class SubscriptionListFragment : Fragment() {
 
-    companion object {
-        private val TAG = SubscriptionListFragment::class.simpleName
-    }
-
-
     private val viewModel: SubscriptionListViewModel by viewModels()
 
 

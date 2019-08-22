@@ -18,8 +18,8 @@ class DisruptionDetailFragment : Fragment() {
     private val args by navArgs<DisruptionDetailFragmentArgs>()
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_disruption, container, false)
     }
 
