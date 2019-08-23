@@ -79,7 +79,8 @@ dependencies {
 
     debugImplementation 'com.facebook.stetho:stetho:1.5.1'
 
-    testImplementation 'junit:junit:4.13-beta-3'
+    // Android Studio reports Incorrect Scope error in unit tests with JUnit version 4.13-beta-3
+    testImplementation 'junit:junit:4.12'
 
     androidTestImplementation 'androidx.arch.core:core-testing:2.1.0-beta01'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
