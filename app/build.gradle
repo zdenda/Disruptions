@@ -70,6 +70,7 @@ dependencies {
     implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
     implementation "androidx.room:room-runtime:$roomVersion"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycleVersion"
     implementation 'androidx.fragment:fragment-ktx:1.2.0-alpha02'
     implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navVersion"
@@ -88,7 +89,6 @@ dependencies {
     androidTestImplementation "androidx.room:room-testing:$roomVersion"
 
     kapt "androidx.room:room-compiler:$roomVersion"
-    kapt "androidx.lifecycle:lifecycle-compiler:$lifecycleVersion"
 
 }
 
