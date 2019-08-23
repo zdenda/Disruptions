@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import eu.zkkn.android.disruptions.R
 import eu.zkkn.android.disruptions.data.Subscription
-import eu.zkkn.android.disruptions.utils.isValidLineName
 import kotlinx.android.synthetic.main.fragment_subscriptions.*
 
 
@@ -24,7 +23,8 @@ class SubscriptionListFragment : Fragment() {
     private val viewModel: SubscriptionListViewModel by viewModels()
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_subscriptions, container, false)
     }
 
@@ -79,20 +79,23 @@ class SubscriptionListFragment : Fragment() {
             adapter.submitList(subscriptions)
         })
 
+        viewModel.subscribeStatus.observe(viewLifecycleOwner, Observer { subscribeState ->
+            val errorMsgResId = subscribeState.errorMsgResIdIfNotHandled
+            tiLine.error = if (errorMsgResId != null) getString(errorMsgResId) else null
+            if (!subscribeState.inProgress && errorMsgResId == null) {
+                tiLine.editText?.text?.clear()
+            }
+            btSubscribe.isEnabled = !subscribeState.inProgress
+            tiLine.isEnabled = !subscribeState.inProgress
+        })
+
     }
 
 
     private fun onSubscribeClick() {
         val lineName = tiLine.editText?.text.toString().trim()
-        // TODO: move validation to viewModel
         if (lineName.isNotBlank()) {
-            if (lineName.isValidLineName()) {
-                tiLine.editText?.text?.clear()
-                tiLine.error = null
-                viewModel.addSubscription(lineName)
-            } else {
-                tiLine.error = getString(R.string.input_line_wrong_name)
-            }
+            viewModel.addSubscription(lineName)
         }
     }
 
