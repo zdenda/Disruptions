@@ -15,8 +15,8 @@ android {
         // TODO: test on Android Q
         //noinspection OldTargetApi
         targetSdkVersion 28
-        versionCode 11
-        versionName "0.6.2"
+        versionCode 12
+        versionName "0.6.3"
         resConfigs "en", "cs"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -65,7 +65,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta1' // beta2 breaks layout
     implementation 'androidx.vectordrawable:vectordrawable:1.1.0-rc01'
     implementation 'com.google.android.material:material:1.1.0-alpha09'
-    implementation 'com.google.firebase:firebase-core:17.1.0'
+    implementation 'com.google.firebase:firebase-core:17.2.0'
     implementation 'com.google.firebase:firebase-messaging:20.0.0'
     implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
     implementation "androidx.room:room-runtime:$roomVersion"
@@ -83,7 +83,7 @@ dependencies {
     // Android Studio reports Incorrect Scope error in unit tests with JUnit version 4.13-beta-3
     testImplementation 'junit:junit:4.12'
 
-    androidTestImplementation 'androidx.arch.core:core-testing:2.1.0-beta01'
+    androidTestImplementation 'androidx.arch.core:core-testing:2.1.0-rc01'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     androidTestImplementation "androidx.room:room-testing:$roomVersion"
