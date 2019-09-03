@@ -1,6 +1,7 @@
 package eu.zkkn.android.disruptions.ui.about
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
@@ -34,8 +35,21 @@ class AboutFragment : Fragment() {
             }
         }
 
+        view.btShare.apply {
+            text = resources.getStringArray(R.array.button_share_alternatives).random()
+            setOnClickListener { showShareDialog() }
+        }
+
+
         return view
 
+    }
+
+    private fun showShareDialog() {
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.type = "text/plain"
+        intent.putExtra(Intent.EXTRA_TEXT, "https://disruptions.page.link/Hi")
+        startActivity(Intent.createChooser(intent, getString(R.string.button_share)))
     }
 
     private fun showDebugInfo() {

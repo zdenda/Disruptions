@@ -58,42 +58,35 @@
             tools:text="Verze: 1.0.0" />
 
         <TextView
-            android:id="@+id/tvPrivacyPolicyLink"
-            android:layout_width="wrap_content"
+            android:id="@+id/tv4"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="24dp"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
-            android:autoLink="none"
-            android:padding="4dp"
-            android:text="@string/privacy_policy_link"
-            android:textColorLink="@color/colorPrimaryDark"
+            android:gravity="center_horizontal"
+            android:text="@string/share"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvVersion"
-            tools:text="Ochrana soukromí"
-            tools:textColor="@color/colorPrimaryDark" />
+            app:layout_constraintTop_toBottomOf="@+id/tvVersion" />
 
-        <TextView
-            android:id="@+id/tvSourceCodeLink"
+        <Button
+            android:id="@+id/btShare"
+            style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
-            android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
-            android:autoLink="none"
-            android:padding="4dp"
-            android:text="@string/source_code_link"
-            android:textColorLink="@color/colorPrimaryDark"
+            android:text="@string/button_share"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvPrivacyPolicyLink"
-            tools:text="Zdrojové kódy"
-            tools:textColor="@color/colorPrimaryDark" />
+            app:layout_constraintTop_toBottomOf="@+id/tv4"
+            app:icon="@drawable/ic_share" />
 
         <TextView
             android:id="@+id/tv2"
@@ -107,7 +100,7 @@
             android:text="@string/data_source"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvSourceCodeLink" />
+            app:layout_constraintTop_toBottomOf="@+id/btShare" />
 
         <ImageView
             android:id="@+id/iv2"
@@ -156,11 +149,50 @@
             android:padding="4dp"
             android:text="@string/ropid_link"
             android:textColorLink="@color/colorPrimaryDark"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv3"
             tools:text="www.PID.cz"
+            tools:textColor="@color/colorPrimaryDark" />
+
+        <TextView
+            android:id="@+id/tvPrivacyPolicyLink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:autoLink="none"
+            android:padding="4dp"
+            android:text="@string/privacy_policy_link"
+            android:textColorLink="@color/colorPrimaryDark"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvRopidLink"
+            tools:text="Ochrana soukromí"
+            tools:textColor="@color/colorPrimaryDark" />
+
+        <TextView
+            android:id="@+id/tvSourceCodeLink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="32dp"
+            android:autoLink="none"
+            android:padding="4dp"
+            android:text="@string/source_code_link"
+            android:textColorLink="@color/colorPrimaryDark"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvPrivacyPolicyLink"
+            tools:text="Zdrojové kódy"
             tools:textColor="@color/colorPrimaryDark" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

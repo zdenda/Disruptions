@@ -28,6 +28,13 @@
     <string name="data_source">Data poskytuje:</string>
     <string name="ropid">ROPID - Regionální organizátor Pražské integrované dopravy</string>
     <string name="ropid_link"><u><a href="https://goo.gl/1ZmRnu">www.PID.cz</a></u></string>
+    <string name="share">Přijde vám aplikace užitečná?</string>
+    <string name="button_share">Sdílet odkaz ke stažení</string>
+    <string-array name="button_share_alternatives">
+        <item>Šiřte její slávu!</item>
+        <item>Pošlete ji dál!</item>
+    </string-array>
+
 
     <string name="dialog_debug_title">Info pro ladění</string>
     <string name="dialog_debug_last_subscriptions_refresh">
