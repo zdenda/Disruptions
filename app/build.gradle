@@ -52,29 +52,29 @@ dependencies {
 
     // define versions used for multiple dependencies
     def roomVersion = '2.1.0'
-    def lifecycleVersion = '2.2.0-alpha03'
-    def navVersion = '2.1.0-rc01'
+    def lifecycleVersion = '2.2.0-alpha04'
+    def navVersion = '2.1.0'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':common')
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.1.0-rc01'
-    implementation 'androidx.core:core-ktx:1.2.0-alpha03'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.core:core-ktx:1.2.0-alpha04'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta1' // beta2 breaks layout
-    implementation 'androidx.vectordrawable:vectordrawable:1.1.0-rc01'
-    implementation 'com.google.android.material:material:1.1.0-alpha09'
+    implementation 'androidx.vectordrawable:vectordrawable:1.1.0'
+    implementation 'com.google.android.material:material:1.1.0-alpha10'
     implementation 'com.google.firebase:firebase-core:17.2.0'
     implementation 'com.google.firebase:firebase-messaging:20.0.0'
     implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
     implementation "androidx.room:room-runtime:$roomVersion"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycleVersion"
-    implementation 'androidx.fragment:fragment-ktx:1.2.0-alpha02'
+    implementation 'androidx.fragment:fragment-ktx:1.2.0-alpha03'
     implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navVersion"
-    implementation 'androidx.recyclerview:recyclerview:1.1.0-beta03'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0-beta04'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.work:work-runtime-ktx:2.2.0'
 
@@ -83,7 +83,7 @@ dependencies {
     // Android Studio reports Incorrect Scope error in unit tests with JUnit version 4.13-beta-3
     testImplementation 'junit:junit:4.12'
 
-    androidTestImplementation 'androidx.arch.core:core-testing:2.1.0-rc01'
+    androidTestImplementation 'androidx.arch.core:core-testing:2.1.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     androidTestImplementation "androidx.room:room-testing:$roomVersion"
