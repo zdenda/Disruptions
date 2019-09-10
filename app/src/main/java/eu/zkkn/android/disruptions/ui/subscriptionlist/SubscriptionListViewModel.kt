@@ -9,6 +9,7 @@ import com.google.firebase.messaging.FirebaseMessaging
 import eu.zkkn.android.disruptions.R
 import eu.zkkn.android.disruptions.data.Subscription
 import eu.zkkn.android.disruptions.data.SubscriptionRepository
+import eu.zkkn.android.disruptions.utils.Analytics
 import eu.zkkn.android.disruptions.utils.isValidLineName
 import eu.zkkn.disruptions.common.FcmConstants
 
@@ -30,6 +31,7 @@ class SubscriptionListViewModel(application: Application) : AndroidViewModel(app
     private val _subscribeStatus: MutableLiveData<SubscribeState> =
         MutableLiveData(SubscribeState(false, null))
 
+    // publicly expose just LiveData (hide MutableLiveData)
     val subscribeStatus: LiveData<SubscribeState> get() = _subscribeStatus
 
     val subscriptions: LiveData<List<Subscription>> by lazy {
@@ -43,7 +45,8 @@ class SubscriptionListViewModel(application: Application) : AndroidViewModel(app
             _subscribeStatus.value = SubscribeState(false, R.string.input_line_wrong_name)
             return
         }
-        FirebaseMessaging.getInstance().subscribeToTopic(FcmConstants.topicNameForLine(lineName))
+        val topicName = FcmConstants.topicNameForLine(lineName)
+        FirebaseMessaging.getInstance().subscribeToTopic(topicName)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     subscriptionRepository.addSubscription(lineName.trim())
@@ -53,15 +56,18 @@ class SubscriptionListViewModel(application: Application) : AndroidViewModel(app
                 }
 
             }
+        Analytics.logSubscribe(topicName)
     }
 
     fun removeSubscription(lineName: String) {
-        FirebaseMessaging.getInstance().unsubscribeFromTopic(FcmConstants.topicNameForLine(lineName))
+        val topicName = FcmConstants.topicNameForLine(lineName)
+        FirebaseMessaging.getInstance().unsubscribeFromTopic(topicName)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     subscriptionRepository.removeSubscription(lineName.trim())
                 }
             }
+        Analytics.logUnsubscribe(topicName)
     }
 
 }

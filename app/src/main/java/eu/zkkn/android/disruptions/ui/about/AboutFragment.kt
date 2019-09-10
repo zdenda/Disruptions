@@ -53,6 +53,7 @@ class AboutFragment : Fragment() {
     }
 
     private fun showDebugInfo() {
+        //TODO: use MaterialAlertDialogBuilder which should look the same on all platform versions
         AlertDialog.Builder(context).apply {
             setTitle(R.string.dialog_debug_title)
             setMessage(getString(R.string.dialog_debug_last_subscriptions_refresh,
