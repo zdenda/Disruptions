@@ -54,6 +54,7 @@ dependencies {
     def roomVersion = '2.1.0'
     def lifecycleVersion = '2.2.0-alpha04'
     def navVersion = '2.1.0'
+    def archCoreVersion = '2.1.0'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':common')
@@ -78,13 +79,14 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0-beta04'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.work:work-runtime-ktx:2.2.0'
+    implementation "androidx.arch.core:core-runtime:$archCoreVersion"
 
     debugImplementation 'com.facebook.stetho:stetho:1.5.1'
 
     // Android Studio reports Incorrect Scope error in unit tests with JUnit version 4.13-beta-3
     testImplementation 'junit:junit:4.12'
 
-    androidTestImplementation 'androidx.arch.core:core-testing:2.1.0'
+    androidTestImplementation "androidx.arch.core:core-testing:$archCoreVersion"
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     androidTestImplementation "androidx.room:room-testing:$roomVersion"
