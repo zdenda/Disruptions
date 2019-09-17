@@ -56,12 +56,6 @@ abstract class AppDatabase : RoomDatabase() {
                     override fun onCreate(db: SupportSQLiteDatabase) {
                         super.onCreate(db)
                         Log.d(TAG, "Create App Database (with Room)")
-                        ioThread {
-                            val subscriptionDao = getInstance(context).subscriptionDao()
-                            for (topic in Preferences.getTopics(context)) {
-                                subscriptionDao.insert(Subscription(0, topic.toUpperCase()))
-                            }
-                        }
                     }
                 })
                 .build()
