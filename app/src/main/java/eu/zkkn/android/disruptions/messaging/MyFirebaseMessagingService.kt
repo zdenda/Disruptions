@@ -108,14 +108,14 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     }
 
     private fun handleHeartbeatMsg(remoteMessage: RemoteMessage) {
-        // show only in debug builds
-        if (!BuildConfig.DEBUG) return
-
+        // save times from Heartbeat
         val received = System.currentTimeMillis()
         val sent = remoteMessage.sentTime
         Preferences.setLastHeartbeatReceivedTime(this, received)
         Preferences.setLastHeartbeatSentTime(this, sent)
 
+        // show notification only in debug builds
+        if (!BuildConfig.DEBUG) return
         val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US)
         val message = "${dateFormat.format(Date(received))} (Sent: ${dateFormat.format(Date(sent))})"
         showHeartBeatNotification(message)
