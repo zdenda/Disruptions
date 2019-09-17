@@ -1,12 +1,12 @@
 package eu.zkkn.android.disruptions.ui.about
 
-import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import eu.zkkn.android.disruptions.BuildConfig
 import eu.zkkn.android.disruptions.R
@@ -53,8 +53,8 @@ class AboutFragment : Fragment() {
     }
 
     private fun showDebugInfo() {
-        //TODO: use MaterialAlertDialogBuilder which should look the same on all platform versions
-        AlertDialog.Builder(context).apply {
+        // or MaterialAlertDialogBuilder could be also used
+        AlertDialog.Builder(requireContext()).apply {
             setTitle(R.string.dialog_debug_title)
             setMessage(getString(R.string.dialog_debug_last_subscriptions_refresh,
                 Preferences.getLastSubscriptionRefreshTime(context),
