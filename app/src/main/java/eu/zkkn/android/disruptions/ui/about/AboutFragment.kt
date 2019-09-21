@@ -7,14 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
-import androidx.fragment.app.Fragment
 import eu.zkkn.android.disruptions.BuildConfig
 import eu.zkkn.android.disruptions.R
 import eu.zkkn.android.disruptions.data.Preferences
+import eu.zkkn.android.disruptions.ui.AnalyticsFragment
 import kotlinx.android.synthetic.main.fragment_about.view.*
 
 
-class AboutFragment : Fragment() {
+class AboutFragment : AnalyticsFragment() {
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

@@ -1,11 +1,13 @@
 package eu.zkkn.android.disruptions
 
-import android.app.Application
+import android.annotation.SuppressLint
 import com.facebook.stetho.Stetho
 
 
-@Suppress("unused") // it's used for debug builds
-class DebugApplication : Application() {
+// class is used and registered for debug build
+@Suppress("unused")
+@SuppressLint("Registered")
+class DebugApplication : MainApplication() {
 
     override fun onCreate() {
         super.onCreate()

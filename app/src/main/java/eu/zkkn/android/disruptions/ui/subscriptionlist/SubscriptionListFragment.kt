@@ -8,17 +8,17 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.EdgeEffect
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import eu.zkkn.android.disruptions.R
 import eu.zkkn.android.disruptions.data.Subscription
+import eu.zkkn.android.disruptions.ui.AnalyticsFragment
 import kotlinx.android.synthetic.main.fragment_subscriptions.*
 
 
-class SubscriptionListFragment : Fragment() {
+class SubscriptionListFragment : AnalyticsFragment() {
 
     private val viewModel: SubscriptionListViewModel by viewModels()
 

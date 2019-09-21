@@ -1,7 +1,6 @@
 package eu.zkkn.android.disruptions.ui.disruptiondetail
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,9 +10,10 @@ import kotlinx.android.synthetic.main.fragment_disruption.*
 import android.graphics.Bitmap
 import android.webkit.WebView
 import eu.zkkn.android.disruptions.R
+import eu.zkkn.android.disruptions.ui.AnalyticsFragment
 
 
-class DisruptionDetailFragment : Fragment() {
+class DisruptionDetailFragment : AnalyticsFragment() {
 
     private val args by navArgs<DisruptionDetailFragmentArgs>()
 

@@ -10,7 +10,6 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.firebase.iid.FirebaseInstanceId
 import eu.zkkn.android.disruptions.data.Preferences
-import eu.zkkn.android.disruptions.utils.Analytics
 import eu.zkkn.android.disruptions.workers.RefreshSubscriptionsWorker
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -28,8 +27,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        Analytics.init(this) //TODO: move to Application.onCreate()
 
         navController = findNavController(R.id.nav_host_fragment)
         val appBarConfiguration = AppBarConfiguration(
