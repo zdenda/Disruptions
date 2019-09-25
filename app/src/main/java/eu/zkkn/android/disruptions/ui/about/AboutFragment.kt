@@ -11,10 +11,15 @@ import eu.zkkn.android.disruptions.BuildConfig
 import eu.zkkn.android.disruptions.R
 import eu.zkkn.android.disruptions.data.Preferences
 import eu.zkkn.android.disruptions.ui.AnalyticsFragment
+import eu.zkkn.android.disruptions.utils.Analytics
 import kotlinx.android.synthetic.main.fragment_about.view.*
 
 
 class AboutFragment : AnalyticsFragment() {
+
+    companion object {
+        private const val SHARE_LINK = "https://disruptions.page.link/Hi"
+    }
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -37,7 +42,10 @@ class AboutFragment : AnalyticsFragment() {
 
         view.btShare.apply {
             text = resources.getStringArray(R.array.button_share_alternatives).random()
-            setOnClickListener { showShareDialog() }
+            setOnClickListener {
+                Analytics.logShare(SHARE_LINK)
+                showShareDialog()
+            }
         }
 
 
@@ -48,7 +56,7 @@ class AboutFragment : AnalyticsFragment() {
     private fun showShareDialog() {
         val intent = Intent(Intent.ACTION_SEND)
         intent.type = "text/plain"
-        intent.putExtra(Intent.EXTRA_TEXT, "https://disruptions.page.link/Hi")
+        intent.putExtra(Intent.EXTRA_TEXT, SHARE_LINK)
         startActivity(Intent.createChooser(intent, getString(R.string.button_share)))
     }
 

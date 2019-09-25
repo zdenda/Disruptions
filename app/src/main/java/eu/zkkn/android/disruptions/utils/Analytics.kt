@@ -28,4 +28,13 @@ object Analytics {
         firebaseAnalytics.logEvent("unsubscribe", bundleOf("topic_name" to topic))
     }
 
+    fun logSubscribeForm(lineName: String) {
+        firebaseAnalytics.logEvent("form_subscribe", bundleOf("line_name" to lineName))
+    }
+
+    fun logShare(itemId: String) {
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SHARE,
+            bundleOf(FirebaseAnalytics.Param.ITEM_ID to itemId))
+    }
+
 }

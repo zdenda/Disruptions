@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import eu.zkkn.android.disruptions.R
 import eu.zkkn.android.disruptions.data.Subscription
 import eu.zkkn.android.disruptions.ui.AnalyticsFragment
+import eu.zkkn.android.disruptions.utils.Analytics
 import kotlinx.android.synthetic.main.fragment_subscriptions.*
 
 
@@ -94,6 +95,7 @@ class SubscriptionListFragment : AnalyticsFragment() {
 
     private fun onSubscribeClick() {
         val lineName = tiLine.editText?.text.toString().trim()
+        Analytics.logSubscribeForm(lineName)
         if (lineName.isNotBlank()) {
             viewModel.addSubscription(lineName)
         }
