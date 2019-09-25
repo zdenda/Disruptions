@@ -15,8 +15,8 @@ android {
         // TODO: test on Android Q
         //noinspection OldTargetApi
         targetSdkVersion 28
-        versionCode 14
-        versionName "0.7.2-α2"
+        versionCode 15
+        versionName "0.7.2"
         resConfigs "en", "cs"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -52,8 +52,8 @@ dependencies {
 
     // define versions used for multiple dependencies
     def roomVersion = '2.1.0'
-    def lifecycleVersion = '2.2.0-alpha04'
-    def navVersion = '2.1.0'
+    def lifecycleVersion = '2.2.0-alpha05'
+    def navVersion = navigationVersion // version of Navigation is defined in top-level build file
     def archCoreVersion = '2.1.0'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -73,7 +73,7 @@ dependencies {
     implementation "androidx.room:room-runtime:$roomVersion"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycleVersion"
-    implementation 'androidx.fragment:fragment-ktx:1.2.0-alpha03'
+    implementation 'androidx.fragment:fragment-ktx:1.2.0-alpha04'
     implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navVersion"
     implementation 'androidx.preference:preference-ktx:1.1.0'
