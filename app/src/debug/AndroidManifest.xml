@@ -5,7 +5,7 @@
 
     <application
         tools:replace="android:name"
-        android:name=".DebugApplication"
+        android:name="eu.zkkn.android.disruptions.DebugApplication"
         tools:ignore="GoogleAppIndexingWarning" />
 
 </manifest>
