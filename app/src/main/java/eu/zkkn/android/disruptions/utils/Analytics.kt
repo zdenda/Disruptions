@@ -2,6 +2,7 @@ package eu.zkkn.android.disruptions.utils
 
 import android.app.Activity
 import android.content.Context
+import android.provider.Settings
 import androidx.core.os.bundleOf
 import com.google.firebase.analytics.FirebaseAnalytics
 
@@ -13,6 +14,9 @@ object Analytics {
 
     fun init(context: Context) {
         firebaseAnalytics = FirebaseAnalytics.getInstance(context.applicationContext)
+        if (shouldExcludeDeviceFromAnalytics(context)) {
+            firebaseAnalytics.setAnalyticsCollectionEnabled(false)
+        }
     }
 
     fun sendScreenView(screenName: String, activity: Activity) {
@@ -35,6 +39,11 @@ object Analytics {
     fun logShare(itemId: String) {
         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SHARE,
             bundleOf(FirebaseAnalytics.Param.ITEM_ID to itemId))
+    }
+
+    private fun shouldExcludeDeviceFromAnalytics(context: Context): Boolean {
+        // exclude Firebase Test Lab and Google Play Pre-launch Report devices from analytics
+        return "true" == Settings.System.getString(context.contentResolver, "firebase.test.lab")
     }
 
 }
