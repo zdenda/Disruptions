@@ -14,8 +14,8 @@ object Analytics {
 
     fun init(context: Context) {
         firebaseAnalytics = FirebaseAnalytics.getInstance(context.applicationContext)
-        if (shouldExcludeDeviceFromAnalytics(context)) {
-            firebaseAnalytics.setAnalyticsCollectionEnabled(false)
+        if (!shouldExcludeDeviceFromAnalytics(context)) {
+            firebaseAnalytics.setAnalyticsCollectionEnabled(true)
         }
     }
 
