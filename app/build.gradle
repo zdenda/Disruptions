@@ -17,7 +17,7 @@ android {
         //noinspection OldTargetApi
         targetSdkVersion 28
         versionCode 18
-        versionName "0.7.5"
+        versionName "0.7.6-α2"
         resConfigs "en", "cs"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -52,8 +52,8 @@ android {
 dependencies {
 
     // define versions used for multiple dependencies
-    def roomVersion = '2.2.0'
-    def lifecycleVersion = '2.2.0-beta01'
+    def roomVersion = '2.2.1'
+    def lifecycleVersion = '2.2.0-rc02'
     def navVersion = navigationVersion // version of Navigation is defined in top-level build file
     def archCoreVersion = '2.1.0'
 
@@ -63,23 +63,23 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.core:core-ktx:1.2.0-beta01'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta1' // beta2 breaks layout
+    implementation 'androidx.core:core-ktx:1.2.0-beta02'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta3'
     implementation 'androidx.vectordrawable:vectordrawable:1.1.0'
-    implementation 'com.google.android.material:material:1.1.0-beta01'
-    implementation 'com.google.firebase:firebase-core:17.2.0'
-    implementation 'com.google.firebase:firebase-analytics:17.2.0'
+    implementation 'com.google.android.material:material:1.1.0-beta02'
+    implementation 'com.google.firebase:firebase-core:17.2.1'
+    implementation 'com.google.firebase:firebase-analytics:17.2.1'
     implementation 'com.google.firebase:firebase-messaging:20.0.0'
     implementation 'com.google.firebase:firebase-perf:19.0.1'
     implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
     implementation "androidx.room:room-runtime:$roomVersion"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycleVersion"
-    implementation 'androidx.fragment:fragment-ktx:1.2.0-beta02'
+    implementation 'androidx.fragment:fragment-ktx:1.2.0-rc02'
     implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navVersion"
     implementation 'androidx.preference:preference-ktx:1.1.0'
-    implementation 'androidx.recyclerview:recyclerview:1.1.0-beta05'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0-rc01'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.work:work-runtime-ktx:2.2.0'
     implementation "androidx.arch.core:core-runtime:$archCoreVersion"
