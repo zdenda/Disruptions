@@ -32,7 +32,8 @@
     <string name="button_share">Sdílet odkaz ke stažení</string>
     <string-array name="button_share_alternatives">
         <item>Šiřte její slávu!</item>
-        <item>Pošlete ji dál!</item>
+        <item>Pošlete ji do světa!</item>
+        <item>Tak nebuďte lakomí\na pošlete ji dál!</item>
     </string-array>
 
 

@@ -82,11 +82,14 @@
             android:layout_marginLeft="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
             android:text="@string/button_share"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv4"
-            app:icon="@drawable/ic_share" />
+            app:icon="@drawable/ic_share"
+            tools:text="Tak nebuďte lakomí\na pošlete ji dál!" />
 
         <TextView
             android:id="@+id/tv2"
