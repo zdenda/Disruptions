@@ -4,6 +4,7 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'io.fabric' // Firebase Crashlytics
 apply plugin: 'androidx.navigation.safeargs.kotlin'
+apply plugin: 'com.google.android.gms.oss-licenses-plugin'
 apply plugin: 'com.google.firebase.firebase-perf' // Firebase Performance Monitoring
 
 
@@ -16,8 +17,8 @@ android {
         // TODO: test on Android Q
         //noinspection OldTargetApi
         targetSdkVersion 28
-        versionCode 18
-        versionName "0.7.6-α2"
+        versionCode 19
+        versionName "0.7.6"
         resConfigs "en", "cs"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -83,6 +84,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.work:work-runtime-ktx:2.2.0'
     implementation "androidx.arch.core:core-runtime:$archCoreVersion"
+    implementation 'com.google.android.gms:play-services-oss-licenses:17.0.0'
 
     debugImplementation 'com.facebook.stetho:stetho:1.5.1'
 

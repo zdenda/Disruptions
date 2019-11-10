@@ -23,6 +23,7 @@
     </plurals>
 
     <string name="version">Verze: %1$s</string>
+    <string name="oss_licenses">Licence použitých komponent</string>
     <string name="privacy_policy_link"><u><a href="https://goo.gl/jytXTT">Ochrana soukromí</a></u></string>
     <string name="source_code_link"><u><a href="https://goo.gl/S3CG25">Zdrojové kódy</a></u></string>
     <string name="data_source">Data poskytuje:</string>

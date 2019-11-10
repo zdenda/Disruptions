@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import eu.zkkn.android.disruptions.BuildConfig
 import eu.zkkn.android.disruptions.R
 import eu.zkkn.android.disruptions.data.Preferences
@@ -31,6 +32,14 @@ class AboutFragment : AnalyticsFragment() {
         view.tvPrivacyPolicyLink.movementMethod = LinkMovementMethod.getInstance()
         view.tvSourceCodeLink.movementMethod = LinkMovementMethod.getInstance()
         view.tvRopidLink.movementMethod = LinkMovementMethod.getInstance()
+
+        view.tvOssLicenses.apply {
+            paint.isUnderlineText = true
+            setOnClickListener {
+                OssLicensesMenuActivity.setActivityTitle(getString(R.string.oss_licenses))
+                startActivity(Intent(requireContext(), OssLicensesMenuActivity::class.java))
+            }
+        }
 
         // show debug window on short and long click on app logo
         view.ivAppLogo.setOnClickListener {
