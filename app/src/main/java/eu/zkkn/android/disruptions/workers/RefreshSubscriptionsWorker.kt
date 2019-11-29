@@ -26,7 +26,7 @@ class RefreshSubscriptionsWorker(appContext: Context, params: WorkerParameters) 
 
     companion object {
 
-        const val VERSION = 10
+        const val VERSION = 12
 
         private const val WORK_NAME = "eu.zkkn.android.disruptions.workers.RefreshSubscriptionsWorker"
 
@@ -46,7 +46,7 @@ class RefreshSubscriptionsWorker(appContext: Context, params: WorkerParameters) 
                 WORK_NAME,
                 ExistingPeriodicWorkPolicy.REPLACE,
                 //Interval resets (job is rescheduled) on device reboot, so it might never run if interval is too long
-                PeriodicWorkRequestBuilder<RefreshSubscriptionsWorker>(14, TimeUnit.DAYS, 4, TimeUnit.DAYS)
+                PeriodicWorkRequestBuilder<RefreshSubscriptionsWorker>(10, TimeUnit.DAYS, 4, TimeUnit.DAYS)
                     .addTag(WORK_NAME)
                     .setBackoffCriteria(
                         BackoffPolicy.EXPONENTIAL,

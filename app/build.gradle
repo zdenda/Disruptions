@@ -18,7 +18,7 @@ android {
         //noinspection OldTargetApi
         targetSdkVersion 28
         versionCode 19
-        versionName "0.7.6"
+        versionName "0.7.7-α5"
         resConfigs "en", "cs"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -57,6 +57,7 @@ dependencies {
     def lifecycleVersion = '2.2.0-rc02'
     def navVersion = navigationVersion // version of Navigation is defined in top-level build file
     def archCoreVersion = '2.1.0'
+    def workVersion = '2.2.0'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':common')
@@ -82,7 +83,8 @@ dependencies {
     implementation 'androidx.preference:preference-ktx:1.1.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0-rc01'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.work:work-runtime-ktx:2.2.0'
+    implementation "androidx.work:work-runtime-ktx:$workVersion"
+    implementation "androidx.work:work-gcm:$workVersion"
     implementation "androidx.arch.core:core-runtime:$archCoreVersion"
     implementation 'com.google.android.gms:play-services-oss-licenses:17.0.0'
 
