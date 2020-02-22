@@ -10,15 +10,15 @@ apply plugin: 'com.google.firebase.firebase-perf' // Firebase Performance Monito
 
 android {
     compileSdkVersion 29
-    buildToolsVersion = '29.0.2'
+    buildToolsVersion = '29.0.3'
     defaultConfig {
         applicationId "eu.zkkn.android.disruptions"
         minSdkVersion 16
         // TODO: test on Android Q
         //noinspection OldTargetApi
         targetSdkVersion 28
-        versionCode 20
-        versionName "0.7.7"
+        versionCode 21
+        versionName "0.7.8"
         resConfigs "en", "cs"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -53,11 +53,11 @@ android {
 dependencies {
 
     // define versions used for multiple dependencies
-    def roomVersion = '2.2.2'
-    def lifecycleVersion = '2.2.0-rc02'
+    def roomVersion = '2.2.3'
+    def lifecycleVersion = '2.2.0'
     def navVersion = navigationVersion // version of Navigation is defined in top-level build file
     def archCoreVersion = '2.1.0'
-    def workVersion = '2.2.0'
+    def workVersion = '2.3.1'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':common')
@@ -65,19 +65,19 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.core:core-ktx:1.2.0-rc01'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta3'
+    implementation 'androidx.core:core-ktx:1.2.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta4'
     implementation 'androidx.vectordrawable:vectordrawable:1.1.0'
-    implementation 'com.google.android.material:material:1.1.0-beta02'
-    implementation 'com.google.firebase:firebase-core:17.2.1'
-    implementation 'com.google.firebase:firebase-analytics:17.2.1'
-    implementation 'com.google.firebase:firebase-messaging:20.0.1'
-    implementation 'com.google.firebase:firebase-perf:19.0.2'
+    implementation 'com.google.android.material:material:1.1.0'
+    implementation 'com.google.firebase:firebase-core:17.2.2'
+    implementation 'com.google.firebase:firebase-analytics:17.2.2'
+    implementation 'com.google.firebase:firebase-messaging:20.1.0'
+    implementation 'com.google.firebase:firebase-perf:19.0.5'
     implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
     implementation "androidx.room:room-runtime:$roomVersion"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycleVersion"
-    implementation 'androidx.fragment:fragment-ktx:1.2.0-rc02'
+    implementation 'androidx.fragment:fragment-ktx:1.2.1'
     implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navVersion"
     implementation 'androidx.preference:preference-ktx:1.1.0'
@@ -91,7 +91,7 @@ dependencies {
     debugImplementation 'com.facebook.stetho:stetho:1.5.1'
 
     // Android Studio reports Incorrect Scope error in unit tests with JUnit version 4.13-beta-3
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.13'
 
     androidTestImplementation "androidx.arch.core:core-testing:$archCoreVersion"
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
