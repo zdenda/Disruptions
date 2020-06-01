@@ -28,7 +28,7 @@ apply plugin: 'com.google.cloud.tools.appengine'
 dependencies {
 
     // define versions used for multiple dependencies
-    def appEngineVersion = '1.9.79'
+    def appEngineVersion = '1.9.80'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':common')
@@ -41,7 +41,7 @@ dependencies {
     //implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'com.googlecode.objectify:objectify:5.1.24'
-    implementation 'com.google.firebase:firebase-admin:6.12.2'
+    implementation 'com.google.firebase:firebase-admin:6.13.0'
     implementation 'org.slf4j:slf4j-nop:1.7.30'
 
     // prevent conflict in transitive dependencies for objectify and firebase-admin
