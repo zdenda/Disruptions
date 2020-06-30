@@ -9,7 +9,6 @@
     </system-properties>
     <!-- https://cloud.google.com/appengine/docs/standard/java/config/appref#scaling_elements -->
     <automatic-scaling>
-        <max-instances>2</max-instances>
-        <target-cpu-utilization>0.95</target-cpu-utilization>
+        <max-instances>1</max-instances>
     </automatic-scaling>
 </appengine-web-app>
