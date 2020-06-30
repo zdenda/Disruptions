@@ -11,7 +11,7 @@ buildscript {
     ext {
         // define versions used in modules
         kotlin_version = '1.3.72'
-        navigationVersion = '2.2.2'
+        navigationVersion = '2.3.0'
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:4.0.0'
