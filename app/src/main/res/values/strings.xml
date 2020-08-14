@@ -13,7 +13,6 @@
     <string name="input_line_wrong_name">Zadané jméno je neplatné!</string>
     <string name="fcm_subscribe_failure">Přihlášení se nezdařilo.</string>
     <string name="button_subscribe">Přidat</string>
-    <string name="button_unsubscribe">Odebrat</string>
 
     <string name="disruptions_empty">Zatím žádné upozornění na mimořádnost v MHD.</string>
     <string name="button_to_subscriptions">Přihlaste se k odběru</string>

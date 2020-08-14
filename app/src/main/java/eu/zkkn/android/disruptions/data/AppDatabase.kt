@@ -10,7 +10,6 @@ import androidx.room.TypeConverters
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import eu.zkkn.android.disruptions.utils.RoomTypeConverters
-import eu.zkkn.android.disruptions.utils.ioThread
 
 
 @Database(entities = [Subscription::class, Disruption::class], version = 2)

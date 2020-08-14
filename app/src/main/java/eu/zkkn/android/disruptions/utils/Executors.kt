@@ -24,6 +24,7 @@ fun ioThread(f : () -> Unit) {
 /**
  * Utility method to run blocks on a dedicated threads for background work.
  */
+@Suppress("unused")
 fun backgroundThread(f: () -> Unit) {
     BACKGROUND_WORK_EXECUTOR.execute(f)
 }
