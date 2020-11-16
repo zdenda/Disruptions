@@ -9,11 +9,9 @@ import android.view.inputmethod.EditorInfo
 import android.widget.EdgeEffect
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import eu.zkkn.android.disruptions.R
-import eu.zkkn.android.disruptions.data.Subscription
 import eu.zkkn.android.disruptions.ui.AnalyticsFragment
 import eu.zkkn.android.disruptions.utils.Analytics
 import kotlinx.android.synthetic.main.fragment_subscriptions.*
@@ -75,12 +73,12 @@ class SubscriptionListFragment : AnalyticsFragment() {
 
         btSubscribe.setOnClickListener { onSubscribeClick() }
 
-        viewModel.subscriptions.observe(viewLifecycleOwner, Observer<List<Subscription>> { subscriptions ->
+        viewModel.subscriptions.observe(viewLifecycleOwner, { subscriptions ->
             empty.visibility = if (subscriptions.isEmpty()) View.VISIBLE else View.GONE
             adapter.submitList(subscriptions)
         })
 
-        viewModel.subscribeStatus.observe(viewLifecycleOwner, Observer { subscribeState ->
+        viewModel.subscribeStatus.observe(viewLifecycleOwner, { subscribeState ->
             val errorMsgResId = subscribeState.errorMsgResIdIfNotHandled
             tiLine.error = if (errorMsgResId != null) getString(errorMsgResId) else null
             if (!subscribeState.inProgress && errorMsgResId == null) {

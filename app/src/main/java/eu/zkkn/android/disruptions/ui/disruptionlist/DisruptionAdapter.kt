@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import eu.zkkn.android.disruptions.R
 import eu.zkkn.android.disruptions.data.Disruption
 import kotlinx.android.synthetic.main.list_item_disruption.view.*
-
+import java.util.Locale
 
 //TODO: use paging and PagedListAdapter
 //https://developer.android.com/topic/libraries/architecture/paging
@@ -43,7 +43,7 @@ class DisruptionAdapter : ListAdapter<Disruption, DisruptionAdapter.ViewHolder>(
                 text = DateUtils.getRelativeDateTimeString(context, item.received.time, DateUtils.MINUTE_IN_MILLIS,
                     DateUtils.DAY_IN_MILLIS, 0)
             }
-            tvTitle.text = item.title.capitalize()
+            tvTitle.text = item.title.capitalize(Locale.getDefault())
             tvTimeInfo.text = item.timeInfo
         }
     }

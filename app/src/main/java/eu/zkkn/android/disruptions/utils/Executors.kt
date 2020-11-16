@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit
 private val NUMBER_OF_CORES = Runtime.getRuntime().availableProcessors()
 
 private val BACKGROUND_WORK_EXECUTOR = ThreadPoolExecutor(NUMBER_OF_CORES, NUMBER_OF_CORES,
-    1L, TimeUnit.SECONDS, LinkedBlockingQueue<Runnable>())
+    1L, TimeUnit.SECONDS, LinkedBlockingQueue())
 
 private val IO_EXECUTOR = Executors.newSingleThreadExecutor()
 

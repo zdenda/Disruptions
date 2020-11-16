@@ -8,7 +8,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.messaging.FirebaseMessaging
 import eu.zkkn.android.disruptions.data.Preferences
 import eu.zkkn.android.disruptions.utils.ioThread
 import eu.zkkn.android.disruptions.workers.RefreshSubscriptionsWorker
@@ -36,12 +36,12 @@ class MainActivity : AppCompatActivity() {
         bottomNavigation.setupWithNavController(navController)
 
         //TODO check play services
-        FirebaseInstanceId.getInstance().instanceId.addOnCompleteListener { task ->
+        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
             if (!task.isSuccessful) {
-                Log.w(TAG, "Firebase getInstanceId() failed", task.exception)
+                Log.w(TAG, "Fetching FCM registration token failed", task.exception)
                 return@addOnCompleteListener
             }
-            Log.d(TAG, "Firebase token: ${task.result?.token}")
+            Log.d(TAG, "FCM token: ${task.result}")
         }
 
         ioThread {

@@ -5,11 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DividerItemDecoration
 import eu.zkkn.android.disruptions.R
-import eu.zkkn.android.disruptions.data.Disruption
 import eu.zkkn.android.disruptions.ui.AnalyticsFragment
 import kotlinx.android.synthetic.main.fragment_disruptions.*
 
@@ -38,7 +36,7 @@ class DisruptionListFragment : AnalyticsFragment() {
         btToSubscriptions.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.subscriptionsFragment))
 
 
-        viewModel.disruptions.observe(viewLifecycleOwner, Observer<List<Disruption>> { disruptions ->
+        viewModel.disruptions.observe(viewLifecycleOwner, { disruptions ->
             empty.visibility = if (disruptions.isEmpty()) View.VISIBLE else View.GONE
             adapter.submitList(disruptions)
         })

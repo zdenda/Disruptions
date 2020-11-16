@@ -20,7 +20,12 @@ object Analytics {
     }
 
     fun sendScreenView(screenName: String, activity: Activity) {
-        firebaseAnalytics.setCurrentScreen(activity, screenName, null /* class override */)
+        firebaseAnalytics.logEvent(
+            FirebaseAnalytics.Event.SCREEN_VIEW, bundleOf(
+                FirebaseAnalytics.Param.SCREEN_NAME to screenName,
+                FirebaseAnalytics.Param.SCREEN_CLASS to activity.javaClass.simpleName
+            )
+        )
     }
 
     fun logSubscribe(topic: String) {
