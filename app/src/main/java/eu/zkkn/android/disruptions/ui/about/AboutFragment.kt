@@ -15,7 +15,7 @@ import eu.zkkn.android.disruptions.ui.AnalyticsFragment
 import eu.zkkn.android.disruptions.utils.Analytics
 import kotlinx.android.synthetic.main.fragment_about.view.*
 
-
+//TODO: Add in-app review https://android-developers.googleblog.com/2020/08/in-app-review-api.html
 class AboutFragment : AnalyticsFragment() {
 
     companion object {
