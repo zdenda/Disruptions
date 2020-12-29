@@ -10,9 +10,9 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.firebase.messaging.FirebaseMessaging
 import eu.zkkn.android.disruptions.data.Preferences
+import eu.zkkn.android.disruptions.databinding.ActivityMainBinding
 import eu.zkkn.android.disruptions.utils.ioThread
 import eu.zkkn.android.disruptions.workers.RefreshSubscriptionsWorker
-import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -21,19 +21,21 @@ class MainActivity : AppCompatActivity() {
         private val TAG = MainActivity::class.simpleName
     }
 
-
+    private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         navController = findNavController(R.id.nav_host_fragment)
         val appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.subscriptionsFragment, R.id.disruptionsFragment, R.id.aboutFragment))
+            setOf(R.id.subscriptionsFragment, R.id.disruptionsFragment, R.id.aboutFragment)
+        )
         setupActionBarWithNavController(navController, appBarConfiguration)
-        bottomNavigation.setupWithNavController(navController)
+        binding.bottomNavigation.setupWithNavController(navController)
 
         //TODO check play services
         FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->

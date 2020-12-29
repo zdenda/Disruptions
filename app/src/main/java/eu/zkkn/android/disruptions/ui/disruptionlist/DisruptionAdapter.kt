@@ -4,15 +4,15 @@ import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import eu.zkkn.android.disruptions.R
 import eu.zkkn.android.disruptions.data.Disruption
-import kotlinx.android.synthetic.main.list_item_disruption.view.*
+import eu.zkkn.android.disruptions.databinding.ListItemDisruptionBinding
 import java.util.Locale
+
 
 //TODO: use paging and PagedListAdapter
 //https://developer.android.com/topic/libraries/architecture/paging
@@ -26,22 +26,24 @@ class DisruptionAdapter : ListAdapter<Disruption, DisruptionAdapter.ViewHolder>(
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item_disruption, parent, false)
-        view.setOnClickListener(onItemClickListener)
-        return ViewHolder(view)
+        val binding = ListItemDisruptionBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        binding.root.setOnClickListener(onItemClickListener)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        with(holder) {
-            itemView.tag = item.guid
+        with(holder.binding) {
+            root.tag = item.guid
             tvLinesLabel.apply {
                 text = resources.getQuantityText(R.plurals.label_lines, item.lineNames.size)
             }
             tvLines.text = item.lineNames.joinToString()
             tvReceived.apply {
-                text = DateUtils.getRelativeDateTimeString(context, item.received.time, DateUtils.MINUTE_IN_MILLIS,
-                    DateUtils.DAY_IN_MILLIS, 0)
+                text = DateUtils.getRelativeDateTimeString(
+                    context, item.received.time, DateUtils.MINUTE_IN_MILLIS,
+                    DateUtils.DAY_IN_MILLIS, 0
+                )
             }
             tvTitle.text = item.title.capitalize(Locale.getDefault())
             tvTimeInfo.text = item.timeInfo
@@ -49,14 +51,7 @@ class DisruptionAdapter : ListAdapter<Disruption, DisruptionAdapter.ViewHolder>(
     }
 
 
-    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val tvLinesLabel: TextView = view.tvLinesLabel
-        val tvLines: TextView = view.tvLines
-        val tvReceived: TextView = view.tvReceived
-        val tvTitle: TextView = view.tvTitle
-        val tvTimeInfo: TextView = view.tvTimeInfo
-    }
-
+    inner class ViewHolder(val binding: ListItemDisruptionBinding) : RecyclerView.ViewHolder(binding.root)
 
     private class DiffCallback : DiffUtil.ItemCallback<Disruption>() {
 

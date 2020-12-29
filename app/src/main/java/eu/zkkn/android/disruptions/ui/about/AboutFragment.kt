@@ -11,9 +11,10 @@ import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import eu.zkkn.android.disruptions.BuildConfig
 import eu.zkkn.android.disruptions.R
 import eu.zkkn.android.disruptions.data.Preferences
+import eu.zkkn.android.disruptions.databinding.FragmentAboutBinding
 import eu.zkkn.android.disruptions.ui.AnalyticsFragment
 import eu.zkkn.android.disruptions.utils.Analytics
-import kotlinx.android.synthetic.main.fragment_about.view.*
+
 
 //TODO: Add in-app review https://android-developers.googleblog.com/2020/08/in-app-review-api.html
 class AboutFragment : AnalyticsFragment() {
@@ -23,42 +24,46 @@ class AboutFragment : AnalyticsFragment() {
     }
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
 
-        val view = inflater.inflate(R.layout.fragment_about, container, false)
+        val viewBinding = FragmentAboutBinding.inflate(inflater, container, false)
 
-        view.tvVersion.text = getString(R.string.version, BuildConfig.VERSION_NAME)
-        view.tvPrivacyPolicyLink.movementMethod = LinkMovementMethod.getInstance()
-        view.tvSourceCodeLink.movementMethod = LinkMovementMethod.getInstance()
-        view.tvRopidLink.movementMethod = LinkMovementMethod.getInstance()
+        with(viewBinding) {
+            tvVersion.text = getString(R.string.version, BuildConfig.VERSION_NAME)
+            tvPrivacyPolicyLink.movementMethod = LinkMovementMethod.getInstance()
+            tvSourceCodeLink.movementMethod = LinkMovementMethod.getInstance()
+            tvRopidLink.movementMethod = LinkMovementMethod.getInstance()
 
-        view.tvOssLicenses.apply {
-            paint.isUnderlineText = true
-            setOnClickListener {
-                OssLicensesMenuActivity.setActivityTitle(getString(R.string.oss_licenses))
-                startActivity(Intent(requireContext(), OssLicensesMenuActivity::class.java))
+            tvOssLicenses.apply {
+                paint.isUnderlineText = true
+                setOnClickListener {
+                    OssLicensesMenuActivity.setActivityTitle(getString(R.string.oss_licenses))
+                    startActivity(Intent(requireContext(), OssLicensesMenuActivity::class.java))
+                }
+            }
+
+            // show debug window on short and long click on app logo
+            ivAppLogo.setOnClickListener {
+                it.setOnLongClickListener {
+                    showDebugInfo()
+                    return@setOnLongClickListener true
+                }
+            }
+
+            btShare.apply {
+                text = resources.getStringArray(R.array.button_share_alternatives).random()
+                setOnClickListener {
+                    Analytics.logShare(SHARE_LINK)
+                    showShareDialog()
+                }
             }
         }
 
-        // show debug window on short and long click on app logo
-        view.ivAppLogo.setOnClickListener {
-            it.setOnLongClickListener {
-                showDebugInfo()
-                return@setOnLongClickListener true
-            }
-        }
-
-        view.btShare.apply {
-            text = resources.getStringArray(R.array.button_share_alternatives).random()
-            setOnClickListener {
-                Analytics.logShare(SHARE_LINK)
-                showShareDialog()
-            }
-        }
-
-
-        return view
+        return viewBinding.root
 
     }
 
