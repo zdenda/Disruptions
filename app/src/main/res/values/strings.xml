@@ -45,7 +45,7 @@
     <string name="dialog_debug_ok">OK</string>
 
     <string name="notification_channel_disruptions_name">Upozornění na mimořádnosti</string>
-    <string name="notification_action_detail">Podrobnosti na webu</string>
+    <string name="notification_action_detail">Info na webu PID</string>
     <string name="notification_action_cancel">Skrýt</string>
     <plurals name="notification_lines">
         <item quantity="one">Linka %1$s</item>
