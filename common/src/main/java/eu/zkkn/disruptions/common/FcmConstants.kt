@@ -2,7 +2,6 @@ package eu.zkkn.disruptions.common
 
 import androidx.annotation.StringDef
 import java.text.Normalizer
-import java.util.Locale
 
 
 object FcmConstants {
@@ -36,7 +35,7 @@ object FcmConstants {
             .take(40)
             .replace(" ", "-")
             .normalize()
-            .toLowerCase(Locale.ROOT)
+            .lowercase()
     }
 
 

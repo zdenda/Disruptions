@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import eu.zkkn.android.disruptions.R
 import eu.zkkn.android.disruptions.data.Disruption
 import eu.zkkn.android.disruptions.databinding.ListItemDisruptionBinding
-import java.util.Locale
+import eu.zkkn.android.disruptions.utils.capitalize
 
 
 //TODO: use paging and PagedListAdapter
@@ -45,7 +45,7 @@ class DisruptionAdapter : ListAdapter<Disruption, DisruptionAdapter.ViewHolder>(
                     DateUtils.DAY_IN_MILLIS, 0
                 )
             }
-            tvTitle.text = item.title.capitalize(Locale.getDefault())
+            tvTitle.text = item.title.capitalize()
             tvTimeInfo.text = item.timeInfo
         }
     }
