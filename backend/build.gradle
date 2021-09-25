@@ -1,5 +1,14 @@
 // App Engine Backend build file
 
+// Backend needs to run with Java 8, otherwise it shows warning: "An illegal reflective access operation has occurred"
+// JDK version can be changed in File > Settings... > Build, Execution, Deployment > Build Tools > Gradle > Gradle JDK
+
+// Set the account before deploy to App Engine
+// List currently available accounts:
+// > gcloud auth list
+// To set the active account, run:
+// > gcloud config set account [ACCOUNT]
+
 buildscript {
     repositories {
         google()
