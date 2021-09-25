@@ -7,7 +7,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.google.cloud.tools:appengine-gradle-plugin:2.4.1'
+        classpath 'com.google.cloud.tools:appengine-gradle-plugin:2.4.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -28,27 +28,26 @@ apply plugin: 'com.google.cloud.tools.appengine'
 dependencies {
 
     // define versions used for multiple dependencies
-    def appEngineVersion = '1.9.84'
+    def appEngineVersion = '1.9.91'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':common')
 
-    //noinspection GradleDeprecatedConfiguration providedImplementation needs Android Gradle Plugin
-    providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
+    implementation 'javax.servlet:javax.servlet-api:3.1.0'
     //providedCompile "com.google.appengine:appengine-java-sdk:$appEngineVersion"
     implementation "com.google.appengine:appengine-api-1.0-sdk:$appEngineVersion"
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     //implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation 'com.google.code.gson:gson:2.8.6'
-    implementation 'com.googlecode.objectify:objectify:5.1.24'
-    implementation 'com.google.firebase:firebase-admin:7.1.0'
-    implementation 'org.slf4j:slf4j-nop:1.7.30'
+    implementation 'com.google.code.gson:gson:2.8.8'
+    implementation 'com.googlecode.objectify:objectify:5.1.25'
+    implementation 'com.google.firebase:firebase-admin:8.1.0'
+    implementation 'org.slf4j:slf4j-nop:1.7.32'
 
     // prevent conflict in transitive dependencies for objectify and firebase-admin
     //implementation 'io.perfmark:perfmark-api:0.20.1'
 
     testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-    testImplementation 'junit:junit:4.13.1'
+    testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.hamcrest:hamcrest:2.2'
     testImplementation "com.google.appengine:appengine-testing:$appEngineVersion"
     testImplementation "com.google.appengine:appengine-api-stubs:$appEngineVersion"
