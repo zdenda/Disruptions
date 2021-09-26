@@ -20,6 +20,7 @@ import eu.zkkn.android.disruptions.R
 import eu.zkkn.android.disruptions.data.DisruptionRepository
 import eu.zkkn.android.disruptions.data.Preferences
 import eu.zkkn.android.disruptions.ui.disruptiondetail.DisruptionDetailFragmentArgs
+import eu.zkkn.android.disruptions.utils.Helpers
 import eu.zkkn.disruptions.common.FcmConstants
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -117,16 +118,19 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         // show notification only in debug builds
         if (!BuildConfig.DEBUG) return
         val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US)
-        val message = "${dateFormat.format(Date(received))} (Sent: ${dateFormat.format(Date(sent))})"
-        showHeartBeatNotification(message)
+        val shortMessage = "Received: ${dateFormat.format(Date(received))};\n"
+        val longMessage = shortMessage + "Sent: ${dateFormat.format(Date(sent))};\n" +
+            "Standby Bucket: ${Helpers.getAppStandbyBucket(this)};\n"
+        showHeartBeatNotification(shortMessage, longMessage)
     }
 
-    private fun showHeartBeatNotification(text: String) {
+    private fun showHeartBeatNotification(text: String, bigText: String) {
         val id = -1
         val builder = NotificationCompat.Builder(this, DISRUPTIONS_CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle("Heartbeat")
             .setContentText(text)
+            .setStyle(NotificationCompat.BigTextStyle().bigText(bigText))
 
         val actionCancel = CancelNotificationReceiver.getIntent(this, id)
         builder.addAction(R.drawable.ic_notification_clear, getString(R.string.notification_action_cancel),

@@ -14,6 +14,7 @@ import eu.zkkn.android.disruptions.data.Preferences
 import eu.zkkn.android.disruptions.databinding.FragmentAboutBinding
 import eu.zkkn.android.disruptions.ui.AnalyticsFragment
 import eu.zkkn.android.disruptions.utils.Analytics
+import eu.zkkn.android.disruptions.utils.Helpers
 
 
 //TODO: Add in-app review https://android-developers.googleblog.com/2020/08/in-app-review-api.html
@@ -78,10 +79,12 @@ class AboutFragment : AnalyticsFragment() {
         // or MaterialAlertDialogBuilder could be also used
         AlertDialog.Builder(requireContext()).apply {
             setTitle(R.string.dialog_debug_title)
-            setMessage(getString(R.string.dialog_debug_last_subscriptions_refresh,
+            setMessage(getString(R.string.dialog_debug_message,
                 Preferences.getLastSubscriptionRefreshTime(context),
                 Preferences.getLastHeartbeatReceivedTime(context),
-                Preferences.getLastHeartbeatSentTime(context)))
+                Preferences.getLastHeartbeatSentTime(context),
+                Helpers.getAppStandbyBucket(context),
+            ))
             setPositiveButton(R.string.dialog_debug_ok) { dialog, _ -> dialog.dismiss() }
             show()
         }

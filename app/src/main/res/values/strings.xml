@@ -38,9 +38,10 @@
 
 
     <string name="dialog_debug_title">Info pro ladění</string>
-    <string name="dialog_debug_last_subscriptions_refresh">
+    <string name="dialog_debug_message">
         Subscriptions Refresh: %1$tY-%1$tm-%1$td&#160;%1$tH:%1$tM:%1$tS\n
         \nLast Heartbeat: %2$tY-%2$tm-%2$td&#160;%2$tH:%2$tM:%2$tS (Sent: %3$tY-%3$tm-%3$td&#160;%3$tH:%3$tM:%3$tS)\n
+        \nStandby Bucket: %4$d\n
     </string>
     <string name="dialog_debug_ok">OK</string>
 
