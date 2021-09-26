@@ -14,11 +14,9 @@ android {
     defaultConfig {
         applicationId "eu.zkkn.android.disruptions"
         minSdkVersion 16
-        //TODO: Test on Android 12 (SDK 31) when it's released (App hibernation might cause problems)
-        //noinspection OldTargetApi
-        targetSdkVersion 30
+        targetSdkVersion 31 // Android 12
         versionCode 25
-        versionName "0.8.1-α6"
+        versionName "0.9.0-α1"
         resConfigs "en", "cs"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
