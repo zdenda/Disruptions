@@ -1,5 +1,7 @@
 package eu.zkkn.android.disruptions.ui.subscriptionlist
 
+import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -8,7 +10,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.EdgeEffect
-import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContract
+import androidx.activity.result.launch
 import androidx.core.content.ContextCompat
 import androidx.core.content.IntentCompat
 import androidx.fragment.app.viewModels
@@ -30,13 +34,15 @@ class SubscriptionListFragment : AnalyticsFragment() {
     // Scoped to the lifecycle of the fragment's view (between onCreateView and onDestroyView)
     private val binding get() = _binding!!
 
-    //TODO: add intent creation here
-    private val startForResult = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) {
-        Log.d("ZKLog", "Activity Result Code: ${it.resultCode}")
-        viewModel.refreshAppRestrictionsStatus()
-    }
+    private val manageUnusedAppRestrictionsLauncher = registerForActivityResult(
+        object : ActivityResultContract<Void?, ActivityResult>() {
+            override fun createIntent(ctx: Context, input: Void?): Intent =
+                IntentCompat.createManageUnusedAppRestrictionsIntent(ctx, BuildConfig.APPLICATION_ID)
+
+            override fun parseResult(resultCode: Int, intent: Intent?): ActivityResult =
+                ActivityResult(resultCode, intent)
+        }
+    ) { result: ActivityResult -> viewModel.refreshAppRestrictionsStatus() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,11 +54,7 @@ class SubscriptionListFragment : AnalyticsFragment() {
         with(binding) {
 
             btUnusedAppRestrictions.setOnClickListener {
-                val appRestrictionsIntent = IntentCompat.createManageUnusedAppRestrictionsIntent(
-                    requireContext(),
-                    BuildConfig.APPLICATION_ID
-                )
-                startForResult.launch(appRestrictionsIntent)
+                manageUnusedAppRestrictionsLauncher.launch()
             }
 
             viewModel.appHibernationStatus.observe(viewLifecycleOwner, { appRestrictionsState ->
