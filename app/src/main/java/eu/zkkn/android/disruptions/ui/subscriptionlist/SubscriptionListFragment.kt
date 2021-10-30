@@ -2,18 +2,23 @@ package eu.zkkn.android.disruptions.ui.subscriptionlist
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.EdgeEffect
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.content.IntentCompat
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
+import eu.zkkn.android.disruptions.BuildConfig
 import eu.zkkn.android.disruptions.R
 import eu.zkkn.android.disruptions.databinding.FragmentSubscriptionsBinding
 import eu.zkkn.android.disruptions.ui.AnalyticsFragment
+import eu.zkkn.android.disruptions.ui.subscriptionlist.SubscriptionListViewModel.AppHibernationState
 import eu.zkkn.android.disruptions.utils.Analytics
 
 
@@ -25,6 +30,14 @@ class SubscriptionListFragment : AnalyticsFragment() {
     // Scoped to the lifecycle of the fragment's view (between onCreateView and onDestroyView)
     private val binding get() = _binding!!
 
+    //TODO: add intent creation here
+    private val startForResult = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) {
+        Log.d("ZKLog", "Activity Result Code: ${it.resultCode}")
+        viewModel.refreshAppRestrictionsStatus()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -33,6 +46,23 @@ class SubscriptionListFragment : AnalyticsFragment() {
 
         _binding = FragmentSubscriptionsBinding.inflate(inflater, container, false)
         with(binding) {
+
+            btUnusedAppRestrictions.setOnClickListener {
+                val appRestrictionsIntent = IntentCompat.createManageUnusedAppRestrictionsIntent(
+                    requireContext(),
+                    BuildConfig.APPLICATION_ID
+                )
+                startForResult.launch(appRestrictionsIntent)
+            }
+
+            viewModel.appHibernationStatus.observe(viewLifecycleOwner, { appRestrictionsState ->
+                Log.d("ZKLog", "UnusedAppRestrictionsStatus Change: $appRestrictionsState")
+                llInfoBox.visibility = when (appRestrictionsState) {
+                    AppHibernationState.ENABLED -> View.VISIBLE
+                    else -> View.GONE
+                }
+            })
+
             val adapter = SubscriptionAdapter()
             adapter.setOnRemoveClickListener { lineName ->
                 viewModel.removeSubscription(lineName)

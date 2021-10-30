@@ -84,6 +84,7 @@ class AboutFragment : AnalyticsFragment() {
                 Preferences.getLastHeartbeatReceivedTime(context),
                 Preferences.getLastHeartbeatSentTime(context),
                 Helpers.getAppStandbyBucket(context),
+                //TODO: Add Unused App Restrictions Status
             ))
             setPositiveButton(R.string.dialog_debug_ok) { dialog, _ -> dialog.dismiss() }
             show()

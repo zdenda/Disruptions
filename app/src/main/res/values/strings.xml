@@ -6,6 +6,10 @@
     <string name="title_about">O aplikaci</string>
     <string name="title_disruption">Podrobnosti</string>
 
+    <string name="button_unused_app_restrictions">Otevřít nastavení</string>
+    <string name="info_unused_app_restrictions_1">Aby se upozornění zobrazovala i když appku nějaký čas neotevřete, je potřeba pro ni vypnout omezení, která Android nepoužívaným aplikacím nastavuje.</string>
+    <string name="info_unused_app_restrictions_2">V nastavení "<b>O aplikaci</b>", dole v sekci "<b>Nepoužívané aplikace</b>" prosím vypněte volbu "<b>Odebrat oprávnění a uvolnit místo</b>".</string>
+
     <string name="line_name">Linka %1$s</string>
     <string name="button_remove_description">Odebrat</string>
     <string name="subscriptions_empty">Přihlaste se k odběru upozornění na mimořídnosti v provozu na některé z linek pražské MHD</string>
