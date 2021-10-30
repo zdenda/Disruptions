@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,7 +21,6 @@ import eu.zkkn.android.disruptions.BuildConfig
 import eu.zkkn.android.disruptions.R
 import eu.zkkn.android.disruptions.databinding.FragmentSubscriptionsBinding
 import eu.zkkn.android.disruptions.ui.AnalyticsFragment
-import eu.zkkn.android.disruptions.ui.subscriptionlist.SubscriptionListViewModel.AppHibernationState
 import eu.zkkn.android.disruptions.utils.Analytics
 
 
@@ -57,12 +55,8 @@ class SubscriptionListFragment : AnalyticsFragment() {
                 manageUnusedAppRestrictionsLauncher.launch()
             }
 
-            viewModel.appHibernationStatus.observe(viewLifecycleOwner, { appRestrictionsState ->
-                Log.d("ZKLog", "UnusedAppRestrictionsStatus Change: $appRestrictionsState")
-                llInfoBox.visibility = when (appRestrictionsState) {
-                    AppHibernationState.ENABLED -> View.VISIBLE
-                    else -> View.GONE
-                }
+            viewModel.showAppHibernationInfo.observe(viewLifecycleOwner, { showWarning ->
+                llInfoBox.visibility = if (showWarning) View.VISIBLE else View.GONE
             })
 
             val adapter = SubscriptionAdapter()

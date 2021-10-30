@@ -1,7 +1,6 @@
 package eu.zkkn.android.disruptions.ui.subscriptionlist
 
 import android.app.Application
-import android.util.Log
 import androidx.annotation.StringRes
 import androidx.core.content.PackageManagerCompat
 import androidx.core.content.PackageManagerCompat.UnusedAppRestrictionsStatus
@@ -13,6 +12,7 @@ import androidx.core.content.UnusedAppRestrictionsConstants.ERROR
 import androidx.core.content.UnusedAppRestrictionsConstants.FEATURE_NOT_AVAILABLE
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.messaging.FirebaseMessaging
 import eu.zkkn.android.disruptions.BuildConfig
@@ -43,7 +43,7 @@ class SubscriptionListViewModel(application: Application) : AndroidViewModel(app
 
     private val subscriptionRepository by lazy { SubscriptionRepository.getInstance(application) }
 
-    private val _appHibernationStatus: MutableLiveData<AppHibernationState> by lazy {
+    private val appHibernationStatus: MutableLiveData<AppHibernationState> by lazy {
         MutableLiveData(AppHibernationState.UNKNOWN).also { mutableLiveData ->
             loadAppHibernationStatusToLiveData(mutableLiveData)
         }
@@ -62,7 +62,6 @@ class SubscriptionListViewModel(application: Application) : AndroidViewModel(app
     private fun appHibernationFromUnusedAppRestrictionsStatus(
         @UnusedAppRestrictionsStatus unusedAppRestrictions: Int
     ): AppHibernationState {
-        Log.d("ZKLog", "UnusedAppRestrictionsStatus: $unusedAppRestrictions")
         val status: AppHibernationState = when (unusedAppRestrictions) {
             ERROR -> AppHibernationState.ERROR
             DISABLED -> AppHibernationState.DISABLED
@@ -87,16 +86,33 @@ class SubscriptionListViewModel(application: Application) : AndroidViewModel(app
     private val _subscribeStatus: MutableLiveData<SubscribeState> =
         MutableLiveData(SubscribeState(false, null))
 
-    // publicly expose just LiveData (hide MutableLiveData)
-    val appHibernationStatus: LiveData<AppHibernationState> get() = _appHibernationStatus
-    val subscribeStatus: LiveData<SubscribeState> get() = _subscribeStatus
-
     val subscriptions: LiveData<List<Subscription>> by lazy {
         subscriptionRepository.getSubscriptions()
     }
 
+    val showAppHibernationInfo: LiveData<Boolean> = MediatorLiveData<Boolean>().apply {
+        addSource(appHibernationStatus) { hibernationState ->
+            this.value = shouldShowAppHibernationInfo(hibernationState, subscriptions.value)
+        }
+        addSource(subscriptions) { subscriptions ->
+            this.value = shouldShowAppHibernationInfo(appHibernationStatus.value, subscriptions)
+        }
+    }
+
+    private fun shouldShowAppHibernationInfo(
+        appHibernationState: AppHibernationState?,
+        subscriptions: List<Subscription>?
+    ): Boolean {
+        return appHibernationState == AppHibernationState.ENABLED &&
+            subscriptions != null && subscriptions.isNotEmpty()
+    }
+
+    // publicly expose just LiveData (hide MutableLiveData)
+    val subscribeStatus: LiveData<SubscribeState> get() = _subscribeStatus
+
+
     fun refreshAppRestrictionsStatus() {
-        loadAppHibernationStatusToLiveData(_appHibernationStatus)
+        loadAppHibernationStatusToLiveData(appHibernationStatus)
     }
 
     fun addSubscription(lineName: String) {
