@@ -47,6 +47,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         ioThread {
+            if (Preferences.isFirstRun(this)) {
+                RefreshSubscriptionsWorker.runRefresh(this)
+            }
             if (!Preferences.isPeriodicSubscriptionRefreshEnabled(this)) {
                 RefreshSubscriptionsWorker.schedulePeriodicRefresh(this)
             }

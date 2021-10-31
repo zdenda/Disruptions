@@ -18,6 +18,7 @@ object Preferences {
         "lastSubscriptionRefreshTime-v${RefreshSubscriptionsWorker.VERSION}"
     private const val PREF_KEY_LAST_HEARTBEAT_RECEIVED = "lastHeartbeatReceivedTime"
     private const val PREF_KEY_LAST_HEARTBEAT_SENT = "lastHeartbeatSentTime"
+    private const val PREF_KEY_FIRST_RUN = "firstRun-v1"
 
     private lateinit var preferences: SharedPreferences
 
@@ -68,6 +69,14 @@ object Preferences {
 
     fun getLastHeartbeatSentTime(context: Context): Long {
         return getPreferences(context).getLong(PREF_KEY_LAST_HEARTBEAT_SENT, 0L)
+    }
+
+    fun isFirstRun(context: Context): Boolean {
+        val prefs = getPreferences(context)
+        val value = prefs.getBoolean(PREF_KEY_FIRST_RUN, true)
+        // set to false after first time
+        if (value) prefs.edit { putBoolean(PREF_KEY_FIRST_RUN, false).apply() }
+        return value
     }
 
 }

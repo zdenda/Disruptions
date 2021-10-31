@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Control backup on Android 12 or higher -->
+<data-extraction-rules>
+    <cloud-backup>
+        <!-- Only the app database should be backed up -->
+        <include domain="database" path="app_database.db" />
+    </cloud-backup>
+    <device-transfer>
+        <!-- Only the app database should be transferred to a new device -->
+        <include domain="database" path="app_database.db" />
+    </device-transfer>
+</data-extraction-rules>

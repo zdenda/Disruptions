@@ -6,7 +6,9 @@ import androidx.work.BackoffPolicy
 import androidx.work.Constraints
 import androidx.work.CoroutineWorker
 import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.ExistingWorkPolicy
 import androidx.work.NetworkType
+import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkRequest
@@ -28,12 +30,26 @@ class RefreshSubscriptionsWorker(appContext: Context, params: WorkerParameters) 
 
         const val VERSION = 12
 
-        private const val WORK_NAME = "eu.zkkn.android.disruptions.workers.RefreshSubscriptionsWorker"
+        private const val ONE_TIME_WORK_NAME =
+            "eu.zkkn.android.disruptions.workers.RefreshSubscriptionsWorker.OneTimeWork"
+        private const val PERIODIC_WORK_NAME =
+            "eu.zkkn.android.disruptions.workers.RefreshSubscriptionsWorker"
 
         private val TAG = RefreshSubscriptionsWorker::class.simpleName
 
         private val firebaseMessaging: FirebaseMessaging by lazy { FirebaseMessaging.getInstance() }
 
+        internal fun runRefresh(context: Context) {
+            Log.d(TAG, "Run refresh for FCM topic subscriptions")
+            val workManager = WorkManager.getInstance(context)
+            workManager.enqueueUniqueWork(
+                ONE_TIME_WORK_NAME,
+                ExistingWorkPolicy.KEEP,
+                OneTimeWorkRequestBuilder<RefreshSubscriptionsWorker>()
+                    .addTag(ONE_TIME_WORK_NAME)
+                    .build()
+            )
+        }
 
         internal fun schedulePeriodicRefresh(context: Context) {
 
@@ -43,11 +59,11 @@ class RefreshSubscriptionsWorker(appContext: Context, params: WorkerParameters) 
             Log.d(TAG, "Schedule periodic refresh for FCM topic subscriptions")
             val workManager = WorkManager.getInstance(context)
             workManager.enqueueUniquePeriodicWork(
-                WORK_NAME,
+                PERIODIC_WORK_NAME,
                 ExistingPeriodicWorkPolicy.REPLACE,
                 //Interval resets (job is rescheduled) on device reboot, so it might never run if interval is too long
                 PeriodicWorkRequestBuilder<RefreshSubscriptionsWorker>(10, TimeUnit.DAYS, 4, TimeUnit.DAYS)
-                    .addTag(WORK_NAME)
+                    .addTag(PERIODIC_WORK_NAME)
                     .setBackoffCriteria(
                         BackoffPolicy.EXPONENTIAL,
                         WorkRequest.DEFAULT_BACKOFF_DELAY_MILLIS * 4,

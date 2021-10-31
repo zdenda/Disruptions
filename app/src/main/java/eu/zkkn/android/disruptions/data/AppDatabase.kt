@@ -21,6 +21,8 @@ abstract class AppDatabase : RoomDatabase() {
 
     companion object {
 
+        private const val DB_FILE_NAME = "app_database.db"
+
         private val TAG = AppDatabase::class.simpleName
 
         @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
@@ -49,7 +51,7 @@ abstract class AppDatabase : RoomDatabase() {
             }
 
         private fun buildDatabase(context: Context): AppDatabase {
-            return Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, "app_database.db")
+            return Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, DB_FILE_NAME)
                 .addMigrations(MIGRATION_1_2)
                 .addCallback(object : Callback() {
                     override fun onCreate(db: SupportSQLiteDatabase) {

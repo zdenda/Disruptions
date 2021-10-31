@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Control backup on Android 11 and lower -->
+<full-backup-content>
+    <!-- Only the app database should be backed up -->
+    <include domain="database" path="app_database.db" />
+</full-backup-content>
