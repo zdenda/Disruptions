@@ -93,17 +93,23 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             .createPendingIntent()
         builder.setContentIntent(pendingIntent)
 
-        val actionWeb = Intent(Intent.ACTION_VIEW, Uri.parse("https://pid.cz/mimoradnost/?id=$guid"))
-        if (actionWeb.resolveActivity(packageManager) != null) {
-            builder.addAction(R.drawable.ic_open_browser, getString(R.string.notification_action_detail),
-                //TODO: shouldn't be the requestCode and flags of PendingIntent set similarly
-                // as in PendingIntent for actionCancel
-                PendingIntent.getActivity(this, 0, actionWeb, 0))
+        // View on web action
+        val viewOnWeb = Intent(Intent.ACTION_VIEW, Uri.parse("https://pid.cz/mimoradnost/?id=$guid"))
+        if (viewOnWeb.resolveActivity(packageManager) != null) {
+            val flags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            } else {
+                PendingIntent.FLAG_UPDATE_CURRENT
+            }
+            val viewOnWebPendingIntent = PendingIntent.getActivity(this, 0, viewOnWeb, flags)
+            builder.addAction(
+                R.drawable.ic_open_browser, getString(R.string.notification_action_detail),
+                viewOnWebPendingIntent
+            )
         }
 
-        val actionCancel = CancelNotificationReceiver.getIntent(this, id)
-        builder.addAction(R.drawable.ic_notification_clear, getString(R.string.notification_action_cancel),
-            PendingIntent.getBroadcast(this, id, actionCancel, PendingIntent.FLAG_UPDATE_CURRENT))
+        // Cancel notification action
+        builder.addAction(CancelNotificationReceiver.getCancelNotificationAction(this, id))
 
         notify(id, builder.build())
     }
@@ -132,9 +138,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             .setContentText(text)
             .setStyle(NotificationCompat.BigTextStyle().bigText(bigText))
 
-        val actionCancel = CancelNotificationReceiver.getIntent(this, id)
-        builder.addAction(R.drawable.ic_notification_clear, getString(R.string.notification_action_cancel),
-            PendingIntent.getBroadcast(this, id, actionCancel, PendingIntent.FLAG_UPDATE_CURRENT))
+        builder.addAction(CancelNotificationReceiver.getCancelNotificationAction(this, id))
 
         notify(id, builder.build())
     }
