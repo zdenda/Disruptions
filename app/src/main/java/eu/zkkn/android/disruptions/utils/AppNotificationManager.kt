@@ -9,6 +9,7 @@ import androidx.core.app.NotificationManagerCompat
 import eu.zkkn.android.disruptions.R
 
 
+//TODO: This might be a singleton and lazy init of notificationManager is useless
 class AppNotificationManager(context: Context) {
 
     companion object {
