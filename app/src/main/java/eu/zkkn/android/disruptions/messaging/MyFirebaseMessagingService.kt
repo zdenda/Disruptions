@@ -1,8 +1,5 @@
 package eu.zkkn.android.disruptions.messaging
 
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Intent
 import android.net.Uri
@@ -10,7 +7,6 @@ import android.os.Build
 import android.util.Log
 import androidx.annotation.WorkerThread
 import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import androidx.navigation.NavDeepLinkBuilder
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
@@ -20,6 +16,7 @@ import eu.zkkn.android.disruptions.R
 import eu.zkkn.android.disruptions.data.DisruptionRepository
 import eu.zkkn.android.disruptions.data.Preferences
 import eu.zkkn.android.disruptions.ui.disruptiondetail.DisruptionDetailFragmentArgs
+import eu.zkkn.android.disruptions.utils.AppNotificationManager
 import eu.zkkn.android.disruptions.utils.Helpers
 import eu.zkkn.disruptions.common.FcmConstants
 import java.text.SimpleDateFormat
@@ -30,13 +27,12 @@ import java.util.Locale
 class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     companion object {
-        private const val DISRUPTIONS_CHANNEL_ID = "disruptions"
         private val TAG = MyFirebaseMessagingService::class.simpleName
     }
 
 
-    private val notificationManager: NotificationManagerCompat by lazy {
-        NotificationManagerCompat.from(this)
+    private val appNotificationManager: AppNotificationManager by lazy {
+        AppNotificationManager(this)
     }
 
 
@@ -80,7 +76,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     }
 
     private fun showNotification(id: Int, guid: String, title: String, text: String, bigText: String) {
-        val builder = NotificationCompat.Builder(this, DISRUPTIONS_CHANNEL_ID)
+        val builder = NotificationCompat.Builder(this, AppNotificationManager.DISRUPTIONS_CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle(title)
             .setContentText(text)
@@ -111,7 +107,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         // Cancel notification action
         builder.addAction(CancelNotificationReceiver.getCancelNotificationAction(this, id))
 
-        notify(id, builder.build())
+        appNotificationManager.notify(id, builder.build())
     }
 
     private fun handleHeartbeatMsg(remoteMessage: RemoteMessage) {
@@ -132,7 +128,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     private fun showHeartBeatNotification(text: String, bigText: String) {
         val id = -1
-        val builder = NotificationCompat.Builder(this, DISRUPTIONS_CHANNEL_ID)
+        val builder = NotificationCompat.Builder(this, AppNotificationManager.DISRUPTIONS_CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle("Heartbeat")
             .setContentText(text)
@@ -140,26 +136,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
         builder.addAction(CancelNotificationReceiver.getCancelNotificationAction(this, id))
 
-        notify(id, builder.build())
-    }
-
-
-    private fun createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            //TODO add channel description
-            notificationManager.createNotificationChannel(
-                NotificationChannel(
-                    DISRUPTIONS_CHANNEL_ID,
-                    getString(R.string.notification_channel_disruptions_name),
-                    NotificationManager.IMPORTANCE_DEFAULT
-                )
-            )
-        }
-    }
-
-    private fun notify(id: Int, notification: Notification) {
-        createNotificationChannel()
-        notificationManager.notify(id, notification)
+        appNotificationManager.notify(id, builder.build())
     }
 
 }
