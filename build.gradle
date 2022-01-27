@@ -10,15 +10,17 @@ buildscript {
     ext {
         // define versions used in modules
         kotlin_version = '1.6.10'
-        navigationVersion = '2.4.0-rc01'
+        navigationVersion = '2.4.0'
     }
     dependencies {
+        // v7.1 is incompatible with Navigation Safe Args versions 2.4.0
+        // https://developer.android.com/studio/releases/gradle-plugin#navigation_safe_args_compatibility
         classpath 'com.android.tools.build:gradle:7.0.4'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.google.gms:google-services:4.3.10'
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navigationVersion"
         classpath 'com.google.firebase:firebase-crashlytics-gradle:2.8.1'
-        classpath 'com.google.firebase:perf-plugin:1.4.0' // Firebase Performance Monitoring plugin
+        classpath 'com.google.firebase:perf-plugin:1.4.1' // Firebase Performance Monitoring plugin
         classpath 'com.google.android.gms:oss-licenses-plugin:0.10.4'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
