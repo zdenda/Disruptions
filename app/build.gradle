@@ -12,14 +12,14 @@ android {
     compileSdkVersion 31
     buildToolsVersion = '32.0.0'
     defaultConfig {
-        applicationId "eu.zkkn.android.disruptions"
+        applicationId 'eu.zkkn.android.disruptions'
         minSdkVersion 16
         targetSdkVersion 31 // Android 12
         versionCode 26
-        versionName "0.9.0"
-        resConfigs "en", "cs"
+        versionName '0.9.1-α03'
+        resConfigs 'en', 'cs'
         vectorDrawables.useSupportLibrary = true
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         kapt { arguments { arg("room.schemaLocation", "$projectDir/schemas".toString()) } }
     }
     buildFeatures {
@@ -54,7 +54,7 @@ android {
 dependencies {
 
     // define versions used for multiple dependencies
-    def roomVersion = '2.4.1'
+    def roomVersion = '2.4.2'
     def navVersion = navigationVersion // version of Navigation is defined in top-level build file
     def archCoreVersion = '2.1.0'
     def workVersion = '2.7.1'
@@ -70,7 +70,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.5.0'
     implementation "androidx.room:room-runtime:$roomVersion"
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    implementation 'androidx.lifecycle:lifecycle-common-java8:2.4.0'
+    implementation 'androidx.lifecycle:lifecycle-common-java8:2.4.1'
     implementation 'androidx.fragment:fragment-ktx:1.4.1'
     implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navVersion"

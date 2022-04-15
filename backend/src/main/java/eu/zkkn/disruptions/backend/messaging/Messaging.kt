@@ -66,6 +66,7 @@ object Messaging {
     }
 
     fun send(message: Message): String {
+        //return firebaseMessaging.send(message, true)
         return firebaseMessaging.send(message)
     }
 

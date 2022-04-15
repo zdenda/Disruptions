@@ -35,7 +35,7 @@ apply plugin: 'com.google.cloud.tools.appengine'
 dependencies {
 
     // define versions used for multiple dependencies
-    def appEngineVersion = '1.9.91'
+    def appEngineVersion = '2.0.4'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':common')
@@ -45,10 +45,10 @@ dependencies {
     implementation "com.google.appengine:appengine-api-1.0-sdk:$appEngineVersion"
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     //implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation 'com.google.code.gson:gson:2.8.8'
+    implementation 'com.google.code.gson:gson:2.9.0'
     implementation 'com.googlecode.objectify:objectify:5.1.25'
     implementation 'com.google.firebase:firebase-admin:8.1.0'
-    implementation 'org.slf4j:slf4j-nop:1.7.32'
+    implementation 'org.slf4j:slf4j-nop:1.7.36'
 
     // prevent conflict in transitive dependencies for objectify and firebase-admin
     //implementation 'io.perfmark:perfmark-api:0.20.1'
@@ -68,7 +68,7 @@ appengine {
     }
     deploy {
         projectId = "$googleCloudProjectId"
-        version = 17
+        version = 18
         // keep the old version running, do the switch manually in administration
         stopPreviousVersion = false
         promote = false
