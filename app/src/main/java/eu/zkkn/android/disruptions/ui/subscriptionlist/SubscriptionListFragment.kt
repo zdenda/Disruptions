@@ -34,13 +34,15 @@ class SubscriptionListFragment : AnalyticsFragment() {
 
     private val manageUnusedAppRestrictionsLauncher = registerForActivityResult(
         object : ActivityResultContract<Void?, ActivityResult>() {
-            override fun createIntent(ctx: Context, input: Void?): Intent =
-                IntentCompat.createManageUnusedAppRestrictionsIntent(ctx, BuildConfig.APPLICATION_ID)
+            override fun createIntent(context: Context, input: Void?): Intent =
+                IntentCompat.createManageUnusedAppRestrictionsIntent(
+                    context, BuildConfig.APPLICATION_ID
+                )
 
             override fun parseResult(resultCode: Int, intent: Intent?): ActivityResult =
                 ActivityResult(resultCode, intent)
         }
-    ) { result: ActivityResult -> viewModel.refreshAppRestrictionsStatus() }
+    ) { viewModel.refreshAppRestrictionsStatus() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -55,9 +57,9 @@ class SubscriptionListFragment : AnalyticsFragment() {
                 manageUnusedAppRestrictionsLauncher.launch()
             }
 
-            viewModel.showAppHibernationInfo.observe(viewLifecycleOwner, { showWarning ->
+            viewModel.showAppHibernationInfo.observe(viewLifecycleOwner) { showWarning ->
                 llInfoBox.visibility = if (showWarning) View.VISIBLE else View.GONE
-            })
+            }
 
             val adapter = SubscriptionAdapter()
             adapter.setOnRemoveClickListener { lineName ->
@@ -106,12 +108,12 @@ class SubscriptionListFragment : AnalyticsFragment() {
 
             btSubscribe.setOnClickListener { onSubscribeClick() }
 
-            viewModel.subscriptions.observe(viewLifecycleOwner, { subscriptions ->
+            viewModel.subscriptions.observe(viewLifecycleOwner) { subscriptions ->
                 empty.visibility = if (subscriptions.isEmpty()) View.VISIBLE else View.GONE
                 adapter.submitList(subscriptions)
-            })
+            }
 
-            viewModel.subscribeStatus.observe(viewLifecycleOwner, { subscribeState ->
+            viewModel.subscribeStatus.observe(viewLifecycleOwner) { subscribeState ->
                 val errorMsgResId = subscribeState.errorMsgResIdIfNotHandled
                 tiLine.error = if (errorMsgResId != null) getString(errorMsgResId) else null
                 if (!subscribeState.inProgress && errorMsgResId == null) {
@@ -119,7 +121,7 @@ class SubscriptionListFragment : AnalyticsFragment() {
                 }
                 btSubscribe.isEnabled = !subscribeState.inProgress
                 tiLine.isEnabled = !subscribeState.inProgress
-            })
+            }
         }
 
         return binding.root
