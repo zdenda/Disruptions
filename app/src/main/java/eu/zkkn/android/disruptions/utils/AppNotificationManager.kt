@@ -4,7 +4,7 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
-import android.os.Build
+import android.util.Log
 import androidx.core.app.NotificationManagerCompat
 import eu.zkkn.android.disruptions.R
 
@@ -13,6 +13,7 @@ import eu.zkkn.android.disruptions.R
 class AppNotificationManager(context: Context) {
 
     companion object {
+        private val TAG = AppNotificationManager::class.simpleName
         const val DISRUPTIONS_CHANNEL_ID = "disruptions"
     }
 
@@ -23,22 +24,25 @@ class AppNotificationManager(context: Context) {
     }
 
 
-    private fun createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            //TODO add channel description
-            notificationManager.createNotificationChannel(
-                NotificationChannel(
-                    DISRUPTIONS_CHANNEL_ID,
-                    appContext.getString(R.string.notification_channel_disruptions_name),
-                    NotificationManager.IMPORTANCE_DEFAULT
-                )
+    fun areNotificationsEnabled(): Boolean = notificationManager.areNotificationsEnabled()
+
+    fun createNotificationChannel() {
+        notificationManager.createNotificationChannel(
+            NotificationChannel(
+                DISRUPTIONS_CHANNEL_ID,
+                appContext.getString(R.string.notification_channel_disruptions_name),
+                NotificationManager.IMPORTANCE_DEFAULT
             )
-        }
+        )
     }
 
     fun notify(id: Int, notification: Notification) {
-        createNotificationChannel()
-        notificationManager.notify(id, notification)
+        if (notificationManager.areNotificationsEnabled()) {
+            createNotificationChannel()
+            notificationManager.notify(id, notification)
+        } else {
+            Log.w(TAG, "Notification are blocked.")
+        }
     }
 
 }

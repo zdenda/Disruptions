@@ -20,12 +20,17 @@ import eu.zkkn.android.disruptions.R
 import eu.zkkn.android.disruptions.data.Subscription
 import eu.zkkn.android.disruptions.data.SubscriptionRepository
 import eu.zkkn.android.disruptions.utils.Analytics
+import eu.zkkn.android.disruptions.utils.AppNotificationManager
 import eu.zkkn.android.disruptions.utils.getBackgroundExecutor
 import eu.zkkn.android.disruptions.utils.isValidLineName
 import eu.zkkn.disruptions.common.FcmConstants
 
 
 class SubscriptionListViewModel(application: Application) : AndroidViewModel(application) {
+
+    enum class AppNotificationsState {
+        UNKNOWN, DISABLED, ENABLED
+    }
 
     enum class AppHibernationState {
         UNKNOWN, ERROR, DISABLED, ENABLED
@@ -42,6 +47,22 @@ class SubscriptionListViewModel(application: Application) : AndroidViewModel(app
     }
 
     private val subscriptionRepository by lazy { SubscriptionRepository.getInstance(application) }
+    private val appNotificationManager by lazy { AppNotificationManager(application) }
+
+    private val appNotificationsStatus: MutableLiveData<AppNotificationsState> by lazy {
+        MutableLiveData(AppNotificationsState.UNKNOWN).also { mutableLiveData ->
+            loadAppNotificationsStatusToLiveData(mutableLiveData)
+        }
+    }
+
+    private fun loadAppNotificationsStatusToLiveData(
+        mutableLiveData: MutableLiveData<AppNotificationsState>
+    ) {
+        mutableLiveData.postValue(
+            if (appNotificationManager.areNotificationsEnabled()) AppNotificationsState.ENABLED
+            else AppNotificationsState.DISABLED
+        )
+    }
 
     private val appHibernationStatus: MutableLiveData<AppHibernationState> by lazy {
         MutableLiveData(AppHibernationState.UNKNOWN).also { mutableLiveData ->
@@ -90,6 +111,23 @@ class SubscriptionListViewModel(application: Application) : AndroidViewModel(app
         subscriptionRepository.getSubscriptions()
     }
 
+    val showNotificationsInfo: LiveData<Boolean> = MediatorLiveData<Boolean>().apply {
+        addSource(appNotificationsStatus) { appNotificationsState ->
+            this.value = shouldShowAppNotificationsInfo(appNotificationsState, subscriptions.value)
+        }
+        addSource(subscriptions) { subscriptions ->
+            this.value = shouldShowAppNotificationsInfo(appNotificationsStatus.value, subscriptions)
+        }
+    }
+
+    private fun shouldShowAppNotificationsInfo(
+        appNotificationsState: AppNotificationsState?,
+        subscriptions: List<Subscription>?
+    ): Boolean {
+        return appNotificationsState == AppNotificationsState.DISABLED &&
+            subscriptions != null && subscriptions.isNotEmpty()
+    }
+
     val showAppHibernationInfo: LiveData<Boolean> = MediatorLiveData<Boolean>().apply {
         addSource(appHibernationStatus) { hibernationState ->
             this.value = shouldShowAppHibernationInfo(hibernationState, subscriptions.value)
@@ -110,6 +148,9 @@ class SubscriptionListViewModel(application: Application) : AndroidViewModel(app
     // publicly expose just LiveData (hide MutableLiveData)
     val subscribeStatus: LiveData<SubscribeState> get() = _subscribeStatus
 
+    fun refreshAppNotificationsStatus() {
+        loadAppNotificationsStatusToLiveData(appNotificationsStatus)
+    }
 
     fun refreshAppRestrictionsStatus() {
         loadAppHibernationStatusToLiveData(appHibernationStatus)
@@ -126,6 +167,7 @@ class SubscriptionListViewModel(application: Application) : AndroidViewModel(app
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     subscriptionRepository.addSubscription(lineName.trim())
+                    appNotificationManager.createNotificationChannel()
                     _subscribeStatus.value = SubscribeState(false)
                 } else {
                     _subscribeStatus.value = SubscribeState(false, R.string.fcm_subscribe_failure)

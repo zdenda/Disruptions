@@ -14,9 +14,10 @@ android {
     defaultConfig {
         applicationId 'eu.zkkn.android.disruptions'
         minSdkVersion 16
+        //noinspection OldTargetApi - Wait for Android 13 (SDK 33)
         targetSdkVersion 31 // Android 12
         versionCode 26
-        versionName '0.9.1-α05'
+        versionName '0.10.0-α02'
         resConfigs 'en', 'cs'
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'

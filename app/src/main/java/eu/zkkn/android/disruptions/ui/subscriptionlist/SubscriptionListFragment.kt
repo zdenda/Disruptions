@@ -2,8 +2,10 @@ package eu.zkkn.android.disruptions.ui.subscriptionlist
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,6 +34,17 @@ class SubscriptionListFragment : AnalyticsFragment() {
     // Scoped to the lifecycle of the fragment's view (between onCreateView and onDestroyView)
     private val binding get() = _binding!!
 
+    private val appSettingsLauncher = registerForActivityResult(
+        object : ActivityResultContract<Void?, ActivityResult>() {
+            override fun createIntent(context: Context, input: Void?): Intent =
+                Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                    .setData(Uri.fromParts("package", BuildConfig.APPLICATION_ID, null))
+
+            override fun parseResult(resultCode: Int, intent: Intent?): ActivityResult =
+                ActivityResult(resultCode, intent)
+        }
+    ) { viewModel.refreshAppNotificationsStatus() }
+
     private val manageUnusedAppRestrictionsLauncher = registerForActivityResult(
         object : ActivityResultContract<Void?, ActivityResult>() {
             override fun createIntent(context: Context, input: Void?): Intent =
@@ -53,12 +66,20 @@ class SubscriptionListFragment : AnalyticsFragment() {
         _binding = FragmentSubscriptionsBinding.inflate(inflater, container, false)
         with(binding) {
 
+            btNotificationsDisabled.setOnClickListener {
+                appSettingsLauncher.launch()
+            }
+
             btUnusedAppRestrictions.setOnClickListener {
                 manageUnusedAppRestrictionsLauncher.launch()
             }
 
+            viewModel.showNotificationsInfo.observe(viewLifecycleOwner) { showWarning ->
+                llNotificationsInfoBox.visibility = if (showWarning) View.VISIBLE else View.GONE
+            }
+
             viewModel.showAppHibernationInfo.observe(viewLifecycleOwner) { showWarning ->
-                llInfoBox.visibility = if (showWarning) View.VISIBLE else View.GONE
+                llHibernationInfoBox.visibility = if (showWarning) View.VISIBLE else View.GONE
             }
 
             val adapter = SubscriptionAdapter()

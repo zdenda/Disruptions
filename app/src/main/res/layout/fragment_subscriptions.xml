@@ -8,7 +8,7 @@
     tools:context=".ui.subscriptionlist.SubscriptionListFragment">
 
     <LinearLayout
-        android:id="@+id/llInfoBox"
+        android:id="@+id/llNotificationsInfoBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -17,6 +17,45 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="@string/info_blocked_notifications"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/btNotificationsDisabled"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="@string/button_open_app_settings" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llHibernationInfoBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:background="@color/backgroundInfo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/llNotificationsInfoBox"
         tools:visibility="visible">
 
         <TextView
@@ -48,7 +87,7 @@
             android:layout_marginTop="0dp"
             android:layout_marginRight="8dp"
             android:layout_marginBottom="8dp"
-            android:text="@string/button_unused_app_restrictions" />
+            android:text="@string/button_open_app_settings" />
 
         <View
             android:layout_width="match_parent"
@@ -67,7 +106,7 @@
         app:layout_constraintBottom_toTopOf="@id/llAddSubscription"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/llInfoBox"
+        app:layout_constraintTop_toBottomOf="@+id/llHibernationInfoBox"
         tools:listitem="@layout/list_item_subscription" />
 
     <TextView
