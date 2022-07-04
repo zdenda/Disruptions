@@ -40,7 +40,7 @@
      inkscape:window-x="1912"
      inkscape:window-y="78"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer3" />
+     inkscape:current-layer="layer1" />
   <defs
      id="defs2">
     <rect
@@ -87,31 +87,30 @@
      style="display:inline">
     <path
        fill="#d50000"
-       d="m 130,124 c -5,0 -10,2 -12,7 l -54,94 c -5.7,9 1.4,21 12.4,21 H 110 v 59 c 0,9 3,16 9,21 v 17 c 0,5 5,10 9,10 h 10 c 6,0 10,-5 10,-10 v -9 h 76 v 9 c 0,5 4,10 9,10 h 10 c 5,0 9,-5 9,-10 v -17 c 6,-5 10,-12 10,-21 v -95 c 0,-33 -34,-38 -76,-38 -7,0 -14,0 -20,0 l -23,-41 c -3,-5 -7,-7 -13,-7 z m -2,24 h 4 c 4,0 7,3 7,7 v 33 c 0,4 -3,7 -7,7 h -4 c -4,0 -7,-3 -7,-7 v -33 c 0,-4 3,-7 7,-7 z m -7,62 h 18 v 18 h -18 z m 67,0 h 55 v 48 H 128 v -12 h 56 c 12,0 18,-12 12,-21 z m -45,76 c 8,0 14,6 14,14 0,8 -6,14 -14,14 -8,0 -15,-6 -15,-14 0,-8 7,-14 15,-14 z m 85,0 c 8,0 15,6 15,14 0,8 -7,14 -15,14 -8,0 -14,-6 -14,-14 0,-8 6,-14 14,-14 z"
+       d="m 160,110 c -5,0 -10,2 -12,7 l -54,94 c -5.7,9 1.4,21 12,21 h 34 v 59 c 0,9 3,16 9,21 v 17 c 0,5 5,10 9,10 h 10 c 6,0 10,-5 10,-10 v -9 h 76 v 9 c 0,5 4,10 9,10 h 10 c 5,0 9,-5 9,-10 v -17 c 6,-5 10,-12 10,-21 v -95 c 0,-33 -34,-38 -76,-38 -7,0 -14,0 -20,0 l -23,-41 c -3,-5 -7,-7 -13,-7 z m -2,24 h 4 c 4,0 7,3 7,7 v 33 c 0,4 -3,7 -7,7 h -4 c -4,0 -7,-3 -7,-7 v -33 c 0,-4 3,-7 7,-7 z m -7,62 h 18 v 18 h -18 z m 67,0 h 55 v 48 H 158 v -12 h 56 c 12,0 18,-12 12,-21 z m -45,76 c 8,0 14,6 14,14 0,8 -6,14 -14,14 -8,0 -15,-6 -15,-14 0,-8 7,-14 15,-14 z m 85,0 c 8,0 15,6 15,14 0,8 -7,14 -15,14 -8,0 -14,-6 -14,-14 0,-8 6,-14 14,-14 z"
        id="path16-8"
        style="stroke-width:4.76162" />
     <text
        xml:space="preserve"
-       style="font-size:96px;line-height:1.25;font-family:Roboto;-inkscape-font-specification:Roboto;letter-spacing:0px;word-spacing:0px"
-       x="334"
-       y="240"
+       style="font-size:85.333px;line-height:1.25;font-family:Roboto;-inkscape-font-specification:Roboto;letter-spacing:0px;word-spacing:0px"
+       x="347"
+       y="230"
        id="text271"><tspan
          id="tspan269"
-         x="334"
-         y="240"
+         x="347"
+         y="230"
          sodipodi:role="line"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Roboto;-inkscape-font-specification:'Roboto Bold'">Mimořádnosti</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:85.333px;font-family:Roboto;-inkscape-font-specification:'Roboto Bold'">Mimořádnosti</tspan></text>
     <text
        xml:space="preserve"
-       style="font-size:48px;line-height:1.25;font-family:Roboto;-inkscape-font-specification:'Roboto weight=250';letter-spacing:0px;word-spacing:0px"
-       x="336"
-       y="334"
+       style="font-size:40px;line-height:1.25;font-family:Roboto;-inkscape-font-specification:'Roboto weight=250';letter-spacing:0px;word-spacing:0px"
+       x="347"
+       y="312"
        id="text400"><tspan
          sodipodi:role="line"
          id="tspan398"
-         x="336"
-         y="334"
-         style="font-size:48px">Pražská integrovaná doprava</tspan></text>
+         x="347"
+         y="312">v pražské integrované dopravě</tspan></text>
   </g>
   <metadata
      id="metadata9">
