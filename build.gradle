@@ -9,7 +9,7 @@ buildscript {
     }
     ext {
         // define versions used in modules
-        kotlin_version = '1.7.0'
+        kotlin_version = '1.7.10'
         navigationVersion = '2.5.0'
     }
     dependencies {
