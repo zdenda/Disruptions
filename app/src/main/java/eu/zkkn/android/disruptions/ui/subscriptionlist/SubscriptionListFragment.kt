@@ -57,6 +57,11 @@ class SubscriptionListFragment : AnalyticsFragment() {
         }
     ) { viewModel.refreshAppRestrictionsStatus() }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        lifecycle.addObserver(viewModel)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

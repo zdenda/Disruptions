@@ -11,6 +11,8 @@ import androidx.core.content.UnusedAppRestrictionsConstants.DISABLED
 import androidx.core.content.UnusedAppRestrictionsConstants.ERROR
 import androidx.core.content.UnusedAppRestrictionsConstants.FEATURE_NOT_AVAILABLE
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
@@ -26,7 +28,8 @@ import eu.zkkn.android.disruptions.utils.isValidLineName
 import eu.zkkn.disruptions.common.FcmConstants
 
 
-class SubscriptionListViewModel(application: Application) : AndroidViewModel(application) {
+class SubscriptionListViewModel(application: Application) : AndroidViewModel(application),
+    DefaultLifecycleObserver {
 
     enum class AppNotificationsState {
         UNKNOWN, DISABLED, ENABLED
@@ -186,6 +189,12 @@ class SubscriptionListViewModel(application: Application) : AndroidViewModel(app
                 }
             }
         Analytics.logUnsubscribe(topicName)
+    }
+
+    override fun onResume(owner: LifecycleOwner) {
+        super.onResume(owner)
+        refreshAppNotificationsStatus()
+        refreshAppRestrictionsStatus()
     }
 
 }
