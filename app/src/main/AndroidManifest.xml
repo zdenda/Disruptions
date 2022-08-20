@@ -5,6 +5,9 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <!-- for Firebase Analytics (since older SDK version is used, it's not added automatically) -->
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID"/>
+
     <application
         android:name="eu.zkkn.android.disruptions.MainApplication"
         android:icon="@mipmap/ic_launcher"
