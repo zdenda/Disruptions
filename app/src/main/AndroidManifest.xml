@@ -4,6 +4,7 @@
     package="eu.zkkn.android.disruptions">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
 
     <!-- for Firebase Analytics (since older SDK version is used, it's not added automatically) -->
     <uses-permission android:name="com.google.android.gms.permission.AD_ID"/>

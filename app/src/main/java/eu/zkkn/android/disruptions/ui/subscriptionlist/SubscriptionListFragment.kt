@@ -1,7 +1,9 @@
 package eu.zkkn.android.disruptions.ui.subscriptionlist
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -13,6 +15,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.EdgeEffect
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContract
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.result.launch
 import androidx.core.content.ContextCompat
 import androidx.core.content.IntentCompat
@@ -33,6 +36,10 @@ class SubscriptionListFragment : AnalyticsFragment() {
     private var _binding: FragmentSubscriptionsBinding? = null
     // Scoped to the lifecycle of the fragment's view (between onCreateView and onDestroyView)
     private val binding get() = _binding!!
+
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { viewModel.refreshAppNotificationsStatus() }
 
     private val appSettingsLauncher = registerForActivityResult(
         object : ActivityResultContract<Void?, ActivityResult>() {
@@ -160,10 +167,23 @@ class SubscriptionListFragment : AnalyticsFragment() {
     }
 
     private fun onSubscribeClick() {
+        requireNotificationPermission()
         val lineName = binding.tiLine.editText?.text.toString().trim()
         Analytics.logSubscribeForm(lineName)
         if (lineName.isNotBlank()) {
             viewModel.addSubscription(lineName)
+        }
+    }
+
+    private fun requireNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= 33) {
+            if (PackageManager.PERMISSION_GRANTED != ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.POST_NOTIFICATIONS
+                )
+            ) {
+                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
         }
     }
 
