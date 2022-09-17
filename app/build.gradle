@@ -9,6 +9,7 @@ apply plugin: 'com.google.firebase.firebase-perf' // Firebase Performance Monito
 
 
 android {
+    namespace 'eu.zkkn.android.disruptions'
     compileSdkVersion 33
     buildToolsVersion = '33.0.0'
     defaultConfig {
@@ -16,7 +17,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 33 // Android 13
         versionCode 29
-        versionName '1.0.0-α01'
+        versionName '1.0.0-α02'
         resConfigs 'en', 'cs'
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
@@ -63,8 +64,8 @@ dependencies {
     implementation project(':common')
 
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.5.0'
-    implementation 'androidx.core:core-ktx:1.8.0'
+    implementation 'androidx.appcompat:appcompat:1.5.1'
+    implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.vectordrawable:vectordrawable:1.1.0'
     implementation 'com.google.android.material:material:1.6.1'

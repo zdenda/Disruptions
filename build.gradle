@@ -10,14 +10,14 @@ buildscript {
     ext {
         // define versions used in modules
         kotlin_version = '1.7.10'
-        navigationVersion = '2.5.1'
+        navigationVersion = '2.5.2'
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.2.2'
+        classpath 'com.android.tools.build:gradle:7.3.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'com.google.gms:google-services:4.3.13'
+        classpath 'com.google.gms:google-services:4.3.14'
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navigationVersion"
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.1'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.2'
         classpath 'com.google.firebase:perf-plugin:1.4.1' // Firebase Performance Monitoring plugin
         classpath 'com.google.android.gms:oss-licenses-plugin:0.10.5'
         // NOTE: Do not place your application dependencies here; they belong
