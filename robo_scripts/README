@@ -1,0 +1,3 @@
+Generated files need to be re-saved with UTF-8 encoding.
+Because there seems to be a problem with czech characters
+and Test Lab runs will fail in the Firebase console.
