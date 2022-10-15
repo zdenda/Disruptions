@@ -30,10 +30,10 @@ class DisruptionListFragment : AnalyticsFragment(R.layout.fragment_disruptions) 
             btToSubscriptions.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.subscriptionsFragment))
 
 
-            viewModel.disruptions.observe(viewLifecycleOwner, { disruptions ->
+            viewModel.disruptions.observe(viewLifecycleOwner) { disruptions ->
                 empty.visibility = if (disruptions.isEmpty()) View.VISIBLE else View.GONE
                 adapter.submitList(disruptions)
-            })
+            }
         }
     }
 

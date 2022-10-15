@@ -16,8 +16,8 @@ android {
         applicationId 'eu.zkkn.android.disruptions'
         minSdkVersion 16
         targetSdkVersion 33 // Android 13
-        versionCode 29
-        versionName '1.0.0-α03'
+        versionCode 30
+        versionName '1.0.0'
         resConfigs 'en', 'cs'
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
