@@ -7,6 +7,7 @@ import android.os.Build
 import android.util.Log
 import androidx.annotation.WorkerThread
 import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavDeepLinkBuilder
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
@@ -83,6 +84,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     private fun showNotification(id: Int, guid: String, title: String, text: String, bigText: String) {
         val builder = NotificationCompat.Builder(this, AppNotificationManager.DISRUPTIONS_CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notification)
+            .setColor(ContextCompat.getColor(this, R.color.disruption))
             .setContentTitle(title)
             .setContentText(text)
             .setStyle(NotificationCompat.BigTextStyle().bigText(bigText))
@@ -135,6 +137,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val id = -1
         val builder = NotificationCompat.Builder(this, AppNotificationManager.DISRUPTIONS_CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notification)
+            .setColor(ContextCompat.getColor(this, R.color.info))
             .setContentTitle("Heartbeat")
             .setContentText(text)
             .setStyle(NotificationCompat.BigTextStyle().bigText(bigText))

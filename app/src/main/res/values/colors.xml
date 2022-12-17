@@ -5,4 +5,7 @@
     <color name="colorAccent">#2962FF</color>
     <color name="backgroundSecondary">#E3F2Fd</color>
     <color name="backgroundInfo">#FFEBEE</color>
+    <color name="disruption">@color/colorPrimary</color>
+    <color name="warning">#FFD600</color>
+    <color name="info">#0091EA</color>
 </resources>
