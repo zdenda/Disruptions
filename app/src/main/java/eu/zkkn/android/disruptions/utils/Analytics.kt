@@ -46,6 +46,13 @@ object Analytics {
             bundleOf(FirebaseAnalytics.Param.ITEM_ID to itemId))
     }
 
+    fun logFcmPriorityChanged(priority: Int, originalPriority: Int) {
+        firebaseAnalytics.logEvent("fcm_message_priority_changed", bundleOf(
+            "priority" to priority,
+            "original_priority" to originalPriority,
+        ))
+    }
+
     private fun shouldExcludeDeviceFromAnalytics(context: Context): Boolean {
         // exclude Firebase Test Lab and Google Play Pre-launch Report devices from analytics
         return "true" == Settings.System.getString(context.contentResolver, "firebase.test.lab")

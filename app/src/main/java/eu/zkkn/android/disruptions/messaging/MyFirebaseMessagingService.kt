@@ -16,6 +16,7 @@ import eu.zkkn.android.disruptions.R
 import eu.zkkn.android.disruptions.data.DisruptionRepository
 import eu.zkkn.android.disruptions.data.Preferences
 import eu.zkkn.android.disruptions.ui.disruptiondetail.DisruptionDetailFragmentArgs
+import eu.zkkn.android.disruptions.utils.Analytics
 import eu.zkkn.android.disruptions.utils.AppNotificationManager
 import eu.zkkn.android.disruptions.utils.Helpers
 import eu.zkkn.disruptions.common.FcmConstants
@@ -47,6 +48,10 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             FcmConstants.TYPE_NOTIFICATION -> handleNotificationMsg(remoteMessage)
             FcmConstants.TYPE_HEARTBEAT -> handleHeartbeatMsg(remoteMessage)
             else -> Log.w(TAG, "Unknown FCM message type: $messageType")
+        }
+
+        if (remoteMessage.priority != remoteMessage.originalPriority) {
+            Analytics.logFcmPriorityChanged(remoteMessage.priority, remoteMessage.originalPriority)
         }
     }
 
