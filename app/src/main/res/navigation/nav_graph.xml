@@ -4,22 +4,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/subscriptionsFragment">
-
-    <fragment
-        android:id="@+id/subscriptionsFragment"
-        android:name="eu.zkkn.android.disruptions.ui.subscriptionlist.SubscriptionListFragment"
-        android:label="@string/app_name"
-        tools:layout="@layout/fragment_subscriptions" />
-
-    <fragment
-        android:id="@+id/aboutFragment"
-        android:name="eu.zkkn.android.disruptions.ui.about.AboutFragment"
-        android:label="@string/app_name"
-        tools:layout="@layout/fragment_about" />
+    app:startDestination="@id/navSubscriptions">
 
     <navigation
-        android:id="@+id/disruptionsNavGraph"
+        android:id="@+id/navSubscriptions"
+        app:startDestination="@id/subscriptionsFragment">
+
+        <fragment
+            android:id="@+id/subscriptionsFragment"
+            android:name="eu.zkkn.android.disruptions.ui.subscriptionlist.SubscriptionListFragment"
+            android:label="@string/app_name"
+            tools:layout="@layout/fragment_subscriptions" />
+
+    </navigation>
+
+    <navigation
+        android:id="@+id/navDisruptions"
         app:startDestination="@id/disruptionsFragment">
 
         <fragment
@@ -41,6 +41,18 @@
                 android:name="guid"
                 app:argType="string" />
         </fragment>
+
+    </navigation>
+
+    <navigation
+        android:id="@+id/navAbout"
+        app:startDestination="@id/aboutFragment">
+
+        <fragment
+            android:id="@+id/aboutFragment"
+            android:name="eu.zkkn.android.disruptions.ui.about.AboutFragment"
+            android:label="@string/app_name"
+            tools:layout="@layout/fragment_about" />
 
     </navigation>
 

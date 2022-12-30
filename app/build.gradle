@@ -17,7 +17,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 33 // Android 13
         versionCode 30
-        versionName '1.0.1-α04'
+        versionName '1.0.1-α05'
         resConfigs 'en', 'cs'
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
