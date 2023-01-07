@@ -18,7 +18,7 @@
         android:allowBackup="true"
         android:fullBackupContent="@xml/backup_descriptor"
         android:dataExtractionRules="@xml/backup_rules"
-        tools:targetApi="s"
+        tools:targetApi="tiramisu"
         tools:ignore="GoogleAppIndexingWarning">
 
         <meta-data
