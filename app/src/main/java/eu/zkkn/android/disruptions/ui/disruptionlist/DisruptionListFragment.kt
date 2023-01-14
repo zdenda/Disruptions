@@ -27,7 +27,9 @@ class DisruptionListFragment : AnalyticsFragment(R.layout.fragment_disruptions) 
                 addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
             }
 
-            btToSubscriptions.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.subscriptionsFragment))
+            btToSubscriptions.setOnClickListener(
+                Navigation.createNavigateOnClickListener(R.id.navSubscriptions)
+            )
 
 
             viewModel.disruptions.observe(viewLifecycleOwner) { disruptions ->
