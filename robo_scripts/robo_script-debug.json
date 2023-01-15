@@ -1,8 +1,8 @@
 [
   {
     "eventType": "VIEW_TEXT_CHANGED",
-    "timestamp": 1665848886485,
-    "replacementText": "TEST",
+    "timestamp": 1673786147660,
+    "replacementText": "TEST1",
     "actionCode": -1,
     "delayTime": 0,
     "canScrollTo": false,
@@ -38,8 +38,8 @@
   },
   {
     "eventType": "PRESSED_EDITOR_ACTION",
-    "timestamp": 1665848902295,
-    "replacementText": "TEST",
+    "timestamp": 1673786155612,
+    "replacementText": "TEST1",
     "actionCode": 6,
     "delayTime": 0,
     "canScrollTo": false,
@@ -51,7 +51,7 @@
         "groupViewChildPosition": 0,
         "resourceId": "",
         "contentDescription": "",
-        "text": "TEST"
+        "text": "TEST1"
       },
       {
         "className": "android.widget.FrameLayout",
@@ -74,157 +74,20 @@
     ]
   },
   {
-    "eventType": "VIEW_CLICKED",
-    "timestamp": 1665848909799,
-    "replacementText": "",
+    "eventType": "PERMISSIONS_REQUEST",
+    "timestamp": 1673786156211,
     "actionCode": -1,
     "delayTime": 0,
+    "requestedPermissions": [
+      "android.permission.POST_NOTIFICATIONS"
+    ],
     "canScrollTo": false,
-    "elementDescriptors": [
-      {
-        "className": "com.google.android.material.bottomnavigation.BottomNavigationItemView",
-        "recyclerViewChildPosition": -1,
-        "adapterViewChildPosition": -1,
-        "groupViewChildPosition": 1,
-        "resourceId": "eu.zkkn.android.disruptions.debug:id/disruptionsNavGraph",
-        "contentDescription": "Mimořádnosti",
-        "text": ""
-      },
-      {
-        "className": "com.google.android.material.bottomnavigation.BottomNavigationMenuView",
-        "recyclerViewChildPosition": -1,
-        "adapterViewChildPosition": -1,
-        "groupViewChildPosition": 0,
-        "resourceId": "",
-        "contentDescription": "",
-        "text": ""
-      },
-      {
-        "className": "com.google.android.material.bottomnavigation.BottomNavigationView",
-        "recyclerViewChildPosition": -1,
-        "adapterViewChildPosition": -1,
-        "groupViewChildPosition": 1,
-        "resourceId": "eu.zkkn.android.disruptions.debug:id/bottomNavigation",
-        "contentDescription": "",
-        "text": ""
-      }
-    ]
-  },
-  {
-    "eventType": "VIEW_CLICKED",
-    "timestamp": 1665848928018,
-    "replacementText": "",
-    "actionCode": -1,
-    "delayTime": 0,
-    "canScrollTo": false,
-    "elementDescriptors": [
-      {
-        "className": "com.google.android.material.bottomnavigation.BottomNavigationItemView",
-        "recyclerViewChildPosition": -1,
-        "adapterViewChildPosition": -1,
-        "groupViewChildPosition": 2,
-        "resourceId": "eu.zkkn.android.disruptions.debug:id/aboutFragment",
-        "contentDescription": "O aplikaci",
-        "text": ""
-      },
-      {
-        "className": "com.google.android.material.bottomnavigation.BottomNavigationMenuView",
-        "recyclerViewChildPosition": -1,
-        "adapterViewChildPosition": -1,
-        "groupViewChildPosition": 0,
-        "resourceId": "",
-        "contentDescription": "",
-        "text": ""
-      },
-      {
-        "className": "com.google.android.material.bottomnavigation.BottomNavigationView",
-        "recyclerViewChildPosition": -1,
-        "adapterViewChildPosition": -1,
-        "groupViewChildPosition": 1,
-        "resourceId": "eu.zkkn.android.disruptions.debug:id/bottomNavigation",
-        "contentDescription": "",
-        "text": ""
-      }
-    ]
-  },
-  {
-    "eventType": "VIEW_CLICKED",
-    "timestamp": 1665848935461,
-    "replacementText": "",
-    "actionCode": -1,
-    "delayTime": 0,
-    "canScrollTo": false,
-    "elementDescriptors": [
-      {
-        "className": "com.google.android.material.bottomnavigation.BottomNavigationItemView",
-        "recyclerViewChildPosition": -1,
-        "adapterViewChildPosition": -1,
-        "groupViewChildPosition": 1,
-        "resourceId": "eu.zkkn.android.disruptions.debug:id/disruptionsNavGraph",
-        "contentDescription": "Mimořádnosti",
-        "text": ""
-      },
-      {
-        "className": "com.google.android.material.bottomnavigation.BottomNavigationMenuView",
-        "recyclerViewChildPosition": -1,
-        "adapterViewChildPosition": -1,
-        "groupViewChildPosition": 0,
-        "resourceId": "",
-        "contentDescription": "",
-        "text": ""
-      },
-      {
-        "className": "com.google.android.material.bottomnavigation.BottomNavigationView",
-        "recyclerViewChildPosition": -1,
-        "adapterViewChildPosition": -1,
-        "groupViewChildPosition": 1,
-        "resourceId": "eu.zkkn.android.disruptions.debug:id/bottomNavigation",
-        "contentDescription": "",
-        "text": ""
-      }
-    ]
-  },
-  {
-    "eventType": "VIEW_CLICKED",
-    "timestamp": 1665848938274,
-    "replacementText": "Přihlaste se k odběru",
-    "actionCode": -1,
-    "delayTime": 0,
-    "canScrollTo": false,
-    "elementDescriptors": [
-      {
-        "className": "com.google.android.material.button.MaterialButton",
-        "recyclerViewChildPosition": -1,
-        "adapterViewChildPosition": -1,
-        "groupViewChildPosition": 1,
-        "resourceId": "eu.zkkn.android.disruptions.debug:id/btToSubscriptions",
-        "contentDescription": "",
-        "text": "Přihlaste se k odběru"
-      },
-      {
-        "className": "androidx.constraintlayout.widget.ConstraintLayout",
-        "recyclerViewChildPosition": -1,
-        "adapterViewChildPosition": -1,
-        "groupViewChildPosition": 1,
-        "resourceId": "eu.zkkn.android.disruptions.debug:id/empty",
-        "contentDescription": "",
-        "text": ""
-      },
-      {
-        "className": "android.widget.FrameLayout",
-        "recyclerViewChildPosition": -1,
-        "adapterViewChildPosition": -1,
-        "groupViewChildPosition": 0,
-        "resourceId": "",
-        "contentDescription": "",
-        "text": ""
-      }
-    ]
+    "elementDescriptors": []
   },
   {
     "eventType": "VIEW_TEXT_CHANGED",
-    "timestamp": 1665848945247,
-    "replacementText": "TEST",
+    "timestamp": 1673786189889,
+    "replacementText": "TEST2",
     "actionCode": -1,
     "delayTime": 0,
     "canScrollTo": false,
@@ -260,7 +123,7 @@
   },
   {
     "eventType": "VIEW_CLICKED",
-    "timestamp": 1665848951591,
+    "timestamp": 1673786198465,
     "replacementText": "Přidat",
     "actionCode": -1,
     "delayTime": 0,
@@ -297,7 +160,192 @@
   },
   {
     "eventType": "VIEW_CLICKED",
-    "timestamp": 1665848963470,
+    "timestamp": 1673786206293,
+    "replacementText": "",
+    "actionCode": -1,
+    "delayTime": 0,
+    "canScrollTo": false,
+    "elementDescriptors": [
+      {
+        "className": "androidx.appcompat.widget.AppCompatImageButton",
+        "recyclerViewChildPosition": -1,
+        "adapterViewChildPosition": -1,
+        "groupViewChildPosition": 2,
+        "resourceId": "eu.zkkn.android.disruptions.debug:id/ibRemove",
+        "contentDescription": "Odebrat",
+        "text": ""
+      },
+      {
+        "className": "androidx.constraintlayout.widget.ConstraintLayout",
+        "recyclerViewChildPosition": -1,
+        "adapterViewChildPosition": -1,
+        "groupViewChildPosition": 1,
+        "resourceId": "",
+        "contentDescription": "",
+        "text": ""
+      },
+      {
+        "className": "androidx.recyclerview.widget.RecyclerView",
+        "recyclerViewChildPosition": -1,
+        "adapterViewChildPosition": -1,
+        "groupViewChildPosition": 2,
+        "resourceId": "eu.zkkn.android.disruptions.debug:id/rwSubscriptions",
+        "contentDescription": "",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "eventType": "VIEW_CLICKED",
+    "timestamp": 1673786220293,
+    "replacementText": "",
+    "actionCode": -1,
+    "delayTime": 0,
+    "canScrollTo": false,
+    "elementDescriptors": [
+      {
+        "className": "com.google.android.material.bottomnavigation.BottomNavigationItemView",
+        "recyclerViewChildPosition": -1,
+        "adapterViewChildPosition": -1,
+        "groupViewChildPosition": 1,
+        "resourceId": "eu.zkkn.android.disruptions.debug:id/navDisruptions",
+        "contentDescription": "Mimořádnosti",
+        "text": ""
+      },
+      {
+        "className": "com.google.android.material.bottomnavigation.BottomNavigationMenuView",
+        "recyclerViewChildPosition": -1,
+        "adapterViewChildPosition": -1,
+        "groupViewChildPosition": 0,
+        "resourceId": "",
+        "contentDescription": "",
+        "text": ""
+      },
+      {
+        "className": "com.google.android.material.bottomnavigation.BottomNavigationView",
+        "recyclerViewChildPosition": -1,
+        "adapterViewChildPosition": -1,
+        "groupViewChildPosition": 1,
+        "resourceId": "eu.zkkn.android.disruptions.debug:id/bottomNavigation",
+        "contentDescription": "",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "eventType": "VIEW_CLICKED",
+    "timestamp": 1673786226019,
+    "replacementText": "Přihlaste se k odběru",
+    "actionCode": -1,
+    "delayTime": 0,
+    "canScrollTo": false,
+    "elementDescriptors": [
+      {
+        "className": "com.google.android.material.button.MaterialButton",
+        "recyclerViewChildPosition": -1,
+        "adapterViewChildPosition": -1,
+        "groupViewChildPosition": 1,
+        "resourceId": "eu.zkkn.android.disruptions.debug:id/btToSubscriptions",
+        "contentDescription": "",
+        "text": "Přihlaste se k odběru"
+      },
+      {
+        "className": "androidx.constraintlayout.widget.ConstraintLayout",
+        "recyclerViewChildPosition": -1,
+        "adapterViewChildPosition": -1,
+        "groupViewChildPosition": 1,
+        "resourceId": "eu.zkkn.android.disruptions.debug:id/empty",
+        "contentDescription": "",
+        "text": ""
+      },
+      {
+        "className": "android.widget.FrameLayout",
+        "recyclerViewChildPosition": -1,
+        "adapterViewChildPosition": -1,
+        "groupViewChildPosition": 0,
+        "resourceId": "",
+        "contentDescription": "",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "eventType": "VIEW_CLICKED",
+    "timestamp": 1673786232140,
+    "replacementText": "",
+    "actionCode": -1,
+    "delayTime": 0,
+    "canScrollTo": false,
+    "elementDescriptors": [
+      {
+        "className": "com.google.android.material.bottomnavigation.BottomNavigationItemView",
+        "recyclerViewChildPosition": -1,
+        "adapterViewChildPosition": -1,
+        "groupViewChildPosition": 2,
+        "resourceId": "eu.zkkn.android.disruptions.debug:id/navAbout",
+        "contentDescription": "O aplikaci",
+        "text": ""
+      },
+      {
+        "className": "com.google.android.material.bottomnavigation.BottomNavigationMenuView",
+        "recyclerViewChildPosition": -1,
+        "adapterViewChildPosition": -1,
+        "groupViewChildPosition": 0,
+        "resourceId": "",
+        "contentDescription": "",
+        "text": ""
+      },
+      {
+        "className": "com.google.android.material.bottomnavigation.BottomNavigationView",
+        "recyclerViewChildPosition": -1,
+        "adapterViewChildPosition": -1,
+        "groupViewChildPosition": 1,
+        "resourceId": "eu.zkkn.android.disruptions.debug:id/bottomNavigation",
+        "contentDescription": "",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "eventType": "VIEW_CLICKED",
+    "timestamp": 1673786240536,
+    "replacementText": "",
+    "actionCode": -1,
+    "delayTime": 0,
+    "canScrollTo": false,
+    "elementDescriptors": [
+      {
+        "className": "com.google.android.material.bottomnavigation.BottomNavigationItemView",
+        "recyclerViewChildPosition": -1,
+        "adapterViewChildPosition": -1,
+        "groupViewChildPosition": 0,
+        "resourceId": "eu.zkkn.android.disruptions.debug:id/navSubscriptions",
+        "contentDescription": "Domů",
+        "text": ""
+      },
+      {
+        "className": "com.google.android.material.bottomnavigation.BottomNavigationMenuView",
+        "recyclerViewChildPosition": -1,
+        "adapterViewChildPosition": -1,
+        "groupViewChildPosition": 0,
+        "resourceId": "",
+        "contentDescription": "",
+        "text": ""
+      },
+      {
+        "className": "com.google.android.material.bottomnavigation.BottomNavigationView",
+        "recyclerViewChildPosition": -1,
+        "adapterViewChildPosition": -1,
+        "groupViewChildPosition": 1,
+        "resourceId": "eu.zkkn.android.disruptions.debug:id/bottomNavigation",
+        "contentDescription": "",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "eventType": "VIEW_CLICKED",
+    "timestamp": 1673786244498,
     "replacementText": "",
     "actionCode": -1,
     "delayTime": 0,
