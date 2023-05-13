@@ -60,7 +60,7 @@ class RefreshSubscriptionsWorker(appContext: Context, params: WorkerParameters) 
             val workManager = WorkManager.getInstance(context)
             workManager.enqueueUniquePeriodicWork(
                 PERIODIC_WORK_NAME,
-                ExistingPeriodicWorkPolicy.REPLACE,
+                ExistingPeriodicWorkPolicy.UPDATE,
                 //Interval resets (job is rescheduled) on device reboot, so it might never run if interval is too long
                 PeriodicWorkRequestBuilder<RefreshSubscriptionsWorker>(10, TimeUnit.DAYS, 4, TimeUnit.DAYS)
                     .addTag(PERIODIC_WORK_NAME)
