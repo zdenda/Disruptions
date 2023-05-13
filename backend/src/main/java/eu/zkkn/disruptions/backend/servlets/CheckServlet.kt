@@ -21,8 +21,10 @@ class CheckServlet : HttpServlet() {
 
     override fun doGet(req: HttpServletRequest, resp: HttpServletResponse) {
         val url = URL(PidRssFeedParser.URL)
-        //TODO: handle SocketTimeoutException
-        val pidRssFeed = PidRssFeedParser(url.openStream()).parse()
+        val connection = url.openConnection()
+        connection.connectTimeout = 60_000 // 60s
+        connection.readTimeout = 60_000 // 60s
+        val pidRssFeed = PidRssFeedParser(connection.getInputStream()).parse()
         log.config(pidRssFeed.toString())
 
         val disruptions = DisruptionDao()
