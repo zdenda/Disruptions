@@ -1,6 +1,6 @@
 package eu.zkkn.disruptions.backend.servlets
 
-import com.google.gson.Gson
+import eu.zkkn.disruptions.backend.MyGson
 import eu.zkkn.disruptions.backend.data.Disruption
 import eu.zkkn.disruptions.backend.data.DisruptionDao
 import eu.zkkn.disruptions.backend.datasource.PidRssFeedParser
@@ -49,7 +49,7 @@ class CheckServlet : HttpServlet() {
         }
 
         resp.contentType = "application/json; charset=UTF-8"
-        Gson().toJson(pidRssFeed, resp.writer)
+        MyGson.get().toJson(pidRssFeed, resp.writer)
     }
 
 }
