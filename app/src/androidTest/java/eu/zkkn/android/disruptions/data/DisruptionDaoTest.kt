@@ -55,11 +55,15 @@ class DisruptionDaoTest {
 
         var id = disruptionDao.insert(disruptionFirst)
 
+        assertTrue("ID should be in Int range", id in Int.MIN_VALUE .. Int.MAX_VALUE)
+
         var allDisruptions = getValue(disruptionDao.getAll())
         assertNotNull(allDisruptions)
         assertTrue(allDisruptions.isNotEmpty())
 
-        var disruption = allDisruptions.filter { it.guid == guid }[0]
+        var disruptions = allDisruptions.filter { it.guid == guid }
+        assertEquals(1, disruptions.size)
+        var disruption = disruptions.first()
         assertEquals(guid, disruption.guid)
         assertEquals(disruptionFirst.received, disruption.received)
         assertEquals(disruptionFirst.lineNames, disruption.lineNames)
@@ -69,11 +73,15 @@ class DisruptionDaoTest {
 
         id = disruptionDao.insert(disruptionSecond)
 
+        assertTrue("ID should be in Int range", id in Int.MIN_VALUE .. Int.MAX_VALUE)
+
         allDisruptions = getValue(disruptionDao.getAll())
         assertNotNull(allDisruptions)
         assertTrue(allDisruptions.isNotEmpty())
 
-        disruption = allDisruptions.filter { it.guid == guid }[0]
+        disruptions = allDisruptions.filter { it.guid == guid }
+        assertEquals(1, disruptions.size)
+        disruption = allDisruptions.first()
         assertEquals(guid, disruption.guid)
         assertEquals(disruptionSecond.received, disruption.received)
         assertEquals(disruptionSecond.lineNames, disruption.lineNames)

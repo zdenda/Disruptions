@@ -11,15 +11,16 @@ buildscript {
         // define versions used in modules
         // Kotlin version 1.8.0 breaks APK release build
         kotlin_version = '1.7.22'
-        navigationVersion = '2.5.3'
+        navigationVersion = '2.7.4'
     }
     dependencies {
         //noinspection GradleDependency Android Gradle plugin v7.4.0 needs JDK 11, but backend still uses JDK 8
         classpath 'com.android.tools.build:gradle:7.3.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        //noinspection GradleDependency v4.4.0 crashes app on start with error: Default FirebaseApp is not initialized in this process
         classpath 'com.google.gms:google-services:4.3.15'
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navigationVersion"
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.5'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.9'
         classpath 'com.google.firebase:perf-plugin:1.4.2' // Firebase Performance Monitoring plugin
         classpath 'com.google.android.gms:oss-licenses-plugin:0.10.6'
         // NOTE: Do not place your application dependencies here; they belong
@@ -34,6 +35,6 @@ allprojects {
     }
 }
 
-task clean(type: Delete) {
+tasks.register('clean', Delete) {
     delete rootProject.buildDir
 }

@@ -10,14 +10,15 @@ apply plugin: 'com.google.firebase.firebase-perf' // Firebase Performance Monito
 
 android {
     namespace 'eu.zkkn.android.disruptions'
-    compileSdkVersion 33
-    buildToolsVersion = '33.0.2'
+    compileSdk 34
+    buildToolsVersion = '34.0.0'
     defaultConfig {
         applicationId 'eu.zkkn.android.disruptions'
         minSdkVersion 16
+        //noinspection OldTargetApi Test on Android 14
         targetSdkVersion 33 // Android 13
-        versionCode 32
-        versionName '1.0.3-α05'
+        versionCode 33
+        versionName '1.0.3'
         resConfigs 'en', 'cs'
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
@@ -55,7 +56,7 @@ android {
 dependencies {
 
     // define versions used for multiple dependencies
-    def roomVersion = '2.5.1'
+    def roomVersion = '2.6.0'
     def navVersion = navigationVersion // version of Navigation is defined in top-level build file
     def archCoreVersion = '2.2.0'
     def workVersion = '2.8.1'
@@ -70,16 +71,16 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.vectordrawable:vectordrawable:1.1.0'
-    implementation 'com.google.android.material:material:1.9.0'
+    implementation 'com.google.android.material:material:1.10.0'
     implementation "androidx.room:room-runtime:$roomVersion"
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     //noinspection GradleDependency v2.6.0 Duplicated classes error cause a dependency to kotlin-stdlib
     implementation 'androidx.lifecycle:lifecycle-common-java8:2.5.1'
-    implementation 'androidx.fragment:fragment-ktx:1.5.7'
+    implementation 'androidx.fragment:fragment-ktx:1.6.1'
     implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navVersion"
-    implementation 'androidx.preference:preference-ktx:1.2.0'
-    implementation 'androidx.recyclerview:recyclerview:1.3.0'
+    implementation 'androidx.preference:preference-ktx:1.2.1'
+    implementation 'androidx.recyclerview:recyclerview:1.3.2'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation "androidx.work:work-runtime-ktx:$workVersion"
     implementation "androidx.work:work-gcm:$workVersion"
