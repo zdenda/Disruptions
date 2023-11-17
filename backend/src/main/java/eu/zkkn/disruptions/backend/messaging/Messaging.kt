@@ -8,11 +8,14 @@ import com.google.firebase.messaging.FcmOptions
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.Message
 import eu.zkkn.disruptions.backend.ServletContextHolder
+import eu.zkkn.disruptions.backend.Utils
 import eu.zkkn.disruptions.backend.datasource.PidRssFeed
 import eu.zkkn.disruptions.common.FcmConstants
-
+import java.util.logging.Logger
 
 object Messaging {
+
+    private val log = Logger.getLogger(Messaging::class.java.name)
 
     private val firebaseMessaging: FirebaseMessaging by lazy {
         val googleCredentials = GoogleCredentials.fromStream(
@@ -66,8 +69,10 @@ object Messaging {
     }
 
     fun send(message: Message): String {
-        //return firebaseMessaging.send(message, true) // perform only a dry run
-        return firebaseMessaging.send(message)
+        // perform only a dry run if not in production
+        val dryRun = !Utils.isProduction()
+        if (dryRun) log.warning("FCM mesages are sent only from Production environment")
+        return firebaseMessaging.send(message, dryRun)
     }
 
 }
