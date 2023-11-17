@@ -27,16 +27,16 @@ abstract class AppDatabase : RoomDatabase() {
 
         @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
         internal val MIGRATION_1_2 = object : Migration(1, 2) {
-            override fun migrate(database: SupportSQLiteDatabase) {
-                database.execSQL("""CREATE TABLE `disruption` (
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("""CREATE TABLE `disruption` (
                     |`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
                     |`guid` TEXT NOT NULL,
                     |`received` INTEGER NOT NULL,
                     |`line_names` TEXT NOT NULL,
                     |`title` TEXT NOT NULL,
                     |`time_info` TEXT NOT NULL);""".trimMargin())
-                database.execSQL("CREATE UNIQUE INDEX `index_disruption_guid` ON `disruption` (`guid`);")
-                database.execSQL("CREATE INDEX `index_disruption_received` ON `disruption` (`received`);")
+                db.execSQL("CREATE UNIQUE INDEX `index_disruption_guid` ON `disruption` (`guid`);")
+                db.execSQL("CREATE INDEX `index_disruption_received` ON `disruption` (`received`);")
             }
         }
 
