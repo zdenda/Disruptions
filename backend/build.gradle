@@ -9,6 +9,11 @@
 // To set the active account, run:
 // > gcloud config set account [ACCOUNT]
 
+// Automatic reload of my application
+// Open two terminals and run those commands
+// > .\gradlew :backend:explodeWar --continuous
+// > .\gradlew :backend:appengineRun
+
 buildscript {
     repositories {
         google()
@@ -65,10 +70,11 @@ appengine {
     run {
         //jvmFlags = ['-Xdebug', '-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005']
         jvmFlags = ["-Ddatastore.backing_store=$rootDir/backend/local_db.bin".toString()]
+        automaticRestart = true
     }
     deploy {
         projectId = "$googleCloudProjectId"
-        version = 21
+        version = 22
         // keep the old version running, do the switch manually in administration
         stopPreviousVersion = false
         promote = false
