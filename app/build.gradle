@@ -19,13 +19,14 @@ android {
         //noinspection OldTargetApi Test on Android 14
         targetSdk 33 // Android 13
         versionCode 33
-        versionName '1.0.4-α06'
+        versionName '1.0.4-α07'
         resourceConfigurations += ['en', 'cs']
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
     buildFeatures {
         viewBinding true
+        buildConfig true
     }
     buildTypes {
         debug {
