@@ -1,8 +1,5 @@
 // App Engine Backend build file
 
-// Backend needs to run with Java 8, otherwise it shows warning: "An illegal reflective access operation has occurred"
-// JDK version can be changed in File > Settings... > Build, Execution, Deployment > Build Tools > Gradle > Gradle JDK
-
 // Set the account before deploy to App Engine
 // List currently available accounts:
 // > gcloud auth list
@@ -14,49 +11,29 @@
 // > .\gradlew :backend:explodeWar --continuous
 // > .\gradlew :backend:appengineRun
 
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'com.google.cloud.tools:appengine-gradle-plugin:2.5.0'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    }
+plugins {
+    id 'org.jetbrains.kotlin.jvm'
+    id 'com.google.cloud.tools.appengine-appenginewebxml'
 }
-
-repositories {
-    google()
-    mavenCentral()
-}
-
-
-apply plugin: 'java'
-apply plugin: 'kotlin'
-apply plugin: 'war'
-apply plugin: 'com.google.cloud.tools.appengine-appenginewebxml'
-
 
 dependencies {
 
     // define versions used for multiple dependencies
-    def appEngineVersion = '2.0.22'
+    def appEngineVersion = '2.0.24'
+
+    compileOnly 'javax.servlet:javax.servlet-api:4.0.1'
+    compileOnly "com.google.appengine:appengine-resources:$appEngineVersion"
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+
     implementation project(':common')
 
-    implementation 'javax.servlet:javax.servlet-api:3.1.0'
-    //providedCompile "com.google.appengine:appengine-java-sdk:$appEngineVersion"
     implementation "com.google.appengine:appengine-api-1.0-sdk:$appEngineVersion"
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    //implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation 'com.google.code.gson:gson:2.10.1'
     implementation 'com.googlecode.objectify:objectify:5.1.25'
     implementation 'com.google.firebase:firebase-admin:9.2.0'
-    implementation 'org.slf4j:slf4j-nop:2.0.9'
-
-    // prevent conflict in transitive dependencies for objectify and firebase-admin
-    //implementation 'io.perfmark:perfmark-api:0.20.1'
+    implementation 'org.slf4j:slf4j-nop:2.0.12'
 
     testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     testImplementation 'junit:junit:4.13.2'
@@ -74,13 +51,15 @@ appengine {
     }
     deploy {
         projectId = "$googleCloudProjectId"
-        version = 22
+        version = 23
         // keep the old version running, do the switch manually in administration
         stopPreviousVersion = false
         promote = false
     }
 }
 
+// JDK version which is used to build can be changed in:
+// File > Settings... > Build, Execution, Deployment > Build Tools > Gradle > Gradle JDK
 sourceCompatibility = JavaVersion.VERSION_17
 targetCompatibility = JavaVersion.VERSION_17
 

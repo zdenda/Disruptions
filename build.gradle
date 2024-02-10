@@ -7,25 +7,25 @@ buildscript {
     }
     ext {
         // define versions used in modules
-        kotlin_version = '1.9.20'
-        navigationVersion = '2.7.5'
+        kotlin_version = '1.9.22'
+        navigationVersion = '2.7.7'
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.1.4'
+        classpath 'com.android.tools.build:gradle:8.2.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        // v4.4.0 might crash app on start with error: Default FirebaseApp is not initialized in this process
-        classpath 'com.google.gms:google-services:4.4.0'
+        classpath 'com.google.gms:google-services:4.4.1'
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navigationVersion"
         classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.9'
         classpath 'com.google.firebase:perf-plugin:1.4.2' // Firebase Performance Monitoring plugin
         classpath 'com.google.android.gms:oss-licenses-plugin:0.10.6'
+        classpath 'com.google.cloud.tools:appengine-gradle-plugin:2.8.0'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
 }
 
 plugins {
-    id 'com.google.devtools.ksp' version "$kotlin_version-1.0.14" apply false
+    id 'com.google.devtools.ksp' version "$kotlin_version-1.0.17" apply false
 }
 
 apply from: 'private.gradle'
