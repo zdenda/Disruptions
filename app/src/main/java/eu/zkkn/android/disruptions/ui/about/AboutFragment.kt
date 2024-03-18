@@ -38,6 +38,7 @@ class AboutFragment : AnalyticsFragment() {
             tvPrivacyPolicyLink.movementMethod = LinkMovementMethod.getInstance()
             tvSourceCodeLink.movementMethod = LinkMovementMethod.getInstance()
             tvRopidLink.movementMethod = LinkMovementMethod.getInstance()
+            tvGolemioLink.movementMethod = LinkMovementMethod.getInstance()
 
             tvOssLicenses.apply {
                 paint.isUnderlineText = true

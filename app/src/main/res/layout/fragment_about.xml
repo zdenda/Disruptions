@@ -151,12 +151,65 @@
             android:autoLink="none"
             android:padding="4dp"
             android:text="@string/ropid_link"
-            android:textColorLink="@color/colorPrimaryDark"
+            android:textColorLink="#dc301b"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv3"
             tools:text="www.PID.cz"
-            tools:textColor="@color/colorPrimaryDark" />
+            tools:textColor="#dc301b" />
+
+        <ImageView
+            android:id="@+id/iv3"
+            android:layout_width="wrap_content"
+            android:layout_height="70dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@null"
+            android:scaleType="fitCenter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvRopidLink"
+            app:srcCompat="@drawable/ic_logo_golemio" />
+
+        <TextView
+            android:id="@+id/tv5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:gravity="center_horizontal"
+            android:text="@string/golemio"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv3" />
+
+        <TextView
+            android:id="@+id/tvGolemioLink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="32dp"
+            android:autoLink="none"
+            android:padding="4dp"
+            android:text="@string/golemio_link"
+            android:textColorLink="#003066"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv5"
+            tools:text="www.GOLEMIO.cz"
+            tools:textColor="#003066" />
 
         <TextView
             android:id="@+id/tvOssLicenses"
@@ -168,7 +221,7 @@
             android:padding="4dp"
             android:text="@string/oss_licenses"
             android:textColor="@color/colorPrimaryDark"
-            app:layout_constraintTop_toBottomOf="@+id/tvRopidLink"
+            app:layout_constraintTop_toBottomOf="@+id/tvGolemioLink"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
