@@ -53,6 +53,10 @@ object Analytics {
         ))
     }
 
+    fun logRealtimeMapEnabled(enabled: Boolean) {
+        firebaseAnalytics.logEvent("realtime_positions_map", bundleOf("enabled" to enabled))
+    }
+
     private fun shouldExcludeDeviceFromAnalytics(context: Context): Boolean {
         // exclude Firebase Test Lab and Google Play Pre-launch Report devices from analytics
         return "true" == Settings.System.getString(context.contentResolver, "firebase.test.lab")

@@ -20,6 +20,7 @@ import eu.zkkn.android.disruptions.R
 import eu.zkkn.android.disruptions.data.Preferences
 import eu.zkkn.android.disruptions.data.SubscriptionRepository
 import eu.zkkn.android.disruptions.ui.AnalyticsFragment
+import eu.zkkn.android.disruptions.utils.Analytics
 import eu.zkkn.android.disruptions.utils.BitmapHelper
 import eu.zkkn.android.disruptions.utils.ioThread
 import org.json.JSONObject
@@ -28,6 +29,8 @@ import java.net.URL
 import kotlin.math.absoluteValue
 
 class MapFragment : AnalyticsFragment() {
+
+    private var isAnalyticsEventLogged = false
 
     private val callback = OnMapReadyCallback { googleMap ->
         /**
@@ -120,6 +123,10 @@ class MapFragment : AnalyticsFragment() {
         }
 
         view.findViewById<Button>(R.id.buttonPositive).setOnClickListener {
+            if (!isAnalyticsEventLogged) {
+                isAnalyticsEventLogged = true
+                Analytics.logRealtimeMapEnabled(true)
+            }
             Preferences.setRealtimePositionsEnabled(requireContext(), true)
             AlertDialog.Builder(requireContext()).apply {
                 setTitle("Poloha vozů na mapě")
@@ -131,6 +138,10 @@ class MapFragment : AnalyticsFragment() {
         }
 
         view.findViewById<Button>(R.id.buttonNegative).setOnClickListener { button ->
+            if (!isAnalyticsEventLogged) {
+                isAnalyticsEventLogged = true
+                Analytics.logRealtimeMapEnabled(false)
+            }
             Preferences.setRealtimePositionsEnabled(requireContext(), false)
             button.isEnabled = false
             Snackbar

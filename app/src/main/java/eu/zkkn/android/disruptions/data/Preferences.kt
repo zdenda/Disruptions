@@ -19,7 +19,7 @@ object Preferences {
     private const val PREF_KEY_LAST_HEARTBEAT_RECEIVED = "lastHeartbeatReceivedTime"
     private const val PREF_KEY_LAST_HEARTBEAT_SENT = "lastHeartbeatSentTime"
     private const val PREF_KEY_FIRST_RUN = "firstRun-v1"
-    private const val PREF_KEY_ENABLE_REALTIME_POSITIONS = "enableRealtimePositionsMap-TEST-16"
+    private const val PREF_KEY_ENABLE_REALTIME_POSITIONS = "enableRealtimePositionsMap"
 
     private lateinit var preferences: SharedPreferences
 
