@@ -30,12 +30,16 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        if (Preferences.isRealtimePositionsEnabled(this) == false) {
+            binding.bottomNavigation.menu.removeItem(R.id.navMap)
+        }
+
         val navHostFragment: NavHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
 
         val appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.subscriptionsFragment, R.id.disruptionsFragment, R.id.aboutFragment)
+            setOf(R.id.subscriptionsFragment, R.id.disruptionsFragment, R.id.aboutFragment, R.id.mapFragment)
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         binding.bottomNavigation.setupWithNavController(navController)

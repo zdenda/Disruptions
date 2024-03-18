@@ -19,6 +19,7 @@ object Preferences {
     private const val PREF_KEY_LAST_HEARTBEAT_RECEIVED = "lastHeartbeatReceivedTime"
     private const val PREF_KEY_LAST_HEARTBEAT_SENT = "lastHeartbeatSentTime"
     private const val PREF_KEY_FIRST_RUN = "firstRun-v1"
+    private const val PREF_KEY_ENABLE_REALTIME_POSITIONS = "enableRealtimePositionsMap-TEST-16"
 
     private lateinit var preferences: SharedPreferences
 
@@ -77,6 +78,27 @@ object Preferences {
         // set to false after first time
         if (value) prefs.edit { putBoolean(PREF_KEY_FIRST_RUN, false).apply() }
         return value
+    }
+
+    fun setRealtimePositionsEnabled(context: Context, enabled: Boolean) {
+        getPreferences(context).edit {
+            putBoolean(PREF_KEY_ENABLE_REALTIME_POSITIONS, enabled).apply()
+        }
+    }
+
+    fun resetRealtimePositionsEnabled(context: Context) {
+        getPreferences(context).edit {
+            remove(PREF_KEY_ENABLE_REALTIME_POSITIONS).apply()
+        }
+    }
+
+    fun isRealtimePositionsEnabled(context: Context): Boolean? {
+        val pref = getPreferences(context)
+        return if (pref.contains(PREF_KEY_ENABLE_REALTIME_POSITIONS)) {
+            pref.getBoolean(PREF_KEY_ENABLE_REALTIME_POSITIONS, true)
+        } else {
+            null
+        }
     }
 
 }

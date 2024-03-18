@@ -6,7 +6,8 @@ import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import android.widget.Button
+import androidx.appcompat.app.AlertDialog
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
@@ -14,16 +15,19 @@ import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.snackbar.Snackbar
 import eu.zkkn.android.disruptions.R
+import eu.zkkn.android.disruptions.data.Preferences
 import eu.zkkn.android.disruptions.data.SubscriptionRepository
+import eu.zkkn.android.disruptions.ui.AnalyticsFragment
 import eu.zkkn.android.disruptions.utils.BitmapHelper
 import eu.zkkn.android.disruptions.utils.ioThread
 import org.json.JSONObject
+import java.io.InputStreamReader
 import java.net.URL
 import kotlin.math.absoluteValue
 
-
-class MapFragment : Fragment() {
+class MapFragment : AnalyticsFragment() {
 
     private val callback = OnMapReadyCallback { googleMap ->
         /**
@@ -46,14 +50,14 @@ class MapFragment : Fragment() {
 
             val bounds = LatLngBounds.builder()
 
-            val allLines = SubscriptionRepository.getInstance(requireContext()).getAllLineNames()
+            val allLines = SubscriptionRepository.getInstance(requireContext()).getAllLineNames().take(10)
 
             for (line in allLines) {
 
-                val data =
-                    URL("https://api.golemio.cz/v2/public/vehiclepositions?routeShortName=$line").readText()
-
-                //println("ZKLog 0: $data")
+                val url = URL("https://api.golemio.cz/v2/public/vehiclepositions?routeShortName=$line")
+                val connection = url.openConnection()
+                connection.setRequestProperty("x-access-token", "zkkn.apps+mimoradnosti@gmail.com") //FIXME
+                val data = InputStreamReader(connection.getInputStream(), Charsets.UTF_8).readText()
 
                 val icon: BitmapDescriptor by lazy {
                     //val color = ContextCompat.getColor(requireContext(), R.color.colorPrimary)
@@ -110,7 +114,40 @@ class MapFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        if (Preferences.isRealtimePositionsEnabled(requireContext()) == true) {
+            showMap(view)
+        }
+
+        view.findViewById<Button>(R.id.buttonPositive).setOnClickListener {
+            Preferences.setRealtimePositionsEnabled(requireContext(), true)
+            AlertDialog.Builder(requireContext()).apply {
+                setTitle("Poloha vozů na mapě")
+                setMessage("Zobrazení aktuální polohy vozů sledovaných linek na mapě je prozatím jen experiment ve velmi ranném stádiu vývoje. Proto nejspíše nebude fungovat spolehlivě a v budoucnu může z aplikace zcela zmizet. Nyní slouží především k prověření funkčnosti a získání zpětné vazby.")
+                setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
+                show()
+            }
+            showMap(view)
+        }
+
+        view.findViewById<Button>(R.id.buttonNegative).setOnClickListener { button ->
+            Preferences.setRealtimePositionsEnabled(requireContext(), false)
+            button.isEnabled = false
+            Snackbar
+                .make(requireContext(), view, "Uloženo. Záložka Mapa zmizí po restartu aplikace.", Snackbar.LENGTH_LONG)
+                .setAction("Zpět") {
+                    Preferences.resetRealtimePositionsEnabled(requireContext())
+                    button.isEnabled = true
+                }
+                .show()
+        }
+    }
+
+    private fun showMap(view: View) {
+        view.findViewById<View>(R.id.mapLayout).visibility = View.VISIBLE
+        view.findViewById<View>(R.id.mapDialog).visibility = View.GONE
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
     }
+
 }
