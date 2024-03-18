@@ -37,6 +37,7 @@ class AboutFragment : AnalyticsFragment() {
             tvVersion.text = getString(R.string.version, BuildConfig.VERSION_NAME)
             tvPrivacyPolicyLink.movementMethod = LinkMovementMethod.getInstance()
             tvSourceCodeLink.movementMethod = LinkMovementMethod.getInstance()
+            tvSendEmailLink.movementMethod = LinkMovementMethod.getInstance()
             tvRopidLink.movementMethod = LinkMovementMethod.getInstance()
             tvGolemioLink.movementMethod = LinkMovementMethod.getInstance()
 
