@@ -19,7 +19,7 @@ open class MainApplication : Application() {
         FragmentStrictMode.defaultPolicy =
             FragmentStrictMode.Policy.Builder()
                 .detectFragmentReuse()
-                .detectFragmentTagUsage()
+                //.detectFragmentTagUsage() //FIXME
                 .detectRetainInstanceUsage()
                 .detectSetUserVisibleHint()
                 .detectTargetFragmentUsage()

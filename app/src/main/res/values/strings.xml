@@ -5,6 +5,7 @@
     <string name="title_disruptions">Mimořádnosti</string>
     <string name="title_about">O aplikaci</string>
     <string name="title_disruption">Podrobnosti</string>
+    <string name="title_map">Mapa</string>
 
     <string name="button_open_app_settings">Otevřít nastavení</string>
     <string name="info_blocked_notifications">Zobrazení oznámení z aplikace je blokováno. V nastavení aplikace zkontrolujte sekce <b>Oznámení</b> a <b>Oprávnění</b>, že je tam vše povoleno, tak aby se upozornění správně zobrazovala.</string>

@@ -4,6 +4,7 @@ plugins {
     id 'com.google.devtools.ksp'
     id 'androidx.navigation.safeargs.kotlin'
     id 'com.google.android.gms.oss-licenses-plugin'
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
     id 'com.google.gms.google-services'
     id 'com.google.firebase.crashlytics' // Firebase Crashlytics
     id 'com.google.firebase.firebase-perf' // Firebase Performance Monitoring
@@ -19,7 +20,7 @@ android {
         //noinspection OldTargetApi Test on Android 14
         targetSdk 33 // Android 13
         versionCode 33
-        versionName '1.0.4-α07'
+        versionName '1.1.0-α02'
         resourceConfigurations += ['en', 'cs']
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
@@ -89,6 +90,7 @@ dependencies {
     implementation "androidx.work:work-runtime-ktx:$workVersion"
     implementation "androidx.work:work-gcm:$workVersion"
     implementation "androidx.arch.core:core-runtime:$archCoreVersion"
+    implementation 'com.google.android.gms:play-services-maps:17.0.0' //FIXME
     implementation 'com.google.android.gms:play-services-oss-licenses:17.0.1'
 
     // Import the BoM for the Firebase platform

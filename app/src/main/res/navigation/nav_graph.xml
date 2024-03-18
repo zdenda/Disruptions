@@ -45,6 +45,18 @@
     </navigation>
 
     <navigation
+        android:id="@+id/navMap"
+        app:startDestination="@id/mapFragment">
+
+        <fragment
+            android:id="@+id/mapFragment"
+            android:name="eu.zkkn.android.disruptions.ui.map.MapFragment"
+            android:label="fragment_map"
+            tools:layout="@layout/fragment_map" />
+
+    </navigation>
+
+    <navigation
         android:id="@+id/navAbout"
         app:startDestination="@id/aboutFragment">
 
