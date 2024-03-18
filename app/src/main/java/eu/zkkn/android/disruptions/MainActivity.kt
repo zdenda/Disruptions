@@ -8,7 +8,11 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import com.google.firebase.remoteconfig.ktx.remoteConfig
+import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
 import eu.zkkn.android.disruptions.data.Preferences
 import eu.zkkn.android.disruptions.databinding.ActivityMainBinding
 import eu.zkkn.android.disruptions.utils.ioThread
@@ -30,7 +34,19 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        if (Preferences.isRealtimePositionsEnabled(this) == false) {
+        val remoteConfig: FirebaseRemoteConfig = Firebase.remoteConfig
+        val configSettings = remoteConfigSettings {
+            minimumFetchIntervalInSeconds = 24 * 60 * 60
+        }
+        remoteConfig.setConfigSettingsAsync(configSettings)
+        remoteConfig.activate().addOnCompleteListener { task ->
+            if (task.isSuccessful && task.result) {
+                Log.d(TAG, "Changes from remote config were activated")
+            }
+        }
+
+        if (Preferences.isRealtimePositionsEnabled(this) == false ||
+            !remoteConfig.getBoolean("show_realtime_positions")) {
             binding.bottomNavigation.menu.removeItem(R.id.navMap)
         }
 
@@ -52,6 +68,8 @@ class MainActivity : AppCompatActivity() {
             }
             Log.d(TAG, "FCM token: ${task.result}")
         }
+
+        remoteConfig.fetch()
 
         ioThread {
             if (Preferences.isFirstRun(this)) {
