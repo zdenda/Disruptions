@@ -2,7 +2,6 @@ package eu.zkkn.android.disruptions.ui.map
 
 import android.graphics.Color
 import android.os.Bundle
-import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,7 +25,7 @@ import eu.zkkn.android.disruptions.utils.ioThread
 import org.json.JSONObject
 import java.io.InputStreamReader
 import java.net.URL
-import kotlin.math.absoluteValue
+
 
 class MapFragment : AnalyticsFragment() {
 
@@ -42,9 +41,10 @@ class MapFragment : AnalyticsFragment() {
          * install it inside the SupportMapFragment. This method will only be triggered once the
          * user has installed Google Play services and returned to the app.
          */
-        //val sydney = LatLng(-34.0, 151.0)
-        //googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney").rotation(90F))
-        //googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        val prague = LatLng(50.0875, 14.421389)
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(prague))
+
+        googleMap.setInfoWindowAdapter(MarkerInfoWindowAdapter(requireContext()))
 
         val colors = mutableSetOf("#d50000", "#c51162", "#aa00ff", "#6200ea", "#304ffe", "#2962ff", "#0091ea", "#00b8d4", "#00bfa5", "#00c853", "#64dd17", "#aeea00", "#ffab00", "#ff6d00", "#dd2c00", "#3e2723", "#212121", "#263238").toMutableList()
         colors.shuffle()
@@ -88,12 +88,12 @@ class MapFragment : AnalyticsFragment() {
                     val marker = MarkerOptions().title(shortName)
                         .position(position)
                         .rotation((bearing).toFloat())
-                        .snippet(
-                            "${if (delay > 0) "-" else "+"}${DateUtils.formatElapsedTime(delay.absoluteValue)} $vehicleId"
-                        )
                         .icon(icon)
+
                     requireActivity().runOnUiThread {
-                        googleMap.addMarker(marker)
+                        googleMap.addMarker(marker).apply {
+                            tag = MarkerData(shortName, vehicleId, delay)
+                        }
                     }
 
                     bounds.include(position)
