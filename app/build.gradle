@@ -20,7 +20,7 @@ android {
         //noinspection OldTargetApi Test on Android 14
         targetSdk 33 // Android 13
         versionCode 33
-        versionName '1.1.0-α04'
+        versionName '1.1.0-α05'
         resourceConfigurations += ['en', 'cs']
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
@@ -77,15 +77,20 @@ dependencies {
     implementation project(':common')
 
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    //noinspection GradleDependency v1.7.0 needs minSdkVersion 21
     implementation 'androidx.appcompat:appcompat:1.6.1'
+    //noinspection GradleDependency v1.13.0 needs minSdkVersion 19
     implementation 'androidx.core:core-ktx:1.12.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    //noinspection GradleDependency v1.2.0 needs minSdkVersion 19
     implementation 'androidx.vectordrawable:vectordrawable:1.1.0'
+    //noinspection GradleDependency v1.12.0 needs minSdkVersion 19
     implementation 'com.google.android.material:material:1.11.0'
     implementation "androidx.room:room-runtime:$roomVersion"
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     //noinspection GradleDependency v2.7.0 needs minSdkVersion 19
     implementation 'androidx.lifecycle:lifecycle-common-java8:2.6.2'
+    //noinspection GradleDependency v1.7.0 needs minSdkVersion 19
     implementation 'androidx.fragment:fragment-ktx:1.6.2'
     implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navVersion"
@@ -95,7 +100,9 @@ dependencies {
     implementation "androidx.work:work-runtime-ktx:$workVersion"
     implementation "androidx.work:work-gcm:$workVersion"
     implementation "androidx.arch.core:core-runtime:$archCoreVersion"
-    implementation 'com.google.android.gms:play-services-maps:17.0.0' //FIXME
+    //noinspection GradleDependency v18.0.0 needs minSdkVersion 19
+    implementation 'com.google.android.gms:play-services-maps:17.0.1'
+    //noinspection GradleDependency v17.1.0 needs minSdkVersion 21
     implementation 'com.google.android.gms:play-services-oss-licenses:17.0.1'
 
     // Import the BoM for the Firebase platform

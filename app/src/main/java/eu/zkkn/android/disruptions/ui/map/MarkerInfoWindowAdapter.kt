@@ -14,14 +14,14 @@ import kotlin.math.absoluteValue
 
 class MarkerInfoWindowAdapter(private val context: Context) : GoogleMap.InfoWindowAdapter {
 
-    override fun getInfoWindow(marker: Marker?): View? {
+    override fun getInfoWindow(marker: Marker): View? {
         // Return null to indicate that the default window (white bubble) should be used
         return null
     }
 
 
-    override fun getInfoContents(marker: Marker?): View? {
-        val data = marker?.tag as? MarkerData ?: return null
+    override fun getInfoContents(marker: Marker): View? {
+        val data = marker.tag as? MarkerData ?: return null
 
         @SuppressLint("InflateParams") // it was in Google Maps Tutorial
         val view = LayoutInflater.from(context).inflate(R.layout.map_marker_info, null).apply {

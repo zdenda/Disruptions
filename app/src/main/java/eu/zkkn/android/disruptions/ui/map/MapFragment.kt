@@ -92,7 +92,7 @@ class MapFragment : AnalyticsFragment() {
 
                     requireActivity().runOnUiThread {
                         googleMap.addMarker(marker).apply {
-                            tag = MarkerData(shortName, vehicleId, delay)
+                            if (this != null) tag = MarkerData(shortName, vehicleId, delay)
                         }
                     }
 
