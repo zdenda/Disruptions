@@ -3,7 +3,7 @@
     <cron>
         <url>/check</url>
         <description>Periodic disruptions check</description>
-        <schedule>every 5 minutes</schedule>
+        <schedule>every 3 minutes</schedule>
     </cron>
     <cron>
         <url>/heartbeat</url>
