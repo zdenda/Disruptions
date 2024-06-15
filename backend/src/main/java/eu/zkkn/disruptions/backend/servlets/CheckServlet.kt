@@ -5,12 +5,20 @@ import eu.zkkn.disruptions.backend.data.Disruption
 import eu.zkkn.disruptions.backend.data.DisruptionDao
 import eu.zkkn.disruptions.backend.datasource.PidRssFeedParser
 import eu.zkkn.disruptions.backend.messaging.Messaging
+import java.io.IOException
 import java.net.URL
+import java.util.logging.Level
 import java.util.logging.Logger
 import javax.servlet.annotation.WebServlet
 import javax.servlet.http.HttpServlet
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
+import kotlin.time.TimeSource
+
+
+// AppEngine seems to ignore values of those timeouts
+// and throws SocketTimeoutException after 50 seconds
+private const val TIMEOUT = 30_000 //30s
 
 
 @WebServlet(name = "CheckServlet", urlPatterns = ["/check"])
@@ -20,11 +28,25 @@ class CheckServlet : HttpServlet() {
 
 
     override fun doGet(req: HttpServletRequest, resp: HttpServletResponse) {
-        val url = URL(PidRssFeedParser.URL)
-        val connection = url.openConnection()
-        connection.connectTimeout = 60_000 // 60s
-        connection.readTimeout = 60_000 // 60s
-        val pidRssFeed = PidRssFeedParser(connection.getInputStream()).parse()
+
+        val timeSource = TimeSource.Monotonic
+        val markStart = timeSource.markNow()
+
+        val inputStream = try {
+            val connection = URL(PidRssFeedParser.URL).openConnection()
+            connection.connectTimeout = TIMEOUT
+            connection.readTimeout = TIMEOUT
+            connection.getInputStream()
+        } catch (_: IOException) {
+            val elapsed = timeSource.markNow() - markStart
+            log.warning("Use secondary URL after ${elapsed.inWholeMilliseconds}ms")
+            val backupConnection = URL(PidRssFeedParser.BACKUP_URL).openConnection()
+            backupConnection.connectTimeout = TIMEOUT
+            backupConnection.readTimeout = TIMEOUT
+            backupConnection.getInputStream()
+        }
+
+        val pidRssFeed = PidRssFeedParser(inputStream).parse()
         log.config(pidRssFeed.toString())
 
         val disruptions = DisruptionDao()
@@ -52,6 +74,14 @@ class CheckServlet : HttpServlet() {
 
         resp.contentType = "application/json; charset=UTF-8"
         MyGson.get().toJson(pidRssFeed, resp.writer)
+
+        val elapsed = timeSource.markNow() - markStart
+        log.log(
+            // Checking runs every 3 minutes, so each run should finish under 2 minutes
+            // to keep some safety margin
+            if (elapsed.inWholeMinutes >= 2) Level.SEVERE else Level.CONFIG,
+            "Finished after ${elapsed.inWholeMilliseconds}ms"
+        )
     }
 
 }

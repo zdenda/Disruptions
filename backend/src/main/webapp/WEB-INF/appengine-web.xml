@@ -5,6 +5,7 @@
     <url-stream-handler>urlfetch</url-stream-handler>
     <system-properties>
         <property name="java.util.logging.config.file" value="WEB-INF/logging.properties" />
+        <!-- This property seems to be ignored and SocketTimeoutException is thrown after 50 seconds -->
         <property name="appengine.api.urlfetch.defaultDeadline" value="60" />
     </system-properties>
     <!-- https://cloud.google.com/appengine/docs/standard/java/config/appref#scaling_elements -->
