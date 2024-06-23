@@ -42,7 +42,7 @@ class MapFragment : AnalyticsFragment() {
          * user has installed Google Play services and returned to the app.
          */
         val prague = LatLng(50.0875, 14.421389)
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(prague))
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(prague, 10f))
 
         googleMap.setInfoWindowAdapter(MarkerInfoWindowAdapter(requireContext()))
 
@@ -52,6 +52,7 @@ class MapFragment : AnalyticsFragment() {
         ioThread {
 
             val bounds = LatLngBounds.builder()
+            var hasPositions = false
 
             val allLines = SubscriptionRepository.getInstance(requireContext()).getAllLineNames().take(10)
 
@@ -97,12 +98,17 @@ class MapFragment : AnalyticsFragment() {
                     }
 
                     bounds.include(position)
+                    hasPositions = true
                 }
             }
 
-            requireActivity().runOnUiThread {
-                googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 20))
+            if (hasPositions) {
+                val cameraPosition = CameraUpdateFactory.newLatLngBounds(bounds.build(), 20)
+                requireActivity().runOnUiThread {
+                    googleMap.moveCamera(cameraPosition)
+                }
             }
+
         }
 
     }
