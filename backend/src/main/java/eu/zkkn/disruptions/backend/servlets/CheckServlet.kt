@@ -39,7 +39,7 @@ class CheckServlet : HttpServlet() {
             connection.getInputStream()
         } catch (_: IOException) {
             val elapsed = timeSource.markNow() - markStart
-            log.warning("Use secondary URL after ${elapsed.inWholeMilliseconds}ms")
+            log.warning("Use secondary URL after ${elapsed.inWholeMilliseconds}ms") //TODO: show only as info
             val backupConnection = URL(PidRssFeedParser.BACKUP_URL).openConnection()
             backupConnection.connectTimeout = TIMEOUT
             backupConnection.readTimeout = TIMEOUT
@@ -76,6 +76,7 @@ class CheckServlet : HttpServlet() {
         MyGson.get().toJson(pidRssFeed, resp.writer)
 
         val elapsed = timeSource.markNow() - markStart
+        //TODO: only show if it's above 2 minutes
         log.log(
             // Checking runs every 3 minutes, so each run should finish under 2 minutes
             // to keep some safety margin
