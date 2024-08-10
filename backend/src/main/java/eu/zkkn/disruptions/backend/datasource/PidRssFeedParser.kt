@@ -19,7 +19,7 @@ class PidRssFeedParser(private val input: InputStream) {
 
     companion object {
         const val URL = "https://pid.cz/feed/rss-mimoradnosti/"
-        const val BACKUP_URL = "https://cdn-zkkn.netlify.app/pid-mimoradnosti/"
+        fun getBackupUrl(): String = System.getProperty("backupRssFeedUrl", URL)
     }
 
     private val dateTimePattern = DateTimeFormatter.ofPattern("EEE, d MMM yyyy HH:mm:ss Z", Locale.US)

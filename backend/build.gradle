@@ -1,10 +1,17 @@
 // App Engine Backend build file
 
-// Set the account before deploy to App Engine
-// List currently available accounts:
-// > gcloud auth list
-// To set the active account, run:
-// > gcloud config set account [ACCOUNT]
+/**
+ * Set the account before deploy to App Engine
+ *
+ * List currently available accounts:
+ *   > gcloud auth list
+ *
+ * To add a new service account:
+ *   > gcloud auth activate-service-account SERVICE_ACCOUNT@DOMAIN.COM --key-file=/path/key.json --project=PROJECT_ID
+ *
+ * To set the active account, run:
+ *   > gcloud config set account [ACCOUNT]
+ */
 
 // Automatic reload of my application
 // Open two terminals and run those commands
@@ -43,6 +50,12 @@ dependencies {
 
 }
 
+war {
+    filesMatching('WEB-INF/appengine-web.xml') {
+        expand 'backupRssFeedUrl': backupRssFeedUrl
+    }
+}
+
 appengine {
     run {
         //jvmFlags = ['-Xdebug', '-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005']
@@ -51,7 +64,7 @@ appengine {
     }
     deploy {
         projectId = "$googleCloudProjectId"
-        version = 25
+        version = 26
         // keep the old version running, do the switch manually in administration
         stopPreviousVersion = false
         promote = false
