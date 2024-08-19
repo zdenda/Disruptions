@@ -1,12 +1,12 @@
 package eu.zkkn.disruptions.backend.servlets
 
 import eu.zkkn.disruptions.backend.MyGson
+import eu.zkkn.disruptions.backend.Utils
 import eu.zkkn.disruptions.backend.data.Disruption
 import eu.zkkn.disruptions.backend.data.DisruptionDao
 import eu.zkkn.disruptions.backend.datasource.PidRssFeedParser
 import eu.zkkn.disruptions.backend.messaging.Messaging
 import java.io.IOException
-import java.net.URL
 import java.util.logging.Level
 import java.util.logging.Logger
 import javax.servlet.annotation.WebServlet
@@ -16,9 +16,7 @@ import javax.servlet.http.HttpServletResponse
 import kotlin.time.TimeSource
 
 
-// AppEngine seems to ignore values of those timeouts
-// and throws SocketTimeoutException after 50 seconds
-private const val TIMEOUT = 30_000 //30s
+
 
 
 @WebServlet(name = "CheckServlet", urlPatterns = ["/check"])
@@ -33,17 +31,12 @@ class CheckServlet : HttpServlet() {
         val markStart = timeSource.markNow()
 
         val inputStream = try {
-            val connection = URL(PidRssFeedParser.URL).openConnection()
-            connection.connectTimeout = TIMEOUT
-            connection.readTimeout = TIMEOUT
-            connection.getInputStream()
+            Utils.openHttpConnection(PidRssFeedParser.URL).inputStream
         } catch (_: IOException) {
             val elapsed = timeSource.markNow() - markStart
-            log.warning("Use secondary URL after ${elapsed.inWholeMilliseconds}ms") //TODO: show only as info
-            val backupConnection = URL(PidRssFeedParser.getBackupUrl()).openConnection()
-            backupConnection.connectTimeout = TIMEOUT
-            backupConnection.readTimeout = TIMEOUT
-            backupConnection.getInputStream()
+            val backupUrl = PidRssFeedParser.getBackupUrl()
+            log.warning("Use secondary URL (${backupUrl}) after ${elapsed.inWholeMilliseconds}ms") //TODO: show only as info
+            Utils.openHttpConnection(backupUrl).inputStream
         }
 
         val pidRssFeed = PidRssFeedParser(inputStream).parse()
