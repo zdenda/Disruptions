@@ -26,7 +26,7 @@ plugins {
 dependencies {
 
     // define versions used for multiple dependencies
-    def appEngineVersion = '2.0.27'
+    def appEngineVersion = '2.0.29'
 
     compileOnly 'javax.servlet:javax.servlet-api:4.0.1'
     compileOnly "com.google.appengine:appengine-resources:$appEngineVersion"
@@ -64,7 +64,7 @@ appengine {
     }
     deploy {
         projectId = "$googleCloudProjectId"
-        version = 26
+        version = 27
         // keep the old version running, do the switch manually in administration
         stopPreviousVersion = false
         promote = false
