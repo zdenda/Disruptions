@@ -12,15 +12,15 @@ plugins {
 
 android {
     namespace 'eu.zkkn.android.disruptions'
-    compileSdk 34
-    buildToolsVersion = '34.0.0'
+    compileSdk 34 // v35 recommends using a newer Android Gradle plugin which is in bera or RC
+    buildToolsVersion = '35.0.0'
     defaultConfig {
         applicationId 'eu.zkkn.android.disruptions'
         minSdk 16
         //noinspection OldTargetApi Test on Android 14
         targetSdk 33 // Android 13
         versionCode 35
-        versionName '1.1.1'
+        versionName '1.1.2-α01'
         resourceConfigurations += ['en', 'cs']
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
@@ -70,7 +70,7 @@ dependencies {
     def roomVersion = '2.6.1'
     def navVersion = navigationVersion // version of Navigation is defined in top-level build file
     def archCoreVersion = '2.2.0'
-    def workVersion = '2.9.0'
+    def workVersion = '2.9.1'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -121,7 +121,9 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
 
     androidTestImplementation "androidx.arch.core:core-testing:$archCoreVersion"
+    //noinspection GradleDependency v1.2.0 needs minSdkVersion 19
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    //noinspection GradleDependency v3.6.0 needs minSdkVersion 19
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     androidTestImplementation "androidx.room:room-testing:$roomVersion"
 
