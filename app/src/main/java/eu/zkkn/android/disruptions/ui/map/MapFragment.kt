@@ -65,7 +65,7 @@ class MapFragment : AnalyticsFragment() {
 
                 val icon: BitmapDescriptor by lazy {
                     //val color = ContextCompat.getColor(requireContext(), R.color.colorPrimary)
-                    val color = Color.parseColor(if (colors.size > 0) colors.removeFirst() else "#000000")
+                    val color = Color.parseColor(if (colors.size > 0) colors.removeAt(0) else "#000000")
                     BitmapHelper.vectorToBitmap(
                         requireContext(),
                         R.drawable.ic_compass_arrow_2,
