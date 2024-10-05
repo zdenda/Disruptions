@@ -10,8 +10,6 @@ import android.widget.Button
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.GoogleMap.OnCameraMoveStartedListener
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.BitmapDescriptor
@@ -62,8 +60,7 @@ class MapFragment : AnalyticsFragment() {
             }
     }
 
-    private var googleMap: GoogleMap? = null
-    private var hasUserMovedCamera = false
+    private var myGoogleMap: MyGoogleMap? = null
 
     private val callback = OnMapReadyCallback { googleMap ->
         /**
@@ -75,23 +72,21 @@ class MapFragment : AnalyticsFragment() {
          * user has installed Google Play services and returned to the app.
          */
 
-        this.googleMap = googleMap
+        myGoogleMap = MyGoogleMap(googleMap)
 
         lifecycleScope.launch {
 
-            val prague = LatLng(50.0875, 14.421389)
-            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(prague, 10f))
-            googleMap.setInfoWindowAdapter(MarkerInfoWindowAdapter(requireContext()))
-            googleMap.setOnCameraMoveStartedListener { reason ->
-                if (reason == OnCameraMoveStartedListener.REASON_GESTURE) hasUserMovedCamera = true
+            myGoogleMap?.let {
+                val prague = LatLng(50.0875, 14.421389)
+                it.moveCamera(CameraUpdateFactory.newLatLngZoom(prague, 10f))
+                it.setInfoWindowAdapter(MarkerInfoWindowAdapter(requireContext()))
+                updatePositions(it)
             }
-
-            updatePositions(googleMap)
         }
 
     }
 
-    private suspend fun updatePositions(googleMap: GoogleMap) {
+    private suspend fun updatePositions(googleMap: MyGoogleMap) {
         withContext(Dispatchers.IO) {
 
             val newMarkers = mutableMapOf<String, Marker>()
@@ -155,8 +150,8 @@ class MapFragment : AnalyticsFragment() {
                 markers = newMarkers
             }
 
-            if (hasPositions && !hasUserMovedCamera) {
-                val cameraPosition = CameraUpdateFactory.newLatLngBounds(bounds.build(), 36)
+            if (hasPositions && !googleMap.hasUserMovedCamera) {
+                val cameraPosition = CameraUpdateFactory.newLatLngBounds(bounds.build(), 48)
                 requireActivity().runOnUiThread {
                     googleMap.moveCamera(cameraPosition)
                 }
@@ -217,7 +212,7 @@ class MapFragment : AnalyticsFragment() {
         view.findViewById<View>(R.id.mapDialog).visibility = View.GONE
         view.findViewById<View>(R.id.fabRefresh).setOnClickListener {
             lifecycleScope.launch {
-                googleMap?.let { updatePositions(it) }
+                myGoogleMap?.let { updatePositions(it) }
             }
         }
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
