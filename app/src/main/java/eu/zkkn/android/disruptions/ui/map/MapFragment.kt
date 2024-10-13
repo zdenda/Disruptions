@@ -133,7 +133,14 @@ class MapFragment : AnalyticsFragment() {
                         requireActivity().runOnUiThread {
                             marker.position = position
                             marker.rotation = bearing.toFloat()
-                            marker.tag = markerData // active tooltip isn't updated if data changes
+                            if (markerData != marker.tag) {
+                                marker.tag = markerData
+                                // update data in info window and move camera if tooltip is shown
+                                if (marker.isInfoWindowShown) {
+                                    googleMap.moveCamera(CameraUpdateFactory.newLatLng(position))
+                                    marker.showInfoWindow()
+                                }
+                            }
                         }
                         newMarkers[vehicleId] = marker
                     }
