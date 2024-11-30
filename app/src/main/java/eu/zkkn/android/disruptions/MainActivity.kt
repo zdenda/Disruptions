@@ -15,6 +15,7 @@ import com.google.firebase.remoteconfig.ktx.remoteConfig
 import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
 import eu.zkkn.android.disruptions.data.Preferences
 import eu.zkkn.android.disruptions.databinding.ActivityMainBinding
+import eu.zkkn.android.disruptions.utils.RemoteConfigKeys
 import eu.zkkn.android.disruptions.utils.ioThread
 import eu.zkkn.android.disruptions.workers.RefreshSubscriptionsWorker
 
@@ -46,7 +47,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         if (Preferences.isRealtimePositionsEnabled(this) == false ||
-            !remoteConfig.getBoolean("show_realtime_positions")) {
+            !remoteConfig.getBoolean(RemoteConfigKeys.SHOW_REALTIME_POSITIONS) ||
+            remoteConfig.getString(RemoteConfigKeys.GOLEMIO_API_KEY).isEmpty()) {
             binding.bottomNavigation.menu.removeItem(R.id.navMap)
         }
 

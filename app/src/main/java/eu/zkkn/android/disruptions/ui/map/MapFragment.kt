@@ -18,12 +18,15 @@ import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.remoteconfig.ktx.remoteConfig
 import eu.zkkn.android.disruptions.R
 import eu.zkkn.android.disruptions.data.Preferences
 import eu.zkkn.android.disruptions.data.SubscriptionRepository
 import eu.zkkn.android.disruptions.ui.AnalyticsFragment
 import eu.zkkn.android.disruptions.utils.Analytics
 import eu.zkkn.android.disruptions.utils.BitmapHelper
+import eu.zkkn.android.disruptions.utils.RemoteConfigKeys
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.launch
@@ -31,6 +34,7 @@ import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import java.io.InputStreamReader
 import java.net.URL
+import javax.net.ssl.HttpsURLConnection
 
 
 class MapFragment : AnalyticsFragment() {
@@ -87,6 +91,10 @@ class MapFragment : AnalyticsFragment() {
     }
 
     private suspend fun updatePositions(googleMap: MyGoogleMap) {
+
+        val golemioApiKey = Firebase.remoteConfig.getString(RemoteConfigKeys.GOLEMIO_API_KEY)
+        if (golemioApiKey.isEmpty()) return
+
         withContext(Dispatchers.IO) {
 
             val newMarkers = mutableMapOf<String, Marker>()
@@ -97,9 +105,12 @@ class MapFragment : AnalyticsFragment() {
                 ensureActive() // check if it works
 
                 val url = URL("https://api.golemio.cz/v2/public/vehiclepositions?routeShortName=${line.lineName}")
-                val connection = url.openConnection()
-                connection.setRequestProperty("x-access-token", "zkkn.apps+mimoradnosti@gmail.com") //FIXME
-                val data = InputStreamReader(connection.getInputStream(), Charsets.UTF_8).readText()
+                val connection = url.openConnection() as HttpsURLConnection
+                connection.setRequestProperty("x-access-token", golemioApiKey)
+                connection.connect()
+                if (connection.responseCode !in 200..299) continue
+
+                val data = InputStreamReader(connection.inputStream, Charsets.UTF_8).readText()
 
                 val features = JSONObject(data).getJSONArray("features")
                 for (i in 0 until features.length()) {
@@ -215,6 +226,13 @@ class MapFragment : AnalyticsFragment() {
     }
 
     private fun showMap(view: View) {
+
+        if (Firebase.remoteConfig.getString(RemoteConfigKeys.GOLEMIO_API_KEY).isEmpty()) {
+            Snackbar.make(view, "Aktuální polohu vozů nyní nelze načíst", Snackbar.LENGTH_INDEFINITE)
+                .setAction("OK") {}
+                .show()
+        }
+
         view.findViewById<View>(R.id.mapLayout).visibility = View.VISIBLE
         view.findViewById<View>(R.id.mapDialog).visibility = View.GONE
         view.findViewById<View>(R.id.fabRefresh).setOnClickListener {
@@ -227,6 +245,7 @@ class MapFragment : AnalyticsFragment() {
 
         // Move position of the map zoom controls, so they wouldn't be under the refresh button
         fixZoomControlsPosition(mapFragment)
+
     }
 
     @SuppressLint("ResourceType")
