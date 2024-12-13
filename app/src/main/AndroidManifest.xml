@@ -18,7 +18,7 @@
         android:allowBackup="true"
         android:fullBackupContent="@xml/backup_descriptor"
         android:dataExtractionRules="@xml/backup_rules"
-        tools:targetApi="tiramisu"
+        tools:targetApi="UPSIDE_DOWN_CAKE"
         tools:ignore="GoogleAppIndexingWarning">
 
         <meta-data
@@ -40,6 +40,7 @@
 
         <service
             android:name=".messaging.MyFirebaseMessagingService"
+            android:foregroundServiceType="remoteMessaging"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
