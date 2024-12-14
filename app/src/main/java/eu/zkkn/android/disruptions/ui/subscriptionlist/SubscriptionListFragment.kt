@@ -87,6 +87,9 @@ class SubscriptionListFragment : AnalyticsFragment() {
             }
 
             viewModel.showNotificationsInfo.observe(viewLifecycleOwner) { showWarning ->
+                if (viewModel.notificationPermissionRequested == false && showWarning) {
+                    requireNotificationPermission()
+                }
                 llNotificationsInfoBox.visibility = if (showWarning) View.VISIBLE else View.GONE
             }
 
@@ -182,6 +185,7 @@ class SubscriptionListFragment : AnalyticsFragment() {
                     Manifest.permission.POST_NOTIFICATIONS
                 )
             ) {
+                viewModel.notificationPermissionRequested = true
                 requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
             }
         }

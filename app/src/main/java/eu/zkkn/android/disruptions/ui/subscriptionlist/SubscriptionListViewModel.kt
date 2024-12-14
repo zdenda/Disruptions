@@ -114,6 +114,8 @@ class SubscriptionListViewModel(application: Application) : AndroidViewModel(app
         subscriptionRepository.getSubscriptions()
     }
 
+    var notificationPermissionRequested = false
+
     val showNotificationsInfo: LiveData<Boolean> = MediatorLiveData<Boolean>().apply {
         addSource(appNotificationsStatus) { appNotificationsState ->
             this.value = shouldShowAppNotificationsInfo(appNotificationsState, subscriptions.value)
