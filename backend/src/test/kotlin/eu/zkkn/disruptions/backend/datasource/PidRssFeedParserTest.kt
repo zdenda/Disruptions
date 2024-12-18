@@ -182,4 +182,49 @@ class PidRssFeedParserTest {
         assertTrue(lines.containsAll(listOf("S34")))
     }
 
+    @Test
+    fun parse_description_in_channel() {
+        val xml = """
+            <rss version="2.0"
+                    xmlns:content="http://purl.org/rss/1.0/modules/content/"
+                    xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+                    xmlns:dc="http://purl.org/dc/elements/1.1/"
+                    xmlns:atom="http://www.w3.org/2005/Atom"
+                    xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+                    xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+            >
+                <channel>
+                    <title>Pražská integrovaná doprava - Mimořádnosti</title>
+                    <atom:link href="https://pid.cz/feed/rss-mimoradnosti/" rel="self" type="application/rss+xml" />
+                    <link>https://pid.cz/</link>
+                    <description>Pražská integrovaná doprava (PID)</description>
+                    <lastBuildDate></lastBuildDate>
+                    <language></language>
+                    <sy:updatePeriod>minutely</sy:updatePeriod>
+                    <sy:updateFrequency>3</sy:updateFrequency>
+                    <generator>https://wordpress.org/?v=6.6.2</generator>
+                    <item>
+                        <title>Lysá nad Labem - Semice - Český Brod - Zpoždění spojů</title>
+                        <link>https://pid.cz/zmena/lysa-nad-labem-semice-cesky-brod-36529-2/</link>
+                        <pubDate></pubDate>
+                        <guid isPermaLink="false">36529-2</guid>
+                        <description><![CDATA[18.12. 16:11 - do&nbsp;odvolání; Dotčené linky: 661]]></description>
+                        <content:encoded><![CDATA[]]></content:encoded>
+                    </item>
+                </channel>
+            </rss>""".trimIndent()
+        val feed = PidRssFeedParser(xml.byteInputStream()).parse()
+
+        assertEquals("Pražská integrovaná doprava - Mimořádnosti", feed.title)
+        assertEquals(1, feed.items.size)
+        assertTrue(feed.items.contains(
+            PidRssFeed.Item(
+                guid = "36529-2",
+                title = "Lysá nad Labem - Semice - Český Brod - Zpoždění spojů",
+                timeInfo = "18.12. 16:11 - do odvolání",
+                lines = listOf("661")
+            )
+        ))
+    }
+
 }

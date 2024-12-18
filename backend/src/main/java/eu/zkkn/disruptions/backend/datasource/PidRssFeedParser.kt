@@ -75,6 +75,7 @@ class PidRssFeedParser(private val input: InputStream) {
                             characters = ""
                         }
                         DESCRIPTION -> {
+                            if (!inItem) continue //parse only descriptions in <item>
                             val (timeInfo, lines) = parseDescription(characters)
                             itemTimeInfo = timeInfo
                             itemLines = lines
