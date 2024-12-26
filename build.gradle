@@ -7,11 +7,11 @@ buildscript {
     }
     ext {
         // define versions used in modules
-        kotlin_version = '2.0.20'
-        navigationVersion = '2.7.7'
+        kotlin_version = '2.0.21' // v2.1 is not properly supported in the IDE plugin (2.0)
+        navigationVersion = '2.7.7' // v2.8.0 needs minSdkVersion 21
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.6.1'
+        classpath 'com.android.tools.build:gradle:8.7.3'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.google.gms:google-services:4.4.2'
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navigationVersion"
@@ -19,14 +19,14 @@ buildscript {
         classpath 'com.google.firebase:perf-plugin:1.4.2' // Firebase Performance Monitoring plugin
         classpath 'com.google.android.gms:oss-licenses-plugin:0.10.6'
         classpath "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:2.0.1"
-        classpath 'com.google.cloud.tools:appengine-gradle-plugin:2.8.1'
+        classpath 'com.google.cloud.tools:appengine-gradle-plugin:2.8.3'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
 }
 
 plugins {
-    id 'com.google.devtools.ksp' version "$kotlin_version-1.0.24" apply false
+    id 'com.google.devtools.ksp' version "$kotlin_version-1.0.28" apply false
 }
 
 apply from: 'private.gradle'

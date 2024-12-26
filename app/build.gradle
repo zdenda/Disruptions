@@ -20,7 +20,7 @@ android {
         //noinspection OldTargetApi Fix problems on Android 15
         targetSdk 34 // Android 14
         versionCode 37
-        versionName '1.1.3-α07'
+        versionName '1.1.3'
         resourceConfigurations += ['en', 'cs']
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'

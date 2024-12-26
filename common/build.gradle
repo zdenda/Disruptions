@@ -8,10 +8,10 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation "androidx.annotation:annotation:1.8.2"
+    implementation "androidx.annotation:annotation:1.9.1"
 
     testImplementation 'junit:junit:4.13.2'
-    testImplementation 'org.hamcrest:hamcrest:2.2'
+    testImplementation 'org.hamcrest:hamcrest:3.0'
 
 }
 
