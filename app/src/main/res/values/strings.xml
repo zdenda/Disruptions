@@ -27,6 +27,7 @@
         <item quantity="one">Linka:</item>
         <item quantity="other">Linky:</item>
     </plurals>
+    <string name="refresh">Aktualizovat</string>
 
     <string name="version">Verze: %1$s</string>
     <string name="oss_licenses">Licence použitých komponent</string>
