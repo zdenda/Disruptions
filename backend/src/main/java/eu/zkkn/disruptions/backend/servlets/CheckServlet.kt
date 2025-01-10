@@ -1,5 +1,6 @@
 package eu.zkkn.disruptions.backend.servlets
 
+import com.google.api.client.util.LoggingInputStream
 import eu.zkkn.disruptions.backend.MyGson
 import eu.zkkn.disruptions.backend.Utils
 import eu.zkkn.disruptions.backend.data.Disruption
@@ -13,10 +14,13 @@ import javax.servlet.annotation.WebServlet
 import javax.servlet.http.HttpServlet
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
+import kotlin.random.Random
 import kotlin.time.TimeSource
 
 
-
+// The Logs Explorer does not display an app log entry that exceeds 16 kilobytes.
+// https://cloud.google.com/appengine/docs/standard/writing-application-logs?tab=java
+private const val LOGGING_LIMIT = 16_000
 
 
 @WebServlet(name = "CheckServlet", urlPatterns = ["/check"])
@@ -39,7 +43,17 @@ class CheckServlet : HttpServlet() {
             Utils.openHttpConnection(backupUrl).inputStream
         }
 
-        val pidRssFeed = PidRssFeedParser(inputStream).parse()
+        // log approximately every tenth response
+        // We can monitor how the log storage has grown and possibly change the frequency
+        // https://console.cloud.google.com/logs/storage
+        // Previous month storage: 78.97 MiB
+        val parserInputStream = if (Random.nextInt(10) == 0) {
+            LoggingInputStream(inputStream, log, Level.CONFIG, LOGGING_LIMIT)
+        } else {
+            inputStream
+        }
+
+        val pidRssFeed = PidRssFeedParser(parserInputStream).parse()
         log.config(pidRssFeed.toString())
 
         val disruptions = DisruptionDao()
