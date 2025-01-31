@@ -26,7 +26,7 @@ plugins {
 dependencies {
 
     // define versions used for multiple dependencies
-    def appEngineVersion = '2.0.31'
+    def appEngineVersion = '2.0.32'
 
     compileOnly 'javax.servlet:javax.servlet-api:4.0.1'
     compileOnly "com.google.appengine:appengine-resources:$appEngineVersion"
@@ -37,9 +37,9 @@ dependencies {
 
     implementation "com.google.appengine:appengine-api-1.0-sdk:$appEngineVersion"
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'com.google.code.gson:gson:2.11.0'
+    implementation 'com.google.code.gson:gson:2.12.1'
     implementation 'com.googlecode.objectify:objectify:5.1.25'
-    implementation 'com.google.firebase:firebase-admin:9.4.2'
+    implementation 'com.google.firebase:firebase-admin:9.4.3'
     implementation 'com.google.http-client:google-http-client:1.45.3'
     implementation 'org.slf4j:slf4j-nop:2.0.16'
 
