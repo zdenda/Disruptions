@@ -43,11 +43,11 @@ class CheckServlet : HttpServlet() {
             Utils.openHttpConnection(backupUrl).inputStream
         }
 
-        // log approximately every tenth response
+        // log approximately every fifth response
         // We can monitor how the log storage has grown and possibly change the frequency
         // https://console.cloud.google.com/logs/storage
-        // Previous month storage: 78.97 MiB
-        val parserInputStream = if (Random.nextInt(10) == 0) {
+        // Previous month storage: 78.97 MiB (December 2024 without response logging)
+        val parserInputStream = if (Random.nextInt(5) == 0) {
             LoggingInputStream(inputStream, log, Level.CONFIG, LOGGING_LIMIT)
         } else {
             inputStream
