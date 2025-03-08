@@ -47,7 +47,7 @@ class CheckServlet : HttpServlet() {
         // We can monitor how the log storage has grown and possibly change the frequency
         // https://console.cloud.google.com/logs/storage
         // Previous month storage: 78.97 MiB (December 2024 without response logging)
-        val parserInputStream = if (Random.nextInt(5) == 0) {
+        val parserInputStream = if (Random.nextInt(2) == 0) {
             LoggingInputStream(inputStream, log, Level.CONFIG, LOGGING_LIMIT)
         } else {
             inputStream
