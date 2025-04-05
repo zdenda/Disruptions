@@ -14,7 +14,6 @@ import javax.servlet.annotation.WebServlet
 import javax.servlet.http.HttpServlet
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
-import kotlin.random.Random
 import kotlin.time.TimeSource
 
 
@@ -43,17 +42,9 @@ class CheckServlet : HttpServlet() {
             Utils.openHttpConnection(backupUrl).inputStream
         }
 
-        // log approximately every fifth response
-        // We can monitor how the log storage has grown and possibly change the frequency
-        // https://console.cloud.google.com/logs/storage
-        // Previous month storage: 78.97 MiB (December 2024 without response logging)
-        val parserInputStream = if (Random.nextInt(2) == 0) {
-            LoggingInputStream(inputStream, log, Level.CONFIG, LOGGING_LIMIT)
-        } else {
-            inputStream
-        }
+        val loggingInputStream = LoggingInputStream(inputStream, log, Level.CONFIG, LOGGING_LIMIT)
 
-        val pidRssFeed = PidRssFeedParser(parserInputStream).parse()
+        val pidRssFeed = PidRssFeedParser(loggingInputStream).parse()
         log.config(pidRssFeed.toString())
 
         val disruptions = DisruptionDao()
