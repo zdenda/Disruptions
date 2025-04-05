@@ -19,7 +19,7 @@ android {
         minSdk 16
         targetSdk 35 // Android 15
         versionCode 37
-        versionName '1.2.0-α04'
+        versionName '1.2.0-α05'
         resourceConfigurations += ['en', 'cs']
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
@@ -69,7 +69,7 @@ dependencies {
     def roomVersion = '2.6.1'
     def navVersion = navigationVersion // version of Navigation is defined in top-level build file
     def archCoreVersion = '2.2.0'
-    def workVersion = '2.9.1'
+    def workVersion = '2.9.1' // v2.10.0 needs minSdkVersion 21
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
