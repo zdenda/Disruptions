@@ -12,14 +12,15 @@ plugins {
 
 android {
     namespace 'eu.zkkn.android.disruptions'
-    compileSdk 35
-    buildToolsVersion = '35.0.0'
+    compileSdk 36
+    buildToolsVersion = '36.0.0'
     defaultConfig {
         applicationId 'eu.zkkn.android.disruptions'
         minSdk 16
+        //noinspection OldTargetApi test on Android 16
         targetSdk 35 // Android 15
         versionCode 37
-        versionName '1.2.0-α05'
+        versionName '1.2.0-α06'
         resourceConfigurations += ['en', 'cs']
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
@@ -66,7 +67,7 @@ ksp {
 dependencies {
 
     // define versions used for multiple dependencies
-    def roomVersion = '2.6.1'
+    def roomVersion = '2.6.1' // v2.7.0 needs minSdkVersion 21
     def navVersion = navigationVersion // version of Navigation is defined in top-level build file
     def archCoreVersion = '2.2.0'
     def workVersion = '2.9.1' // v2.10.0 needs minSdkVersion 21
@@ -86,6 +87,7 @@ dependencies {
     implementation 'androidx.vectordrawable:vectordrawable:1.1.0'
     //noinspection GradleDependency v1.12.0 needs minSdkVersion 19
     implementation 'com.google.android.material:material:1.11.0'
+    //noinspection GradleDependency v2.7.0 needs minSdkVersion 21
     implementation "androidx.room:room-runtime:$roomVersion"
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     //noinspection GradleDependency v2.7.0 needs minSdkVersion 19
@@ -131,6 +133,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     //noinspection GradleDependency v3.6.0 needs minSdkVersion 19
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    //noinspection GradleDependency v2.7.0 needs minSdkVersion 21
     androidTestImplementation "androidx.room:room-testing:$roomVersion"
 
     ksp "androidx.room:room-compiler:$roomVersion"
