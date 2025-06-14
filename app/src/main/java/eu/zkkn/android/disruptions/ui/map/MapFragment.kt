@@ -1,13 +1,13 @@
 package eu.zkkn.android.disruptions.ui.map
 
 import android.annotation.SuppressLint
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.appcompat.app.AlertDialog
+import androidx.core.graphics.toColorInt
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -32,6 +32,7 @@ import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
+import java.io.IOException
 import java.io.InputStreamReader
 import java.net.URL
 import javax.net.ssl.HttpsURLConnection
@@ -40,6 +41,7 @@ import javax.net.ssl.HttpsURLConnection
 class MapFragment : AnalyticsFragment() {
 
     private var isAnalyticsEventLogged = false
+    private var loadingErrorVisible = false
 
     private var markers = mapOf<String, Marker>()
 
@@ -53,7 +55,7 @@ class MapFragment : AnalyticsFragment() {
             .map { lineName ->
                 val icon: BitmapDescriptor by lazy {
                     //val color = ContextCompat.getColor(requireContext(), R.color.colorPrimary)
-                    val color = Color.parseColor(if (colors.size > 0) colors.removeAt(0) else "#000000")
+                    val color = (if (colors.size > 0) colors.removeAt(0) else "#000000").toColorInt()
                     BitmapHelper.vectorToBitmap(
                         requireContext(),
                         R.drawable.ic_compass_arrow_2,
@@ -104,11 +106,21 @@ class MapFragment : AnalyticsFragment() {
             for (line in lines) {
                 ensureActive() // check if it works
 
-                val url = URL("https://api.golemio.cz/v2/public/vehiclepositions?routeShortName=${line.lineName}")
-                val connection = url.openConnection() as HttpsURLConnection
-                connection.setRequestProperty("x-access-token", golemioApiKey)
-                connection.connect()
-                if (connection.responseCode !in 200..299) continue
+                var connection: HttpsURLConnection?
+                try {
+                    val url = URL("https://api.golemio.cz/v2/public/vehiclepositions?routeShortName=${line.lineName}")
+                    connection = url.openConnection() as HttpsURLConnection
+                    connection.setRequestProperty("x-access-token", golemioApiKey)
+                    connection.connect()
+                } catch (_: IOException) {
+                    // connection failed so we shouldn't do anything with it
+                    connection = null
+                }
+
+                if (connection == null || connection.responseCode !in 200..299) {
+                    showLoadingError()
+                    continue
+                }
 
                 val data = InputStreamReader(connection.inputStream, Charsets.UTF_8).readText()
 
@@ -141,6 +153,7 @@ class MapFragment : AnalyticsFragment() {
                         }
                         if (newMarker != null) newMarkers[vehicleId] = newMarker
                     } else {
+                        ensureActive()
                         requireActivity().runOnUiThread {
                             marker.position = position
                             marker.rotation = bearing.toFloat()
@@ -163,6 +176,7 @@ class MapFragment : AnalyticsFragment() {
 
             if (newMarkers.isNotEmpty()) {
                 markers.minus(newMarkers.keys).forEach { (_, marker) ->
+                    ensureActive()
                     requireActivity().runOnUiThread { marker.remove() }
                 }
                 markers = newMarkers
@@ -170,6 +184,7 @@ class MapFragment : AnalyticsFragment() {
 
             if (hasPositions && !googleMap.hasUserMovedCamera) {
                 val cameraPosition = CameraUpdateFactory.newLatLngBounds(bounds.build(), 48)
+                ensureActive()
                 requireActivity().runOnUiThread {
                     googleMap.moveCamera(cameraPosition)
                 }
@@ -228,9 +243,7 @@ class MapFragment : AnalyticsFragment() {
     private fun showMap(view: View) {
 
         if (Firebase.remoteConfig.getString(RemoteConfigKeys.GOLEMIO_API_KEY).isEmpty()) {
-            Snackbar.make(view, "Aktuální polohu vozů nyní nelze načíst", Snackbar.LENGTH_INDEFINITE)
-                .setAction("OK") {}
-                .show()
+            showLoadingError(view)
         }
 
         view.findViewById<View>(R.id.mapLayout).visibility = View.VISIBLE
@@ -246,6 +259,16 @@ class MapFragment : AnalyticsFragment() {
         // Move position of the map zoom controls, so they wouldn't be under the refresh button
         fixZoomControlsPosition(mapFragment)
 
+    }
+
+    private fun showLoadingError(view: View? = getView()) {
+        if (view == null || loadingErrorVisible) return
+        loadingErrorVisible = true
+        Snackbar.make(view, "Aktuální polohu vozů nyní nelze načíst", Snackbar.LENGTH_INDEFINITE)
+            .setAction("OK") {
+                loadingErrorVisible = false
+            }
+            .show()
     }
 
     @SuppressLint("ResourceType")

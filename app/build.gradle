@@ -19,8 +19,8 @@ android {
         minSdk 16
         //noinspection OldTargetApi test on Android 16
         targetSdk 35 // Android 15
-        versionCode 37
-        versionName '1.2.0-α06'
+        versionCode 38
+        versionName '1.2.0'
         resourceConfigurations += ['en', 'cs']
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
