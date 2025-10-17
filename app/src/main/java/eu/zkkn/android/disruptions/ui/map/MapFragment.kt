@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.annotation.UiThread
 import androidx.appcompat.app.AlertDialog
 import androidx.core.graphics.toColorInt
 import androidx.lifecycle.lifecycleScope
@@ -115,10 +116,13 @@ class MapFragment : AnalyticsFragment() {
                 } catch (_: IOException) {
                     // connection failed so we shouldn't do anything with it
                     connection = null
+                } catch (_: RuntimeException) {
+                    // connection failed so we shouldn't do anything with it
+                    connection = null
                 }
 
                 if (connection == null || connection.responseCode !in 200..299) {
-                    showLoadingError()
+                    requireActivity().runOnUiThread { showLoadingError() }
                     continue
                 }
 
@@ -243,7 +247,7 @@ class MapFragment : AnalyticsFragment() {
     private fun showMap(view: View) {
 
         if (Firebase.remoteConfig.getString(RemoteConfigKeys.GOLEMIO_API_KEY).isEmpty()) {
-            showLoadingError(view)
+            requireActivity().runOnUiThread { showLoadingError(view) }
         }
 
         view.findViewById<View>(R.id.mapLayout).visibility = View.VISIBLE
@@ -261,6 +265,7 @@ class MapFragment : AnalyticsFragment() {
 
     }
 
+    @UiThread // not sure, but Gemini recommends it, so better be safe
     private fun showLoadingError(view: View? = getView()) {
         if (view == null || loadingErrorVisible) return
         loadingErrorVisible = true
