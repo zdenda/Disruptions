@@ -4,6 +4,7 @@
 /secrets.properties
 /private.gradle
 /.idea/caches
+/.idea/deviceManager.xml
 /.idea/libraries
 /.idea/modules.xml
 /.idea/workspace.xml

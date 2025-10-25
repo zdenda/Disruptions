@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
@@ -12,15 +14,15 @@ plugins {
 
 android {
     namespace 'eu.zkkn.android.disruptions'
-    compileSdk 36
-    buildToolsVersion = '36.0.0'
+    compileSdkVersion 36
+    buildToolsVersion = '36.1.0'
     defaultConfig {
         applicationId 'eu.zkkn.android.disruptions'
         minSdk 16
         //noinspection OldTargetApi test on Android 16
         targetSdk 35 // Android 15
         versionCode 40
-        versionName '1.2.2'
+        versionName '1.2.3-α00'
         resourceConfigurations += ['en', 'cs']
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
@@ -50,8 +52,10 @@ android {
         sourceCompatibility = '1.8'
         targetCompatibility = '1.8'
     }
-    kotlinOptions {
-        jvmTarget = '1.8'
+    kotlin {
+        compilerOptions {
+            jvmTarget = JvmTarget.JVM_1_8
+        }
     }
 }
 

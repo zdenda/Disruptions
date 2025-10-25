@@ -7,7 +7,7 @@ buildscript {
     }
     ext {
         // define versions used in modules
-        kotlin_version = '2.2.20'
+        kotlin_version = '2.2.21'
         navigationVersion = '2.7.7' // v2.8.0 needs minSdkVersion 21
     }
     dependencies {
@@ -20,14 +20,14 @@ buildscript {
         //noinspection GradleDependency v0.10.7 does not generate OSS License report
         classpath 'com.google.android.gms:oss-licenses-plugin:0.10.6'
         classpath "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:2.0.1"
-        classpath 'com.google.cloud.tools:appengine-gradle-plugin:2.8.3'
+        classpath 'com.google.cloud.tools:appengine-gradle-plugin:2.8.4'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
 }
 
 plugins {
-    id 'com.google.devtools.ksp' version "$kotlin_version-2.0.2" apply false
+    id 'com.google.devtools.ksp' version "2.3.0" apply false
 }
 
 apply from: 'private.gradle'
