@@ -21,7 +21,7 @@ import eu.zkkn.android.disruptions.utils.Helpers
 class AboutFragment : AnalyticsFragment() {
 
     companion object {
-        private const val SHARE_LINK = "https://disruptions.page.link/Hi"
+        private const val SHARE_LINK = "https://play.google.com/store/apps/details?id=eu.zkkn.android.disruptions"
     }
 
 
