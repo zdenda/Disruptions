@@ -3,10 +3,6 @@
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="1.8">
       <module name="common" target="1.8" />
-      <module name="Disruptions.app" target="21" />
-      <module name="Disruptions.backend" target="17" />
-      <module name="Disruptions.backend.main" target="17" />
-      <module name="Disruptions.backend.test" target="17" />
     </bytecodeTargetLevel>
   </component>
 </project>
