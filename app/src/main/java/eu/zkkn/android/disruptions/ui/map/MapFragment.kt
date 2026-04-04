@@ -81,7 +81,7 @@ class MapFragment : AnalyticsFragment() {
 
         myGoogleMap = MyGoogleMap(googleMap)
 
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
 
             myGoogleMap?.let {
                 val prague = LatLng(50.0875, 14.421389)
@@ -122,7 +122,9 @@ class MapFragment : AnalyticsFragment() {
                 }
 
                 if (connection == null || connection.responseCode !in 200..299) {
-                    requireActivity().runOnUiThread { showLoadingError() }
+                    withContext(Dispatchers.Main) {
+                        if (isAdded) showLoadingError()
+                    }
                     continue
                 }
 
@@ -157,8 +159,8 @@ class MapFragment : AnalyticsFragment() {
                         }
                         if (newMarker != null) newMarkers[vehicleId] = newMarker
                     } else {
-                        ensureActive()
-                        requireActivity().runOnUiThread {
+                        withContext(Dispatchers.Main) {
+                            if (!isAdded) return@withContext
                             marker.position = position
                             marker.rotation = bearing.toFloat()
                             if (markerData != marker.tag) {
@@ -179,18 +181,21 @@ class MapFragment : AnalyticsFragment() {
             }
 
             if (newMarkers.isNotEmpty()) {
-                markers.minus(newMarkers.keys).forEach { (_, marker) ->
-                    ensureActive()
-                    requireActivity().runOnUiThread { marker.remove() }
+                val markersToRemove = markers.minus(newMarkers.keys)
+                if (markersToRemove.isNotEmpty()) {
+                    withContext(Dispatchers.Main) {
+                        if (isAdded) {
+                            markersToRemove.forEach { (_, marker) -> marker.remove() }
+                        }
+                    }
                 }
                 markers = newMarkers
             }
 
             if (hasPositions && !googleMap.hasUserMovedCamera) {
                 val cameraPosition = CameraUpdateFactory.newLatLngBounds(bounds.build(), 48)
-                ensureActive()
-                requireActivity().runOnUiThread {
-                    googleMap.moveCamera(cameraPosition)
+                withContext(Dispatchers.Main) {
+                    if (isAdded) googleMap.moveCamera(cameraPosition)
                 }
             }
 
@@ -247,13 +252,13 @@ class MapFragment : AnalyticsFragment() {
     private fun showMap(view: View) {
 
         if (Firebase.remoteConfig.getString(RemoteConfigKeys.GOLEMIO_API_KEY).isEmpty()) {
-            requireActivity().runOnUiThread { showLoadingError(view) }
+            showLoadingError(view)
         }
 
         view.findViewById<View>(R.id.mapLayout).visibility = View.VISIBLE
         view.findViewById<View>(R.id.mapDialog).visibility = View.GONE
         view.findViewById<View>(R.id.fabRefresh).setOnClickListener {
-            lifecycleScope.launch {
+            viewLifecycleOwner.lifecycleScope.launch {
                 myGoogleMap?.let { updatePositions(it) }
             }
         }
