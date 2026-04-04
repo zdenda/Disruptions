@@ -37,8 +37,10 @@ class PidRssFeedParser(private val input: InputStream) {
         var characters = ""
 
         val xmlInputFactory = XMLInputFactory.newInstance()
-        xmlInputFactory.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, true)
-        xmlInputFactory.setProperty(XMLInputFactory.IS_REPLACING_ENTITY_REFERENCES, true)
+        // Disable XXE: external entities must not be processed from untrusted XML sources
+        xmlInputFactory.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false)
+        xmlInputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false)
+        xmlInputFactory.setProperty(XMLInputFactory.IS_REPLACING_ENTITY_REFERENCES, false)
         val eventReader = xmlInputFactory.createXMLEventReader(input)
 
         while (eventReader.hasNext()) {

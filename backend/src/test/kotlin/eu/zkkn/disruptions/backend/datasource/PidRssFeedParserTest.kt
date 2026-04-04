@@ -4,6 +4,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import java.time.LocalDateTime
+import javax.xml.stream.XMLStreamException
 
 
 class PidRssFeedParserTest {
@@ -140,6 +141,22 @@ class PidRssFeedParserTest {
                 lines = listOf("9", "10", "15", "16")
             )
         ))
+    }
+
+    @Test
+    fun parse_rejectsXXE() {
+        val maliciousXml = """
+            <?xml version="1.0" encoding="UTF-8"?>
+            <!DOCTYPE foo [
+              <!ENTITY xxe SYSTEM "file:///etc/passwd">
+            ]>
+            <rss><channel>
+                <title>&xxe;--after</title>
+                <lastBuildDate>Sun, 03 Feb 2019 16:57:19 +0000</lastBuildDate>
+            </channel></rss>
+        """.trimIndent()
+        val feed = PidRssFeedParser(maliciousXml.byteInputStream()).parse()
+        assertTrue("XXE should not be resolved", !feed.title.contains("root:x"))
     }
 
     @Test
