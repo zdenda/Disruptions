@@ -46,12 +46,14 @@ class MapFragment : AnalyticsFragment() {
 
     private var markers = mapOf<String, Marker>()
 
-    private val lines: List<LineData> by lazy {
+    private var lines: List<LineData> = emptyList()
+
+    private fun loadLineData(): List<LineData> {
         // uses green, yellow and red for metro lines
         val colors = mutableSetOf("#d50000", "#c51162", "#aa00ff", "#6200ea", "#304ffe", "#2962ff", "#0091ea", "#00b8d4", "#00bfa5", "#00c853", "#64dd17", "#aeea00", "#ffab00", "#ff6d00", "#dd2c00", "#3e2723", "#212121", "#263238").toMutableList()
         colors.shuffle()
 
-        SubscriptionRepository.getInstance(requireContext()).getAllLineNames()
+        return SubscriptionRepository.getInstance(requireContext()).getAllLineNames()
             .take(10) // show info if user has more subscribed lines
             .map { lineName ->
                 val icon: BitmapDescriptor by lazy {
@@ -87,6 +89,11 @@ class MapFragment : AnalyticsFragment() {
                 val prague = LatLng(50.0875, 14.421389)
                 it.moveCamera(CameraUpdateFactory.newLatLngZoom(prague, 10f))
                 it.setInfoWindowAdapter(MarkerInfoWindowAdapter(requireContext()))
+
+                withContext(Dispatchers.IO) {
+                    lines = loadLineData()
+                }
+
                 updatePositions(it)
             }
         }
