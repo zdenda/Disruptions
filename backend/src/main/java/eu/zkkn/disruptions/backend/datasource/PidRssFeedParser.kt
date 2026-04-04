@@ -99,14 +99,23 @@ class PidRssFeedParser(private val input: InputStream) {
     internal fun parseDescription(description: String): Pair<String, List<String>> {
         if (description.isEmpty()) return Pair("", emptyList())
 
-        val lastSemicolon = description.lastIndexOf(';')
-        val timeInfo = description.substring(0, lastSemicolon).replace("&nbsp;", " ")
-        val lines = parseDescLines(description.substring(lastSemicolon + 1))
+        val sanitizedDescription = description.replace("&nbsp;", " ")
+        val lastSemicolon = sanitizedDescription.lastIndexOf(';')
+        if (lastSemicolon == -1) {
+            // No semicolon found — treat the entire description as time info with no line names
+            return Pair(sanitizedDescription, emptyList())
+        }
+
+        val timeInfo = sanitizedDescription.substring(0, lastSemicolon)
+        val lines = parseDescLines(sanitizedDescription.substring(lastSemicolon + 1))
         return Pair(timeInfo, lines)
     }
 
     private fun parseDescLines(text: String): List<String> {
-        return text.substring(text.indexOf(':') + 1) // take text after first colon
+        val colonIndex = text.indexOf(':')
+        if (colonIndex == -1) return emptyList()
+
+        return text.substring(colonIndex + 1) // take text after first colon
             .split(',') // split it by commas
             .map { n -> n.trim() } // remove leading and trailing spaces
             .filterNot { it.isBlank() } // and return only not blank values

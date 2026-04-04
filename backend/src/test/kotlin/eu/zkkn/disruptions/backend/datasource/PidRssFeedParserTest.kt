@@ -244,4 +244,53 @@ class PidRssFeedParserTest {
         ))
     }
 
+    @Test
+    fun parseDescription_noSemicolon() {
+        val parser = PidRssFeedParser("".byteInputStream())
+        val (timeInfo, lines) = parser.parseDescription("Just some text without semicolon")
+        assertEquals("Just some text without semicolon", timeInfo)
+        assertTrue(lines.isEmpty())
+    }
+
+    @Test
+    fun parseDescription_noColon() {
+        val parser = PidRssFeedParser("".byteInputStream())
+        val (timeInfo, lines) = parser.parseDescription("1.6. 12:00 - do odvolání; no colon here")
+        assertEquals("1.6. 12:00 - do odvolání", timeInfo)
+        assertTrue(lines.isEmpty())
+    }
+
+    @Test
+    fun parseDescription_emptySections() {
+        val parser = PidRssFeedParser("".byteInputStream())
+        val (timeInfo, lines) = parser.parseDescription(";")
+        assertEquals("", timeInfo)
+        assertTrue(lines.isEmpty())
+    }
+
+    @Test
+    fun parseDescription_onlySemicolonAndColon() {
+        val parser = PidRssFeedParser("".byteInputStream())
+        val (timeInfo, lines) = parser.parseDescription(";:")
+        assertEquals("", timeInfo)
+        assertTrue(lines.isEmpty())
+    }
+
+    @Test
+    fun parseDescription_realExamples() {
+        val parser = PidRssFeedParser("".byteInputStream())
+
+        val (time1, lines1) = parser.parseDescription("4.4. 11:00 - 4.4. 13:00; Dotčené linky: 387")
+        assertEquals("4.4. 11:00 - 4.4. 13:00", time1)
+        assertEquals(listOf("387"), lines1)
+
+        val (time2, lines2) = parser.parseDescription("26.2. 04:00 - do&nbsp;odvolání; Dotčené linky: 560")
+        assertEquals("26.2. 04:00 - do odvolání", time2)
+        assertEquals(listOf("560"), lines2)
+
+        val (time3, lines3) = parser.parseDescription("11.4. 04:00 - do&nbsp;odvolání; Dotčené linky: 415, 590")
+        assertEquals("11.4. 04:00 - do odvolání", time3)
+        assertEquals(listOf("415", "590"), lines3)
+    }
+
 }
