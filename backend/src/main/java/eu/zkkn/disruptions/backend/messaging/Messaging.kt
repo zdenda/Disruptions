@@ -15,9 +15,12 @@ import java.util.logging.Logger
 
 object Messaging {
 
+    private const val PREFIX_ERROR = "ERROR:"
+
     private val log = Logger.getLogger(Messaging::class.java.name)
 
     private val firebaseMessaging: FirebaseMessaging by lazy {
+        //TODO: try GoogleCredentials.getApplicationDefault() if it works on App Engine and also on local development
         val googleCredentials = GoogleCredentials.fromStream(
             ServletContextHolder.getServletContext().getResourceAsStream("/WEB-INF/serviceAccountKey.json")
         )
@@ -60,10 +63,14 @@ object Messaging {
     }
 
 
-    fun send(messages: Set<Message>): Set<String> {
-        val results = mutableSetOf<String>()
+    fun send(messages: Set<Message>): List<String> {
+        val results = mutableListOf<String>()
         for (message in messages) {
             results.add(send(message))
+        }
+        val failures = results.count { it.startsWith(PREFIX_ERROR) }
+        if (failures > 0) {
+            log.warning("$failures out of ${messages.size} FCM messages failed to send")
         }
         return results
     }
@@ -71,8 +78,13 @@ object Messaging {
     fun send(message: Message): String {
         // perform only a dry run if not in production
         val dryRun = !Utils.isProduction()
-        if (dryRun) log.warning("FCM mesages are sent only from Production environment")
-        return firebaseMessaging.send(message, dryRun)
+        if (dryRun) log.warning("FCM messages are sent only from Production environment")
+        return try {
+            firebaseMessaging.send(message, dryRun)
+        } catch (e: Exception) {
+            log.severe("Failed to send FCM message: ${e.message}")
+            "$PREFIX_ERROR ${e.message}"
+        }
     }
 
 }
