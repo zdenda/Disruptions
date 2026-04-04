@@ -19,6 +19,7 @@ import eu.zkkn.android.disruptions.data.Preferences
 import eu.zkkn.android.disruptions.ui.disruptiondetail.DisruptionDetailFragmentArgs
 import eu.zkkn.android.disruptions.utils.Analytics
 import eu.zkkn.android.disruptions.utils.AppNotificationManager
+import eu.zkkn.android.disruptions.utils.Crashlytics
 import eu.zkkn.android.disruptions.utils.Helpers
 import eu.zkkn.disruptions.common.FcmConstants
 import java.text.SimpleDateFormat
@@ -30,7 +31,32 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     companion object {
         private val TAG = MyFirebaseMessagingService::class.simpleName
+
+        internal fun validateNotificationData(data: Map<String, String>): NotificationData? {
+            val guid = data[FcmConstants.KEY_ID]?.trim()
+            val linesStr = data[FcmConstants.KEY_LINES]
+            val title = data[FcmConstants.KEY_TITLE]
+            val timeInfo = data[FcmConstants.KEY_TIME]
+
+            if (guid.isNullOrBlank() || linesStr.isNullOrBlank() ||
+                title.isNullOrBlank() || timeInfo.isNullOrBlank()
+            ) {
+                return null
+            }
+
+            val lines = linesStr.split(',').map { it.trim() }.filter { it.isNotBlank() }
+            if (lines.isEmpty()) return null
+
+            return NotificationData(guid, lines, title, timeInfo)
+        }
     }
+
+    internal data class NotificationData(
+        val guid: String,
+        val lines: List<String>,
+        val title: String,
+        val timeInfo: String
+    )
 
 
     private val appNotificationManager: AppNotificationManager by lazy {
@@ -65,15 +91,28 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     private fun handleNotificationMsg(remoteMessage: RemoteMessage) {
         val data = remoteMessage.data
-        //TODO add validation that all data fields exists and have values
-        val guid = data[FcmConstants.KEY_ID]!!.trim()
-        val lines = data[FcmConstants.KEY_LINES]!!.split(',').map { it.trim() }
-        val title = data[FcmConstants.KEY_TITLE]!!
-        val timeInfo = data[FcmConstants.KEY_TIME]!!
+
+        val notificationData = validateNotificationData(data)
+        if (notificationData == null) {
+            val missingOrEmpty = listOfNotNull(
+                if (data[FcmConstants.KEY_ID].isNullOrBlank()) FcmConstants.KEY_ID else null,
+                if (data[FcmConstants.KEY_LINES].isNullOrBlank()) FcmConstants.KEY_LINES else null,
+                if (data[FcmConstants.KEY_TITLE].isNullOrBlank()) FcmConstants.KEY_TITLE else null,
+                if (data[FcmConstants.KEY_TIME].isNullOrBlank()) FcmConstants.KEY_TIME else null
+            )
+            val errorMessage = "Incomplete FCM notification data. Received keys: ${data.keys}. " +
+                "Missing or empty: $missingOrEmpty"
+            Log.w(TAG, errorMessage)
+            Crashlytics.log(errorMessage)
+            Crashlytics.logException(RuntimeException(errorMessage))
+            return
+        }
+
+        val (guid, lines, title, timeInfo) = notificationData
 
         DisruptionRepository.getInstance(this).addDisruption(guid, lines.toSet(), title, timeInfo)
 
-        val notificationId = guid.replace("[^0-9]".toRegex(), "0").toIntOrNull() ?: 1 //TODO do it better
+        val notificationId = guid.hashCode().and(Int.MAX_VALUE)
         val notificationTitle = resources.getQuantityString(
             R.plurals.notification_lines, lines.size, lines.joinToString()
         )

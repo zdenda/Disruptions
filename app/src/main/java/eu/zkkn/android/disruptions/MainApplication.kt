@@ -2,8 +2,8 @@ package eu.zkkn.android.disruptions
 
 import android.app.Application
 import androidx.fragment.app.strictmode.FragmentStrictMode
-import com.google.firebase.crashlytics.FirebaseCrashlytics
 import eu.zkkn.android.disruptions.utils.Analytics
+import eu.zkkn.android.disruptions.utils.Crashlytics
 
 
 open class MainApplication : Application() {
@@ -31,7 +31,7 @@ open class MainApplication : Application() {
                     } else {
                         // Log to Crashlytics on RELEASE builds
                         penaltyListener {
-                            FirebaseCrashlytics.getInstance().recordException(it)
+                            Crashlytics.logException(it)
                         }
                     }
                 }
