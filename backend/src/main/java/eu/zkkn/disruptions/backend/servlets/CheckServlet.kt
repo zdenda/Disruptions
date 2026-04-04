@@ -38,8 +38,15 @@ class CheckServlet : HttpServlet() {
         } catch (_: IOException) {
             val elapsed = timeSource.markNow() - markStart
             val backupUrl = PidRssFeedParser.getBackupUrl()
-            log.warning("Use secondary URL (${backupUrl}) after ${elapsed.inWholeMilliseconds}ms") //TODO: show only as info
-            Utils.openHttpConnection(backupUrl).inputStream
+            log.warning("Use secondary URL ($backupUrl) after ${elapsed.inWholeMilliseconds}ms") //TODO: show only as info
+            try {
+                Utils.openHttpConnection(backupUrl).inputStream
+            } catch (e: IOException) {
+                log.severe("Both primary and backup RSS feeds failed: ${e.message}")
+                resp.status = HttpServletResponse.SC_SERVICE_UNAVAILABLE
+                resp.writer.write("RSS feed unavailable")
+                return
+            }
         }
 
         val loggingInputStream = LoggingInputStream(inputStream, log, Level.CONFIG, LOGGING_LIMIT)
@@ -49,25 +56,38 @@ class CheckServlet : HttpServlet() {
 
         val disruptions = DisruptionDao()
 
+        var processedCount = 0
+        var failedCount = 0
+
         for (item in pidRssFeed.items) {
-            val linesToNotify = item.lines.toMutableSet()
+            try {
+                val linesToNotify = item.lines.toMutableSet()
 
-            var disruption = disruptions.load(item.guid)
-            if (disruption != null) {
-                // remove all lines which already received the notification
-                linesToNotify.removeAll(disruption.lines)
-                disruption.modify(item)
-            } else {
-                disruption = Disruption.fromPidRssFeedItem(item)
+                var disruption = disruptions.load(item.guid)
+                if (disruption != null) {
+                    // remove all lines which already received the notification
+                    linesToNotify.removeAll(disruption.lines)
+                    disruption.modify(item)
+                } else {
+                    disruption = Disruption.fromPidRssFeedItem(item)
+                }
+
+                if (linesToNotify.isNotEmpty()) {
+                    log.info("Send notifications to: $linesToNotify")
+                    val results = Messaging.send(Messaging.prepareNotificationMessages(linesToNotify, item))
+                    log.info(results.toString())
+                }
+
+                disruptions.save(disruption)
+                processedCount++
+            } catch (e: Exception) {
+                failedCount++
+                log.severe("Failed to process disruption '${item.guid}': ${e.message}")
             }
+        }
 
-            if (linesToNotify.isNotEmpty()) {
-                log.info("Send notifications to: $linesToNotify")
-                val results = Messaging.send(Messaging.prepareNotificationMessages(linesToNotify, item))
-                log.info(results.toString())
-            }
-
-            disruptions.save(disruption)
+        if (failedCount > 0) {
+            log.warning("Processed $processedCount items, failed $failedCount items out of ${pidRssFeed.items.size}")
         }
 
         resp.contentType = "application/json; charset=UTF-8"
