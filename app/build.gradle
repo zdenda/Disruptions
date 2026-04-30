@@ -14,15 +14,15 @@ plugins {
 
 android {
     namespace 'eu.zkkn.android.disruptions'
-    compileSdkVersion 36
-    buildToolsVersion = '36.1.0'
+    compileSdkVersion 37
+    buildToolsVersion = '37.0.0'
     defaultConfig {
         applicationId 'eu.zkkn.android.disruptions'
         minSdk 16
         //noinspection OldTargetApi test on Android 16
         targetSdk 35 // Android 15
-        versionCode 41
-        versionName '1.2.4-α03'
+        versionCode 42
+        versionName '1.2.4'
         resourceConfigurations += ['en', 'cs']
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
