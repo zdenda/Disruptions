@@ -17,8 +17,7 @@ buildscript {
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navigationVersion"
         classpath 'com.google.firebase:firebase-crashlytics-gradle:3.0.7'
         classpath 'com.google.firebase:perf-plugin:2.0.2' // Firebase Performance Monitoring plugin
-        //noinspection GradleDependency v0.10.7 does not generate OSS License report
-        classpath 'com.google.android.gms:oss-licenses-plugin:0.10.6'
+        classpath 'com.google.android.gms:oss-licenses-plugin:0.11.0'
         classpath "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:2.0.1"
         classpath 'com.google.cloud.tools:appengine-gradle-plugin:2.8.7'
         // NOTE: Do not place your application dependencies here; they belong
