@@ -14,7 +14,12 @@
 
 # Uncomment this to preserve the line number information for
 # debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
+-keepattributes SourceFile,LineNumberTable
+
+# Preserve the generated Google Services resource IDs
+-keepclassmembers class **.R$string {
+    public static <fields>;
+}
 
 # Google Play Services OSS Licenses plugin
 -keep class com.google.android.gms.oss.licenses.** { *; }
